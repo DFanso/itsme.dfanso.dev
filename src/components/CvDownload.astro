@@ -1,0 +1,215 @@
+---
+const { class: className } = Astro.props;
+
+// Import data from other components
+const personalInfo = {
+    name: "Leo Felcianas",
+    title: "Associate DevOps Engineer at Empite",
+    email: "contact@dfanso.dev",
+    summary: "DevOps/Backend specialist crafting efficient and scalable solutions. Transforming complex challenges into elegant architectures."
+};
+
+// From Skills.astro
+const skillCategories = [
+    {
+        name: 'cloud',
+        skills: [
+            { icon: '⠿', name: 'AWS' },
+            { icon: '⚡', name: 'Azure' },
+            { icon: '☁', name: 'Cloudflare' }
+        ]
+    },
+    {
+        name: 'containers',
+        skills: [
+            { icon: '🐳', name: 'Docker' },
+            { icon: '☸', name: 'Kubernetes' }
+        ]
+    },
+    {
+        name: 'infra',
+        skills: [
+            { icon: '⚙', name: 'Terraform' },
+            { icon: '⚡', name: 'Jenkins' },
+            { icon: '⭐', name: 'GitHub-Actions' }
+        ]
+    },
+    {
+        name: 'lang',
+        skills: [
+            { icon: '⚡', name: 'Go' },
+            { icon: '🐍', name: 'Python' },
+            { icon: '⚛', name: 'TypeScript' },
+            { icon: '⬡', name: 'Node.js' }
+        ]
+    },
+    {
+        name: 'db',
+        skills: [
+            { icon: '🐘', name: 'PostgreSQL' },
+            { icon: '🍃', name: 'MongoDB' },
+            { icon: '⚡', name: 'Redis' }
+        ]
+    },
+    {
+        name: 'monitor',
+        skills: [
+            { icon: '📊', name: 'Prometheus' },
+            { icon: '📈', name: 'Grafana' },
+            { icon: '🔍', name: 'ELK' }
+        ]
+    },
+    {
+        name: 'arch',
+        skills: [
+            { icon: '⚡', name: 'Microservices' },
+            { icon: '⚙', name: 'System' },
+            { icon: '🔒', name: 'Network' }
+        ]
+    }
+];
+
+// From Experience.astro
+const experiences = [
+    {
+        type: 'DEV',
+        file: 'empite.md',
+        title: 'Associate DevOps Engineer',
+        company: 'Empite',
+        period: 'November 2024 - Present',
+        responsibilities: [
+            'Building and maintaining CI/CD pipelines using Azure DevOps',
+            'Developing backend services using NestJS and TypeScript',
+            'Infrastructure as Code (IaC) implementation with Terraform',
+            'Container orchestration with Docker and Kubernetes'
+        ]
+    },
+    {
+        type: 'INT',
+        file: 'intern.md',
+        title: 'Software Engineer Intern',
+        company: 'Empite',
+        period: 'July 2024 - October 2024',
+        responsibilities: [
+            'Developed web applications using modern frameworks',
+            'Collaborated with senior developers on project implementations',
+            'Participated in code reviews and agile development processes'
+        ]
+    },
+    {
+        type: 'FRL',
+        file: 'freelance.md',
+        title: 'Software Engineer',
+        company: 'Freelance',
+        period: 'May 2023 - Present',
+        responsibilities: [
+            'Developing custom web and mobile applications for clients',
+            'Implementing full-stack solutions with modern technologies',
+            'Managing client relationships and project deliverables'
+        ]
+    }
+];
+
+// From Projects.astro
+const projects = [
+    {
+        type: 'WEB',
+        name: 'Techxeed',
+        description: 'A comprehensive digital solutions platform offering web development, mobile apps, AI solutions, and digital marketing services.',
+        tech: [
+            { icon: '⚛', name: 'Next.js' },
+            { icon: '⬡', name: 'Nest.js' },
+            { icon: '🍃', name: 'MongoDB' },
+            { icon: '🎨', name: 'TailwindCSS' },
+            { icon: '🔥', name: 'Firebase' },
+            { icon: '⠿', name: 'AWS' }
+        ]
+    },
+    {
+        type: 'APP',
+        name: 'QuickQuest',
+        description: 'A location-based platform connecting customers with laborers, featuring real-time chat via SSE and geospatial queries.',
+        tech: [
+            { icon: '⚛', name: 'Next.js' },
+            { icon: '⬡', name: 'Nest.js' },
+            { icon: '🍃', name: 'MongoDB' },
+            { icon: '🐍', name: 'Python' },
+            { icon: '⠿', name: 'AWS' }
+        ]
+    },
+    {
+        type: 'SYS',
+        name: 'CineMagic',
+        description: 'A comprehensive cinema ticket booking system with real-time seat selection and secure payments.',
+        tech: [
+            { icon: '⚛', name: 'React.js' },
+            { icon: '⚡', name: 'Redux' },
+            { icon: '⬡', name: 'Nest.js' },
+            { icon: '🍃', name: 'MongoDB' }
+        ]
+    }
+];
+
+function generateCV() {
+    return `${personalInfo.name}
+${personalInfo.title}
+${personalInfo.email}
+
+PROFESSIONAL SUMMARY
+${personalInfo.summary}
+
+SKILLS
+${skillCategories.map(category => 
+    `${category.name.toUpperCase()}: ${category.skills.map(skill => skill.name).join(", ")}`
+).join("\n")}
+
+PROFESSIONAL EXPERIENCE
+${experiences.map(job => 
+    `${job.title} | ${job.company}
+${job.period}
+${job.responsibilities.map(r => `• ${r}`).join("\n")}`
+).join("\n\n")}
+
+PROJECTS
+${projects.map(project => 
+    `${project.name}
+• ${project.description}
+• Technologies: ${project.tech.map(t => t.name).join(", ")}`
+).join("\n\n")}
+
+EDUCATION
+BSc (Hons) Software Engineering
+University of Plymouth`;
+}
+
+const cvContent = generateCV();
+---
+
+<div class:list={["mt-4", className]}>
+    <button
+        id="downloadCV"
+        class="flex items-center gap-2 px-4 py-2 bg-[#7aa2f7] text-[#1a1b26] rounded hover:bg-[#9ece6a] transition-colors"
+    >
+        <span class="command-prompt">$</span> download-cv
+    </button>
+</div>
+
+<script define:vars={{ cvContent }}>
+    document.getElementById('downloadCV').addEventListener('click', () => {
+        const element = document.createElement('a');
+        const file = new Blob([cvContent], { type: 'text/plain' });
+        element.href = window.URL.createObjectURL(file);
+        element.download = 'Leo_Felcianas_CV.txt';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    });
+</script>
+
+<style>
+    button {
+        font-family: monospace;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+</style> 
