@@ -49,37 +49,107 @@ import Layout from '../layouts/Layout.astro';
 					<div class="ml-4 border-l-2 border-[#565f89] pl-3 space-y-2 text-sm">
 						<div>
 							<span class="command-prompt">└─▶ ls cloud/</span>
-							<div class="ml-3 text-[#9ece6a]">AWS Azure Cloudflare</div>
+							<div class="ml-3 text-[#9ece6a] flex flex-wrap gap-3">
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">⠿</pre> AWS
+								</div>
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">⚡</pre> Azure
+								</div>
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">☁</pre> Cloudflare
+								</div>
+							</div>
 						</div>
 
 						<div>
 							<span class="command-prompt">└─▶ ls containers/</span>
-							<div class="ml-3 text-[#9ece6a]">Docker Kubernetes</div>
+							<div class="ml-3 text-[#9ece6a] flex flex-wrap gap-3">
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">🐳</pre> Docker
+								</div>
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">☸</pre> Kubernetes
+								</div>
+							</div>
 						</div>
 
 						<div>
 							<span class="command-prompt">└─▶ ls infra/</span>
-							<div class="ml-3 text-[#9ece6a]">Terraform Jenkins GitHub-Actions CI/CD</div>
+							<div class="ml-3 text-[#9ece6a] flex flex-wrap gap-3">
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">⚙</pre> Terraform
+								</div>
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">⚡</pre> Jenkins
+								</div>
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">⭐</pre> GitHub-Actions
+								</div>
+							</div>
 						</div>
 
 						<div>
 							<span class="command-prompt">└─▶ ls lang/</span>
-							<div class="ml-3 text-[#9ece6a]">Go Python TypeScript Node.js</div>
+							<div class="ml-3 text-[#9ece6a] flex flex-wrap gap-3">
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">⚡</pre> Go
+								</div>
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">🐍</pre> Python
+								</div>
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">⚛</pre> TypeScript
+								</div>
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">⬡</pre> Node.js
+								</div>
+							</div>
 						</div>
 
 						<div>
 							<span class="command-prompt">└─▶ ls db/</span>
-							<div class="ml-3 text-[#9ece6a]">PostgreSQL MongoDB Redis</div>
+							<div class="ml-3 text-[#9ece6a] flex flex-wrap gap-3">
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">🐘</pre> PostgreSQL
+								</div>
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">🍃</pre> MongoDB
+								</div>
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">⚡</pre> Redis
+								</div>
+							</div>
 						</div>
 
 						<div>
 							<span class="command-prompt">└─▶ ls monitor/</span>
-							<div class="ml-3 text-[#9ece6a]">Prometheus Grafana ELK</div>
+							<div class="ml-3 text-[#9ece6a] flex flex-wrap gap-3">
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">📊</pre> Prometheus
+								</div>
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">📈</pre> Grafana
+								</div>
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">🔍</pre> ELK
+								</div>
+							</div>
 						</div>
 
 						<div>
 							<span class="command-prompt">└─▶ ls arch/</span>
-							<div class="ml-3 text-[#9ece6a]">Microservices System Network</div>
+							<div class="ml-3 text-[#9ece6a] flex flex-wrap gap-3">
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">⚡</pre> Microservices
+								</div>
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">⚙</pre> System
+								</div>
+								<div class="flex items-center gap-2">
+									<pre class="text-[#7aa2f7] text-xs">🔒</pre> Network
+								</div>
+							</div>
 						</div>
 					</div>
 				</section>
@@ -91,16 +161,16 @@ import Layout from '../layouts/Layout.astro';
 					</h2>
 					<div class="ml-4 border-l-2 border-[#565f89] pl-3 space-y-1.5 text-sm">
 						<a href="https://github.com/dfanso" target="_blank" class="block hover:text-[#9ece6a] transition-colors">
-							<span class="command-prompt">└─▶</span> github/dfanso
+							<span class="command-prompt">└─▶</span> <pre class="inline text-[#7aa2f7]">[GH]</pre> github/dfanso
 						</a>
 						<a href="https://www.linkedin.com/in/leo-felcianas" target="_blank" class="block hover:text-[#9ece6a] transition-colors">
-							<span class="command-prompt">└─▶</span> linkedin/leo-felcianas
+							<span class="command-prompt">└─▶</span> <pre class="inline text-[#7aa2f7]">[IN]</pre> linkedin/leo-felcianas
 						</a>
 						<a href="https://discord.com" target="_blank" class="block hover:text-[#9ece6a] transition-colors">
-							<span class="command-prompt">└─▶</span> discord
+							<span class="command-prompt">└─▶</span> <pre class="inline text-[#7aa2f7]">[DC]</pre> discord
 						</a>
 						<a href="https://instagram.com" target="_blank" class="block hover:text-[#9ece6a] transition-colors">
-							<span class="command-prompt">└─▶</span> instagram
+							<span class="command-prompt">└─▶</span> <pre class="inline text-[#7aa2f7]">[IG]</pre> instagram
 						</a>
 					</div>
 				</section>
@@ -115,26 +185,44 @@ import Layout from '../layouts/Layout.astro';
 					</h2>
 					<div class="ml-4 border-l-2 border-[#565f89] pl-3 space-y-5">
 						<div class="project">
-							<h3 class="text-[#7aa2f7] font-bold text-sm">└─▶ ./techxeed</h3>
+							<h3 class="text-[#7aa2f7] font-bold text-sm flex items-center gap-2">
+								<span class="command-prompt">└─▶</span> <pre class="inline text-[#bb9af7]">[WEB]</pre> ./techxeed
+							</h3>
 							<p class="ml-3 mb-1.5 text-sm">A comprehensive digital solutions platform offering web development, mobile apps, AI solutions, and digital marketing services.</p>
-							<div class="ml-3 text-xs text-[#9ece6a]">
-								Next.js • Nest.js • MongoDB • TailwindCSS • Firebase • AWS • Stripe
+							<div class="ml-3 text-xs text-[#9ece6a] flex flex-wrap gap-2">
+								<span class="flex items-center gap-1"><pre class="text-[#7aa2f7]">⚛</pre> Next.js</span>
+								<span class="flex items-center gap-1"><pre class="text-[#7aa2f7]">⬡</pre> Nest.js</span>
+								<span class="flex items-center gap-1"><pre class="text-[#7aa2f7]">🍃</pre> MongoDB</span>
+								<span class="flex items-center gap-1"><pre class="text-[#7aa2f7]">🎨</pre> TailwindCSS</span>
+								<span class="flex items-center gap-1"><pre class="text-[#7aa2f7]">🔥</pre> Firebase</span>
+								<span class="flex items-center gap-1"><pre class="text-[#7aa2f7]">⠿</pre> AWS</span>
 							</div>
 						</div>
 
 						<div class="project">
-							<h3 class="text-[#7aa2f7] font-bold text-sm">└─▶ ./quickquest</h3>
+							<h3 class="text-[#7aa2f7] font-bold text-sm flex items-center gap-2">
+								<span class="command-prompt">└─▶</span> <pre class="inline text-[#bb9af7]">[APP]</pre> ./quickquest
+							</h3>
 							<p class="ml-3 mb-1.5 text-sm">A location-based platform connecting customers with laborers, featuring real-time chat via SSE and geospatial queries.</p>
-							<div class="ml-3 text-xs text-[#9ece6a]">
-								Next.js • Nest.js • MongoDB • Python • AWS • TailwindCSS • PayPal
+							<div class="ml-3 text-xs text-[#9ece6a] flex flex-wrap gap-2">
+								<span class="flex items-center gap-1"><pre class="text-[#7aa2f7]">⚛</pre> Next.js</span>
+								<span class="flex items-center gap-1"><pre class="text-[#7aa2f7]">⬡</pre> Nest.js</span>
+								<span class="flex items-center gap-1"><pre class="text-[#7aa2f7]">🍃</pre> MongoDB</span>
+								<span class="flex items-center gap-1"><pre class="text-[#7aa2f7]">🐍</pre> Python</span>
+								<span class="flex items-center gap-1"><pre class="text-[#7aa2f7]">⠿</pre> AWS</span>
 							</div>
 						</div>
 
 						<div class="project">
-							<h3 class="text-[#7aa2f7] font-bold text-sm">└─▶ ./cinemagic</h3>
+							<h3 class="text-[#7aa2f7] font-bold text-sm flex items-center gap-2">
+								<span class="command-prompt">└─▶</span> <pre class="inline text-[#bb9af7]">[SYS]</pre> ./cinemagic
+							</h3>
 							<p class="ml-3 mb-1.5 text-sm">A comprehensive cinema ticket booking system with real-time seat selection and secure payments.</p>
-							<div class="ml-3 text-xs text-[#9ece6a]">
-								React.js • Redux • Nest.js • MongoDB • WebSocket • PayPal
+							<div class="ml-3 text-xs text-[#9ece6a] flex flex-wrap gap-2">
+								<span class="flex items-center gap-1"><pre class="text-[#7aa2f7]">⚛</pre> React.js</span>
+								<span class="flex items-center gap-1"><pre class="text-[#7aa2f7]">⚡</pre> Redux</span>
+								<span class="flex items-center gap-1"><pre class="text-[#7aa2f7]">⬡</pre> Nest.js</span>
+								<span class="flex items-center gap-1"><pre class="text-[#7aa2f7]">🍃</pre> MongoDB</span>
 							</div>
 						</div>
 					</div>
@@ -147,7 +235,9 @@ import Layout from '../layouts/Layout.astro';
 					</h2>
 					<div class="ml-4 border-l-2 border-[#565f89] pl-3 space-y-5">
 						<div class="experience">
-							<h3 class="text-[#7aa2f7] font-bold text-sm">└─▶ cat empite.md</h3>
+							<h3 class="text-[#7aa2f7] font-bold text-sm flex items-center gap-2">
+								<span class="command-prompt">└─▶</span> <pre class="inline text-[#bb9af7]">[DEV]</pre> cat empite.md
+							</h3>
 							<div class="ml-3">
 								<p class="text-[#9ece6a] text-sm">Associate DevOps Engineer</p>
 								<p class="text-xs text-[#565f89]">November 2024 - Present</p>
@@ -161,7 +251,9 @@ import Layout from '../layouts/Layout.astro';
 						</div>
 
 						<div class="experience">
-							<h3 class="text-[#7aa2f7] font-bold text-sm">└─▶ cat intern.md</h3>
+							<h3 class="text-[#7aa2f7] font-bold text-sm flex items-center gap-2">
+								<span class="command-prompt">└─▶</span> <pre class="inline text-[#bb9af7]">[INT]</pre> cat intern.md
+							</h3>
 							<div class="ml-3">
 								<p class="text-[#9ece6a] text-sm">Software Engineer Intern</p>
 								<p class="text-xs text-[#565f89]">July 2024 - October 2024</p>
@@ -174,7 +266,9 @@ import Layout from '../layouts/Layout.astro';
 						</div>
 
 						<div class="experience">
-							<h3 class="text-[#7aa2f7] font-bold text-sm">└─▶ cat freelance.md</h3>
+							<h3 class="text-[#7aa2f7] font-bold text-sm flex items-center gap-2">
+								<span class="command-prompt">└─▶</span> <pre class="inline text-[#bb9af7]">[FRL]</pre> cat freelance.md
+							</h3>
 							<div class="ml-3">
 								<p class="text-[#9ece6a] text-sm">Software Engineer</p>
 								<p class="text-xs text-[#565f89]">May 2023 - Present</p>
@@ -192,7 +286,7 @@ import Layout from '../layouts/Layout.astro';
 
 		<!-- Footer -->
 		<footer class="text-center text-xs text-[#565f89] mt-8 pb-4">
-			<p>Made with 💻 by DFanso</p>
+			<p>Made with <span class="text-[#f7768e]">❤</span> by DFanso</p>
 		</footer>
 	</div>
 </Layout>
