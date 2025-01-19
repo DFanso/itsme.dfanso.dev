@@ -1,0 +1,12 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="630" fill="#1A1B26"/>
+    <text x="100" y="200" fill="#7AA2F7" font-family="monospace" font-size="64" font-weight="bold">Leo Felcianas</text>
+    <text x="100" y="280" fill="#9ECE6A" font-family="monospace" font-size="36">DevOps Engineer & Software Developer</text>
+    <text x="100" y="380" fill="#A9B1D6" font-family="monospace" font-size="24" letter-spacing="0.1em">
+        <tspan x="100" dy="0">$ ls skills/</tspan>
+        <tspan x="100" dy="40">AWS • Azure • Docker • Kubernetes • Terraform</tspan>
+        <tspan x="100" dy="40">Go • Python • TypeScript • Node.js</tspan>
+    </text>
+    <path d="M900 200L1000 300L900 400" stroke="#7AA2F7" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M800 450H1100" stroke="#9ECE6A" stroke-width="8" stroke-linecap="round"/>
+</svg> 
