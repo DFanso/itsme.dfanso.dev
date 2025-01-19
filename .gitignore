@@ -1,7 +1,6 @@
 # build output
 dist/
-
-# generated types
+.output/
 .astro/
 
 # dependencies
@@ -19,6 +18,9 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+# vercel
+.vercel
 
 # jetbrains setting folder
 .idea/
