@@ -3,7 +3,17 @@
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
   "installCommand": "npm install",
+  "outputDirectory": "dist",
   "cleanUrls": true,
+  "github": {
+    "silent": true
+  },
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build"
+    }
+  ],
   "images": {
     "sizes": [16, 32, 96, 128, 180, 192, 256, 512],
     "formats": ["image/avif", "image/webp", "image/png"]
