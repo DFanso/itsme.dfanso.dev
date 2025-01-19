@@ -16,6 +16,6 @@
   ],
   "images": {
     "sizes": [16, 32, 96, 128, 180, 192, 256, 512],
-    "formats": ["image/avif", "image/webp", "image/png"]
+    "formats": ["webp", "png"]
   }
 } 
