@@ -1,0 +1,65 @@
+---
+const { class: className } = Astro.props;
+
+const projects = [
+    {
+        type: 'WEB',
+        name: 'techxeed',
+        description: 'A comprehensive digital solutions platform offering web development, mobile apps, AI solutions, and digital marketing services.',
+        tech: [
+            { icon: '⚛', name: 'Next.js' },
+            { icon: '⬡', name: 'Nest.js' },
+            { icon: '🍃', name: 'MongoDB' },
+            { icon: '🎨', name: 'TailwindCSS' },
+            { icon: '🔥', name: 'Firebase' },
+            { icon: '⠿', name: 'AWS' }
+        ]
+    },
+    {
+        type: 'APP',
+        name: 'quickquest',
+        description: 'A location-based platform connecting customers with laborers, featuring real-time chat via SSE and geospatial queries.',
+        tech: [
+            { icon: '⚛', name: 'Next.js' },
+            { icon: '⬡', name: 'Nest.js' },
+            { icon: '🍃', name: 'MongoDB' },
+            { icon: '🐍', name: 'Python' },
+            { icon: '⠿', name: 'AWS' }
+        ]
+    },
+    {
+        type: 'SYS',
+        name: 'cinemagic',
+        description: 'A comprehensive cinema ticket booking system with real-time seat selection and secure payments.',
+        tech: [
+            { icon: '⚛', name: 'React.js' },
+            { icon: '⚡', name: 'Redux' },
+            { icon: '⬡', name: 'Nest.js' },
+            { icon: '🍃', name: 'MongoDB' }
+        ]
+    }
+];
+---
+
+<section class:list={[className]}>
+    <h2 class="section-title text-sm flex items-center gap-2">
+        <span class="text-[#9ece6a] font-mono">❯</span> #projects
+    </h2>
+    <div class="ml-4 border-l-2 border-[#565f89] pl-3 space-y-5">
+        {projects.map(project => (
+            <div class="project">
+                <h3 class="text-[#7aa2f7] font-bold text-sm flex items-center gap-2">
+                    <span class="command-prompt">└─▶</span> <pre class="inline text-[#bb9af7]">[{project.type}]</pre> ./{project.name}
+                </h3>
+                <p class="ml-3 mb-1.5 text-sm">{project.description}</p>
+                <div class="ml-3 text-xs text-[#9ece6a] flex flex-wrap gap-2">
+                    {project.tech.map(tech => (
+                        <span class="flex items-center gap-1">
+                            <pre class="text-[#7aa2f7]">{tech.icon}</pre> {tech.name}
+                        </span>
+                    ))}
+                </div>
+            </div>
+        ))}
+    </div>
+</section> 

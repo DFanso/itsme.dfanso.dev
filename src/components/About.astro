@@ -1,0 +1,16 @@
+---
+const { class: className } = Astro.props;
+---
+
+<section class:list={[className]}>
+    <h2 class="section-title text-sm flex items-center gap-2">
+        <span class="text-[#9ece6a] font-mono">❯</span> #about
+    </h2>
+    <div class="ml-4 border-l-2 border-[#565f89] pl-3 text-sm">
+        <p class="leading-relaxed">
+            DevOps/Backend specialist crafting efficient and scalable solutions. 
+            Transforming complex challenges into elegant architectures.
+            BSc (Hons) Software Engineering @ University of Plymouth
+        </p>
+    </div>
+</section> 

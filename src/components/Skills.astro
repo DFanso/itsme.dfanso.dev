@@ -1,0 +1,82 @@
+---
+const { class: className } = Astro.props;
+
+const skillCategories = [
+    {
+        name: 'cloud',
+        skills: [
+            { icon: '⠿', name: 'AWS' },
+            { icon: '⚡', name: 'Azure' },
+            { icon: '☁', name: 'Cloudflare' }
+        ]
+    },
+    {
+        name: 'containers',
+        skills: [
+            { icon: '🐳', name: 'Docker' },
+            { icon: '☸', name: 'Kubernetes' }
+        ]
+    },
+    {
+        name: 'infra',
+        skills: [
+            { icon: '⚙', name: 'Terraform' },
+            { icon: '⚡', name: 'Jenkins' },
+            { icon: '⭐', name: 'GitHub-Actions' }
+        ]
+    },
+    {
+        name: 'lang',
+        skills: [
+            { icon: '⚡', name: 'Go' },
+            { icon: '🐍', name: 'Python' },
+            { icon: '⚛', name: 'TypeScript' },
+            { icon: '⬡', name: 'Node.js' }
+        ]
+    },
+    {
+        name: 'db',
+        skills: [
+            { icon: '🐘', name: 'PostgreSQL' },
+            { icon: '🍃', name: 'MongoDB' },
+            { icon: '⚡', name: 'Redis' }
+        ]
+    },
+    {
+        name: 'monitor',
+        skills: [
+            { icon: '📊', name: 'Prometheus' },
+            { icon: '📈', name: 'Grafana' },
+            { icon: '🔍', name: 'ELK' }
+        ]
+    },
+    {
+        name: 'arch',
+        skills: [
+            { icon: '⚡', name: 'Microservices' },
+            { icon: '⚙', name: 'System' },
+            { icon: '🔒', name: 'Network' }
+        ]
+    }
+];
+---
+
+<section class:list={[className]}>
+    <h2 class="section-title text-sm flex items-center gap-2">
+        <span class="text-[#9ece6a] font-mono">❯</span> #skills
+    </h2>
+    <div class="ml-4 border-l-2 border-[#565f89] pl-3 space-y-2 text-sm">
+        {skillCategories.map(category => (
+            <div>
+                <span class="command-prompt">└─▶ ls {category.name}/</span>
+                <div class="ml-3 text-[#9ece6a] flex flex-wrap gap-3">
+                    {category.skills.map(skill => (
+                        <div class="flex items-center gap-2">
+                            <pre class="text-[#7aa2f7] text-xs">{skill.icon}</pre> {skill.name}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        ))}
+    </div>
+</section> 

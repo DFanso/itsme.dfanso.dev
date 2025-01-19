@@ -1,0 +1,19 @@
+---
+const { class: className } = Astro.props;
+---
+
+<header class:list={["flex items-start gap-4", className]}>
+    <pre class="text-[#7aa2f7] text-xs leading-4 mt-2">
+</pre>
+    <div class="space-y-3">
+        <img 
+            src="https://github.com/dfanso.png" 
+            alt="Leo Felcianas"
+            class="w-28 h-28 rounded-full border-2 border-[#7aa2f7]"
+        />
+        <div>
+            <h1 class="text-xl font-bold text-[#7aa2f7] cursor">Leo Felcianas</h1>
+            <p class="text-[#a9b1d6] text-sm">Associate DevOps Engineer at Empite</p>
+        </div>
+    </div>
+</header> 

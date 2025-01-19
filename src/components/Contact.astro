@@ -1,0 +1,23 @@
+---
+const { class: className } = Astro.props;
+
+const socialLinks = [
+    { id: 'GH', name: 'github/dfanso', url: 'https://github.com/dfanso' },
+    { id: 'IN', name: 'linkedin/leo-felcianas', url: 'https://www.linkedin.com/in/leo-felcianas' },
+    { id: 'DC', name: 'discord', url: 'https://discord.com' },
+    { id: 'IG', name: 'instagram', url: 'https://instagram.com' }
+];
+---
+
+<section class:list={[className]}>
+    <h2 class="section-title text-sm flex items-center gap-2">
+        <span class="text-[#9ece6a] font-mono">❯</span> #contact
+    </h2>
+    <div class="ml-4 border-l-2 border-[#565f89] pl-3 space-y-1.5 text-sm">
+        {socialLinks.map(link => (
+            <a href={link.url} target="_blank" class="block hover:text-[#9ece6a] transition-colors">
+                <span class="command-prompt">└─▶</span> <pre class="inline text-[#7aa2f7]">[{link.id}]</pre> {link.name}
+            </a>
+        ))}
+    </div>
+</section> 
