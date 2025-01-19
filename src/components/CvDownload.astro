@@ -5,8 +5,8 @@ const { class: className } = Astro.props;
 const personalInfo = {
     name: "Leo Felcianas",
     title: "Associate DevOps Engineer at Empite",
-    email: "contact@dfanso.dev",
-    summary: "DevOps/Backend specialist crafting efficient and scalable solutions. Transforming complex challenges into elegant architectures."
+    email: "leogavin123@outlook.com",
+    summary: "DevOps/Backend specialist crafting efficient and scalable solutions. \nTransforming complex challenges into elegant architectures."
 };
 
 // From Skills.astro
@@ -115,7 +115,7 @@ const projects = [
     {
         type: 'WEB',
         name: 'Techxeed',
-        description: 'A comprehensive digital solutions platform offering web development, mobile apps, AI solutions, and digital marketing services.',
+        description: 'A comprehensive digital solutions platform offering web development, \nmobile apps, AI solutions, and digital marketing services.',
         tech: [
             { icon: '⚛', name: 'Next.js' },
             { icon: '⬡', name: 'Nest.js' },
@@ -128,7 +128,7 @@ const projects = [
     {
         type: 'APP',
         name: 'QuickQuest',
-        description: 'A location-based platform connecting customers with laborers, featuring real-time chat via SSE and geospatial queries.',
+        description: 'A location-based platform connecting customers with laborers, \nfeaturing real-time chat via SSE and geospatial queries.',
         tech: [
             { icon: '⚛', name: 'Next.js' },
             { icon: '⬡', name: 'Nest.js' },
@@ -140,7 +140,7 @@ const projects = [
     {
         type: 'SYS',
         name: 'CineMagic',
-        description: 'A comprehensive cinema ticket booking system with real-time seat selection and secure payments.',
+        description: 'A comprehensive cinema ticket booking system with \nreal-time seat selection and secure payments.',
         tech: [
             { icon: '⚛', name: 'React.js' },
             { icon: '⚡', name: 'Redux' },
@@ -150,59 +150,121 @@ const projects = [
     }
 ];
 
-function generateCV() {
-    return `${personalInfo.name}
-${personalInfo.title}
-${personalInfo.email}
-
-PROFESSIONAL SUMMARY
-${personalInfo.summary}
-
-SKILLS
-${skillCategories.map(category => 
-    `${category.name.toUpperCase()}: ${category.skills.map(skill => skill.name).join(", ")}`
-).join("\n")}
-
-PROFESSIONAL EXPERIENCE
-${experiences.map(job => 
-    `${job.title} | ${job.company}
-${job.period}
-${job.responsibilities.map(r => `• ${r}`).join("\n")}`
-).join("\n\n")}
-
-PROJECTS
-${projects.map(project => 
-    `${project.name}
-• ${project.description}
-• Technologies: ${project.tech.map(t => t.name).join(", ")}`
-).join("\n\n")}
-
-EDUCATION
-BSc (Hons) Software Engineering
-University of Plymouth`;
+function truncateText(text: string, maxLength: number) {
+    return text.length > maxLength ? text.substring(0, maxLength - 3) + '...' : text;
 }
 
-const cvContent = generateCV();
+function generateCVContent() {
+    const sections = [
+        { 
+            title: "LEO FELCIANAS",
+            isHeader: true,
+            content: `${personalInfo.title}\n${personalInfo.email}`
+        },
+        { 
+            title: "PROFESSIONAL SUMMARY",
+            content: truncateText(personalInfo.summary, 150)
+        },
+        { 
+            title: "TECHNICAL SKILLS",
+            content: skillCategories.map(category => 
+                `${category.name.toUpperCase()}: ${category.skills.map(skill => skill.name).join(" | ")}`
+            ).join("\n")
+        },
+        { 
+            title: "PROFESSIONAL EXPERIENCE",
+            content: experiences.map(job => 
+                `${job.title} - ${job.company} (${job.period})\n${job.responsibilities.slice(0, 3).map(r => `• ${truncateText(r, 80)}`).join("\n")}`
+            ).join("\n\n")
+        },
+        { 
+            title: "KEY PROJECTS",
+            content: projects.map(project => 
+                `${project.name}: ${truncateText(project.description, 100)}\nStack: ${project.tech.map(t => t.name).join(" | ")}`
+            ).join("\n\n")
+        },
+        { 
+            title: "EDUCATION",
+            content: "Bachelor of Science (Honours) in Software Engineering\nUniversity of Plymouth"
+        }
+    ];
+
+    return sections;
+}
+
+const cvSections = generateCVContent();
 ---
 
 <div class:list={["mt-4", className]}>
     <button
         id="downloadCV"
         class="flex items-center gap-2 px-4 py-2 bg-[#7aa2f7] text-[#1a1b26] rounded hover:bg-[#9ece6a] transition-colors"
+        data-sections={cvSections.map(section => `${section.title}:::${section.content}:::${section.isHeader || false}`).join('|||')}
     >
         <span class="command-prompt">$</span> download-cv
     </button>
 </div>
 
-<script define:vars={{ cvContent }}>
-    document.getElementById('downloadCV').addEventListener('click', () => {
-        const element = document.createElement('a');
-        const file = new Blob([cvContent], { type: 'text/plain' });
-        element.href = window.URL.createObjectURL(file);
-        element.download = 'Leo_Felcianas_CV.txt';
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
+<script>
+    import { jsPDF } from 'jspdf';
+
+    const downloadButton = document.getElementById('downloadCV');
+    if (!downloadButton) throw new Error('Download button not found');
+
+    downloadButton.addEventListener('click', () => {
+        const sectionsData = downloadButton.getAttribute('data-sections');
+        if (!sectionsData) throw new Error('CV sections data not found');
+
+        const doc = new jsPDF();
+        const sections = sectionsData.split('|||');
+        
+        let y = 15;
+        const margin = 15;
+        const lineHeight = 6;
+        
+        sections.forEach(section => {
+            const [title, content, isHeader] = section.split(':::');
+            
+            if (isHeader === 'true') {
+                // Header formatting
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(14);
+                doc.text(title, margin, y);
+                y += lineHeight;
+                
+                doc.setFontSize(10);
+                const lines = content.split('\n');
+                lines.forEach(line => {
+                    doc.text(line, margin, y);
+                    y += lineHeight;
+                });
+            } else {
+                // Section title
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(11);
+                doc.text(title, margin, y);
+                y += lineHeight;
+                
+                // Section content
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(10);
+                
+                const lines = content.split('\n');
+                lines.forEach(line => {
+                    // Handle bullet points with proper indentation
+                    if (line.startsWith('•')) {
+                        doc.text(line, margin + 4, y);
+                    } else {
+                        doc.text(line, margin, y);
+                    }
+                    y += lineHeight;
+                });
+                
+                y += lineHeight * 0.5; // Reduced space between sections
+            }
+        });
+        
+        doc.save('Leo_Felcianas_CV.pdf');
     });
 </script>
 
