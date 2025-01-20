@@ -1,15 +1,22 @@
 ---
+import { Image } from 'astro:assets';
 const { class: className } = Astro.props;
+
+const avatarUrl = "https://github.com/dfanso.png";
 ---
 
 <header class:list={["flex items-start gap-4", className]}>
     <pre class="text-[#7aa2f7] text-xs leading-4 mt-2">
 </pre>
     <div class="space-y-3">
-        <img 
-            src="https://github.com/dfanso.png" 
+        <Image 
+            src={avatarUrl}
             alt="Leo Felcianas"
-            class="w-28 h-28 rounded-full border-2 border-[#7aa2f7]"
+            width={112}
+            height={112}
+            class="rounded-full border-2 border-[#7aa2f7]"
+            format="webp"
+            loading="eager"
         />
         <div>
             <h1 class="text-xl font-bold text-[#7aa2f7] cursor">Leo Felcianas</h1>
