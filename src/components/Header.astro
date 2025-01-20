@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import profileImage from '../assets/profile.webp';
 const { class: className } = Astro.props;
 
 const avatarUrl = "https://github.com/dfanso.png";
@@ -10,13 +11,13 @@ const avatarUrl = "https://github.com/dfanso.png";
 </pre>
     <div class="space-y-3">
         <Image 
-            src={avatarUrl}
+            src={profileImage}
             alt="Leo Felcianas"
             width={112}
             height={112}
             class="rounded-full border-2 border-[#7aa2f7]"
-            format="webp"
             loading="eager"
+            quality="max"
         />
         <div>
             <h1 class="text-xl font-bold text-[#7aa2f7] cursor">Leo Felcianas</h1>
