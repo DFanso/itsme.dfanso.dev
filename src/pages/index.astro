@@ -48,6 +48,11 @@ import Welcome from '../components/Welcome.astro';
 			</div>
 		</div>
 
+		<!-- Terminal Footer -->
+		<div class="terminal-footer">
+			<p class="text-xs text-[#7aa2f7]">Made with <span class="text-[#f7768e]">❤</span> by DFanso</p>
+		</div>
+
 		<!-- Hidden Components -->
 		<div id="components" class="hidden">
 			<div id="welcome"><Welcome /></div>
@@ -317,5 +322,20 @@ import Welcome from '../components/Welcome.astro';
 
 	.command-list ul {
 		@apply space-y-1;
+	}
+
+	.terminal-footer {
+		@apply absolute bottom-4 right-6 text-center;
+		font-family: 'Fira Code', monospace;
+	}
+
+	.terminal-footer span {
+		@apply inline-block;
+		animation: pulse 1.5s ease-in-out infinite;
+	}
+
+	@keyframes pulse {
+		0%, 100% { transform: scale(1); }
+		50% { transform: scale(1.1); }
 	}
 </style>
