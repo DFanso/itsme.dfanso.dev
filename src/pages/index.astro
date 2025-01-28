@@ -6,32 +6,310 @@ import Skills from '../components/Skills.astro';
 import Contact from '../components/Contact.astro';
 import Projects from '../components/Projects.astro';
 import Experience from '../components/Experience.astro';
+import Welcome from '../components/Welcome.astro';
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-	<div class="max-w-5xl mx-auto px-4">
-		<div class="grid md:grid-cols-[1fr,1.5fr] gap-6">
-			<!-- Left Column -->
-			<div class="space-y-6 md:sticky md:top-8 md:self-start">
-				<Header />
-				<About />
-				<Skills />
-				<Contact />
+	<div class="terminal-container h-screen p-6 font-mono text-[#c0caf5]">
+		<!-- Terminal Header -->
+		<div class="terminal-title-bar">
+			<div class="terminal-buttons">
+				<span class="terminal-button close"></span>
+				<span class="terminal-button minimize"></span>
+				<span class="terminal-button maximize"></span>
+			</div>
+			<div class="terminal-title">visitor@dfanso.dev</div>
+		</div>
+
+		<!-- Terminal Content -->
+		<div id="terminal" class="terminal-content-area">
+			<div id="output-container">
+				<!-- Welcome message -->
+				<div class="command-block">
+					<div class="command-prompt">visitor@dfanso.dev:~$ <span class="text-[#9ece6a]">welcome</span></div>
+					<div class="command-output"><Welcome /></div>
+				</div>
 			</div>
 
-			<!-- Right Column -->
-			<div class="space-y-6">
-				<Projects />
-				<Experience />
+			<!-- Command Input -->
+			<div class="command-block" id="input-line">
+				<div class="command-prompt">
+					visitor@dfanso.dev:~$ <span class="command-text"></span><span class="cursor"></span>
+				</div>
 			</div>
 		</div>
 
-		<!-- Footer -->
-		<footer class="text-center text-xs text-[#7aa2f7] mt-8 pb-4">
-			<p>Made with <span class="text-[#f7768e]">❤</span> by DFanso</p>
-		</footer>
+		<!-- Hidden Components -->
+		<div id="components" class="hidden">
+			<div id="welcome"><Welcome /></div>
+			<div id="whoami"><Header /></div>
+			<div id="about"><About /></div>
+			<div id="projects"><Projects /></div>
+			<div id="skills"><Skills /></div>
+			<div id="experience"><Experience /></div>
+			<div id="contact"><Contact /></div>
+			<div id="help">
+				<div class="command-list">
+					<p>Available commands:</p>
+					<ul class="ml-4 mt-2">
+						<li><span class="text-[#9ece6a]">welcome</span> - Display welcome message</li>
+						<li><span class="text-[#9ece6a]">whoami</span> - Show profile information</li>
+						<li><span class="text-[#9ece6a]">about</span> - About me</li>
+						<li><span class="text-[#9ece6a]">projects</span> - View my projects</li>
+						<li><span class="text-[#9ece6a]">skills</span> - My technical skills</li>
+						<li><span class="text-[#9ece6a]">experience</span> - Work experience</li>
+						<li><span class="text-[#9ece6a]">contact</span> - Contact information</li>
+						<li><span class="text-[#9ece6a]">clear</span> - Clear terminal</li>
+						<li><span class="text-[#9ece6a]">help</span> - Show this help message</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 	</div>
 </Layout>
+
+<script>
+	class Terminal {
+		private terminal: HTMLElement;
+		private outputContainer: HTMLElement;
+		private inputLine: HTMLElement;
+		private currentInput: string = '';
+		private commandHistory: string[] = [];
+		private historyIndex: number = -1;
+
+		constructor() {
+			this.terminal = document.getElementById('terminal') as HTMLElement;
+			this.outputContainer = document.getElementById('output-container') as HTMLElement;
+			this.inputLine = document.getElementById('input-line') as HTMLElement;
+			this.initializeTerminal();
+		}
+
+		private initializeTerminal(): void {
+			document.addEventListener('click', () => this.focusInput());
+			document.addEventListener('keydown', (e: KeyboardEvent) => {
+				if (e.key === 'Enter') {
+					this.handleEnter();
+				} else if (e.key === 'Backspace') {
+					this.handleBackspace();
+				} else if (e.key === 'ArrowUp') {
+					this.handleArrowUp();
+					e.preventDefault();
+				} else if (e.key === 'ArrowDown') {
+					this.handleArrowDown();
+					e.preventDefault();
+				} else if (e.key.length === 1) {
+					this.handleInput(e.key);
+				}
+			});
+		}
+
+		private handleEnter(): void {
+			const command = this.currentInput.trim().toLowerCase();
+			if (command) {
+				// Clone current input line without cursor
+				const inputClone = this.inputLine.cloneNode(true) as HTMLElement;
+				inputClone.removeAttribute('id');
+				const commandText = inputClone.querySelector('.command-text');
+				if (commandText) {
+					commandText.textContent = this.currentInput;
+				}
+				const cursor = inputClone.querySelector('.cursor');
+				if (cursor) {
+					cursor.remove();
+				}
+
+				// Add command output
+				const outputDiv = document.createElement('div');
+				outputDiv.className = 'command-output';
+				inputClone.appendChild(outputDiv);
+
+				// Add to history
+				this.commandHistory.push(command);
+				this.historyIndex = this.commandHistory.length;
+
+				// Execute command
+				this.executeCommand(command, outputDiv);
+
+				// Add to output container
+				this.outputContainer.appendChild(inputClone);
+			}
+
+			// Reset input
+			this.currentInput = '';
+			this.updateInputLine();
+			this.terminal.scrollTop = this.terminal.scrollHeight;
+		}
+
+		private executeCommand(command: string, outputDiv: HTMLElement): void {
+			if (command === 'clear') {
+				this.outputContainer.innerHTML = '';
+				return;
+			}
+
+			const componentId = command === 'whoami' ? 'whoami' : command;
+			const component = document.getElementById(componentId);
+
+			if (component) {
+				outputDiv.innerHTML = component.innerHTML;
+			} else {
+				outputDiv.innerHTML = `<div class="text-[#f7768e]">Command not found: ${command}</div>`;
+			}
+		}
+
+		private handleBackspace(): void {
+			if (this.currentInput.length > 0) {
+				this.currentInput = this.currentInput.slice(0, -1);
+				this.updateInputLine();
+			}
+		}
+
+		private handleArrowUp(): void {
+			if (this.historyIndex > 0) {
+				this.historyIndex--;
+				this.currentInput = this.commandHistory[this.historyIndex];
+				this.updateInputLine();
+			}
+		}
+
+		private handleArrowDown(): void {
+			if (this.historyIndex < this.commandHistory.length - 1) {
+				this.historyIndex++;
+				this.currentInput = this.commandHistory[this.historyIndex];
+			} else {
+				this.historyIndex = this.commandHistory.length;
+				this.currentInput = '';
+			}
+			this.updateInputLine();
+		}
+
+		private handleInput(key: string): void {
+			this.currentInput += key;
+			this.updateInputLine();
+		}
+
+		private updateInputLine(): void {
+			const commandText = this.inputLine.querySelector('.command-text');
+			if (commandText) {
+				commandText.textContent = this.currentInput;
+			}
+		}
+
+		private focusInput(): void {
+			// Just ensure cursor is visible
+			const cursor = this.inputLine.querySelector('.cursor');
+			if (!cursor) {
+				const newCursor = document.createElement('span');
+				newCursor.className = 'cursor';
+				const commandText = this.inputLine.querySelector('.command-text');
+				if (commandText) {
+					commandText.parentNode?.insertBefore(newCursor, commandText.nextSibling);
+				}
+			}
+		}
+	}
+
+	// Initialize terminal when the page loads
+	window.addEventListener('load', () => {
+		new Terminal();
+	});
+</script>
+
+<style>
+	.terminal-container {
+		@apply bg-[#1a1b26] overflow-hidden;
+		background-image: 
+			radial-gradient(circle at 50% -20%, rgba(122, 162, 247, 0.05), transparent 70%),
+			linear-gradient(to bottom, rgba(26, 27, 38, 0.9), rgba(26, 27, 38, 1));
+	}
+
+	.terminal-title-bar {
+		@apply flex items-center bg-[#1a1b26] border border-[#7aa2f7]/20 rounded-t-lg p-2 mb-1;
+		background: linear-gradient(to bottom, #1a1b26, rgba(26, 27, 38, 0.8));
+	}
+
+	.terminal-buttons {
+		@apply flex gap-2 mr-4;
+	}
+
+	.terminal-button {
+		@apply w-3 h-3 rounded-full;
+	}
+
+	.terminal-button.close { @apply bg-[#f7768e]; }
+	.terminal-button.minimize { @apply bg-[#e0af68]; }
+	.terminal-button.maximize { @apply bg-[#9ece6a]; }
+
+	.terminal-title {
+		@apply text-[#7aa2f7] text-sm text-center flex-1;
+	}
+
+	.terminal-content-area {
+		@apply p-4 overflow-auto space-y-4;
+		height: calc(100% - 3rem);
+	}
+
+	.command-block {
+		@apply mb-4;
+	}
+
+	.command-prompt {
+		@apply text-[#7aa2f7] mb-2 flex items-center;
+		font-family: 'Fira Code', monospace;
+	}
+
+	.command-output {
+		@apply pl-4 py-2;
+	}
+
+	.cursor {
+		@apply ml-[1px] -mr-[1px];
+	}
+
+	.cursor::after {
+		content: "█";
+		animation: cursor-blink 1s step-end infinite;
+	}
+
+	@keyframes cursor-blink {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0; }
+	}
+
+	.hidden {
+		display: none !important;
+	}
+
+	/* Custom Scrollbar */
+	.terminal-content-area {
+		scrollbar-width: thin;
+		scrollbar-color: #7aa2f7 transparent;
+	}
+
+	.terminal-content-area::-webkit-scrollbar {
+		width: 4px;
+	}
+
+	.terminal-content-area::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	.terminal-content-area::-webkit-scrollbar-thumb {
+		background-color: #7aa2f7;
+		border-radius: 4px;
+	}
+
+	.terminal-content-area::-webkit-scrollbar-thumb {
+		background-color: #bb9af7;
+	}
+
+	.command-list {
+		@apply text-sm;
+	}
+
+	.command-list ul {
+		@apply space-y-1;
+	}
+</style>
