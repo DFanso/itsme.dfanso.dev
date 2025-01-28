@@ -13,10 +13,10 @@ import Welcome from '../components/Welcome.astro';
 ---
 
 <Layout>
-	<div class="terminal-container h-screen p-6 font-mono text-[#c0caf5]">
+	<div class="terminal-container min-h-screen p-4 md:p-6 font-mono text-[#c0caf5]">
 		<!-- Terminal Header -->
 		<div class="terminal-title-bar">
-			<div class="terminal-buttons">
+			<div class="terminal-buttons hidden sm:flex">
 				<span class="terminal-button close"></span>
 				<span class="terminal-button minimize"></span>
 				<span class="terminal-button maximize"></span>
@@ -29,20 +29,20 @@ import Welcome from '../components/Welcome.astro';
 			<div id="output-container">
 				<!-- Welcome message -->
 				<div class="command-block">
-					<div class="command-prompt">visitor@dfanso.dev:~$ <span class="text-[#9ece6a]">welcome</span></div>
+					<div class="command-prompt text-sm md:text-base">visitor@dfanso.dev:~$ <span class="text-[#9ece6a]">welcome</span></div>
 					<div class="command-output"><Welcome /></div>
 				</div>
 
 				<!-- Whoami command -->
 				<div class="command-block">
-					<div class="command-prompt">visitor@dfanso.dev:~$ <span class="text-[#9ece6a]">whoami</span></div>
+					<div class="command-prompt text-sm md:text-base">visitor@dfanso.dev:~$ <span class="text-[#9ece6a]">whoami</span></div>
 					<div class="command-output"><Header /></div>
 				</div>
 			</div>
 
 			<!-- Command Input -->
 			<div class="command-block" id="input-line">
-				<div class="command-prompt">
+				<div class="command-prompt text-sm md:text-base">
 					visitor@dfanso.dev:~$ <span class="command-text"></span><span class="cursor"></span>
 				</div>
 			</div>
@@ -50,7 +50,7 @@ import Welcome from '../components/Welcome.astro';
 
 		<!-- Terminal Footer -->
 		<div class="terminal-footer">
-			<p class="text-xs text-[#7aa2f7]">Made with <span class="text-[#f7768e]">❤</span> by DFanso</p>
+			<p class="text-[10px] md:text-xs text-[#7aa2f7]">Made with <span class="text-[#f7768e]">❤</span> by DFanso</p>
 		</div>
 
 		<!-- Hidden Components -->
@@ -242,11 +242,11 @@ import Welcome from '../components/Welcome.astro';
 	}
 
 	.terminal-buttons {
-		@apply flex gap-2 mr-4;
+		@apply gap-2 mr-4;
 	}
 
 	.terminal-button {
-		@apply w-3 h-3 rounded-full;
+		@apply w-2 h-2 md:w-3 md:h-3 rounded-full;
 	}
 
 	.terminal-button.close { @apply bg-[#f7768e]; }
@@ -254,25 +254,28 @@ import Welcome from '../components/Welcome.astro';
 	.terminal-button.maximize { @apply bg-[#9ece6a]; }
 
 	.terminal-title {
-		@apply text-[#7aa2f7] text-sm text-center flex-1;
+		@apply text-[#7aa2f7] text-xs md:text-sm text-center flex-1;
 	}
 
 	.terminal-content-area {
-		@apply p-4 overflow-auto space-y-4;
-		height: calc(100% - 3rem);
+		@apply p-2 md:p-4 overflow-auto space-y-4;
+		height: calc(100vh - 8rem);
+		@screen md {
+			height: calc(100vh - 10rem);
+		}
 	}
 
 	.command-block {
-		@apply mb-4;
+		@apply mb-3 md:mb-4;
 	}
 
 	.command-prompt {
-		@apply text-[#7aa2f7] mb-2 flex items-center;
+		@apply text-[#7aa2f7] mb-1 md:mb-2 flex items-center flex-wrap;
 		font-family: 'Fira Code', monospace;
 	}
 
 	.command-output {
-		@apply pl-4 py-2;
+		@apply pl-2 md:pl-4 py-1 md:py-2 text-sm md:text-base;
 	}
 
 	.cursor {
@@ -300,7 +303,10 @@ import Welcome from '../components/Welcome.astro';
 	}
 
 	.terminal-content-area::-webkit-scrollbar {
-		width: 4px;
+		width: 3px;
+		@screen md {
+			width: 4px;
+		}
 	}
 
 	.terminal-content-area::-webkit-scrollbar-track {
@@ -317,7 +323,7 @@ import Welcome from '../components/Welcome.astro';
 	}
 
 	.command-list {
-		@apply text-sm;
+		@apply text-xs md:text-sm;
 	}
 
 	.command-list ul {
@@ -325,7 +331,7 @@ import Welcome from '../components/Welcome.astro';
 	}
 
 	.terminal-footer {
-		@apply absolute bottom-4 right-6 text-center;
+		@apply fixed bottom-2 md:bottom-4 right-2 md:right-6 text-center;
 		font-family: 'Fira Code', monospace;
 	}
 
@@ -337,5 +343,16 @@ import Welcome from '../components/Welcome.astro';
 	@keyframes pulse {
 		0%, 100% { transform: scale(1); }
 		50% { transform: scale(1.1); }
+	}
+
+	/* Mobile-specific styles */
+	@media (max-width: 640px) {
+		.command-prompt {
+			word-break: break-all;
+		}
+
+		.terminal-content-area {
+			-webkit-overflow-scrolling: touch;
+		}
 	}
 </style>
