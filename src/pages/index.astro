@@ -95,6 +95,7 @@ import Welcome from '../components/Welcome.astro';
 		private currentInput: string = '';
 		private commandHistory: string[] = [];
 		private historyIndex: number = -1;
+		private awaitingProjectResponse: boolean = false;
 
 		constructor() {
 			this.terminal = document.getElementById('terminal') as HTMLElement;
@@ -170,6 +171,34 @@ import Welcome from '../components/Welcome.astro';
 
 			if (component) {
 				outputDiv.innerHTML = component.innerHTML;
+				
+				// Add interactive project prompt if it's the projects command
+				if (command === 'projects') {
+					const promptDiv = document.createElement('div');
+					promptDiv.className = 'mt-4 text-[#9ece6a]';
+					promptDiv.innerHTML = 'Would you like to see more projects? (yes/no)';
+					outputDiv.appendChild(promptDiv);
+					
+					// Set a flag to handle the next input differently
+					this.awaitingProjectResponse = true;
+				}
+			} else if (this.awaitingProjectResponse) {
+				const response = command.toLowerCase();
+				if (response === 'yes') {
+					outputDiv.innerHTML = `<div class="text-[#9ece6a]">
+						<p class="mb-2">🔗 Check out more of my projects:</p>
+						<a href="https://github.com/dfanso" target="_blank" class="text-[#7aa2f7] hover:text-[#9ece6a] transition-colors">
+							→ Visit my GitHub Profile
+						</a>
+					</div>`;
+				} else if (response === 'no') {
+					outputDiv.innerHTML = '<div class="text-[#9ece6a]">Alright! Feel free to explore other commands using `help`.</div>';
+				} else {
+					outputDiv.innerHTML = '<div class="text-[#f7768e]">Please answer with yes or no.</div>';
+					this.awaitingProjectResponse = true;
+					return;
+				}
+				this.awaitingProjectResponse = false;
 			} else {
 				outputDiv.innerHTML = `<div class="text-[#f7768e]">Command not found: ${command}</div>`;
 			}
