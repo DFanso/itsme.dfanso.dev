@@ -45,6 +45,7 @@ import Welcome from '../components/Welcome.astro';
 				<div class="command-prompt text-sm md:text-base">
 					visitor@dfanso.dev:~$ <span class="command-text"></span><span class="cursor"></span>
 				</div>
+				<input type="text" class="mobile-input" aria-label="Terminal input" />
 			</div>
 		</div>
 
@@ -87,6 +88,7 @@ import Welcome from '../components/Welcome.astro';
 		private terminal: HTMLElement;
 		private outputContainer: HTMLElement;
 		private inputLine: HTMLElement;
+		private mobileInput: HTMLInputElement;
 		private currentInput: string = '';
 		private commandHistory: string[] = [];
 		private historyIndex: number = -1;
@@ -95,26 +97,56 @@ import Welcome from '../components/Welcome.astro';
 			this.terminal = document.getElementById('terminal') as HTMLElement;
 			this.outputContainer = document.getElementById('output-container') as HTMLElement;
 			this.inputLine = document.getElementById('input-line') as HTMLElement;
+			this.mobileInput = this.inputLine.querySelector('.mobile-input') as HTMLInputElement;
 			this.initializeTerminal();
 		}
 
 		private initializeTerminal(): void {
-			document.addEventListener('click', () => this.focusInput());
+			// Handle mobile input focus
+			document.addEventListener('click', () => {
+				this.mobileInput.focus();
+			});
+
+			// Handle mobile input
+			this.mobileInput.addEventListener('input', (e: Event) => {
+				const input = e.target as HTMLInputElement;
+				this.currentInput = input.value;
+				this.updateInputLine();
+			});
+
+			// Handle mobile keyboard enter
+			this.mobileInput.addEventListener('keypress', (e: KeyboardEvent) => {
+				if (e.key === 'Enter') {
+					e.preventDefault();
+					this.handleEnter();
+					this.mobileInput.value = '';
+				}
+			});
+
+			// Desktop keyboard events
 			document.addEventListener('keydown', (e: KeyboardEvent) => {
 				if (e.key === 'Enter') {
 					this.handleEnter();
+					this.mobileInput.value = '';
 				} else if (e.key === 'Backspace') {
 					this.handleBackspace();
+					this.mobileInput.value = this.currentInput;
 				} else if (e.key === 'ArrowUp') {
 					this.handleArrowUp();
+					this.mobileInput.value = this.currentInput;
 					e.preventDefault();
 				} else if (e.key === 'ArrowDown') {
 					this.handleArrowDown();
+					this.mobileInput.value = this.currentInput;
 					e.preventDefault();
 				} else if (e.key.length === 1) {
 					this.handleInput(e.key);
+					this.mobileInput.value = this.currentInput;
 				}
 			});
+
+			// Initial focus
+			this.mobileInput.focus();
 		}
 
 		private handleEnter(): void {
@@ -205,19 +237,6 @@ import Welcome from '../components/Welcome.astro';
 			const commandText = this.inputLine.querySelector('.command-text');
 			if (commandText) {
 				commandText.textContent = this.currentInput;
-			}
-		}
-
-		private focusInput(): void {
-			// Just ensure cursor is visible
-			const cursor = this.inputLine.querySelector('.cursor');
-			if (!cursor) {
-				const newCursor = document.createElement('span');
-				newCursor.className = 'cursor';
-				const commandText = this.inputLine.querySelector('.command-text');
-				if (commandText) {
-					commandText.parentNode?.insertBefore(newCursor, commandText.nextSibling);
-				}
 			}
 		}
 	}
@@ -345,6 +364,13 @@ import Welcome from '../components/Welcome.astro';
 		50% { transform: scale(1.1); }
 	}
 
+	/* Mobile keyboard input */
+	.mobile-input {
+		@apply fixed opacity-0 w-0 h-0 p-0 border-0;
+		top: -9999px;
+		left: -9999px;
+	}
+
 	/* Mobile-specific styles */
 	@media (max-width: 640px) {
 		.command-prompt {
@@ -353,6 +379,10 @@ import Welcome from '../components/Welcome.astro';
 
 		.terminal-content-area {
 			-webkit-overflow-scrolling: touch;
+		}
+
+		.mobile-input:focus + .command-prompt .cursor {
+			opacity: 1;
 		}
 	}
 </style>
