@@ -46,6 +46,7 @@ import Welcome from '../components/Welcome.astro';
 					visitor@dfanso.dev:~$ <span class="command-text"></span><span class="cursor"></span>
 				</div>
 				<input type="text" class="mobile-input" aria-label="Terminal input" />
+				<button id="keyboard-dismiss" class="keyboard-dismiss" aria-label="Dismiss keyboard">✕</button>
 			</div>
 		</div>
 
@@ -89,6 +90,7 @@ import Welcome from '../components/Welcome.astro';
 		private outputContainer: HTMLElement;
 		private inputLine: HTMLElement;
 		private mobileInput: HTMLInputElement;
+		private keyboardDismiss: HTMLButtonElement;
 		private currentInput: string = '';
 		private commandHistory: string[] = [];
 		private historyIndex: number = -1;
@@ -98,13 +100,29 @@ import Welcome from '../components/Welcome.astro';
 			this.outputContainer = document.getElementById('output-container') as HTMLElement;
 			this.inputLine = document.getElementById('input-line') as HTMLElement;
 			this.mobileInput = this.inputLine.querySelector('.mobile-input') as HTMLInputElement;
+			this.keyboardDismiss = this.inputLine.querySelector('.keyboard-dismiss') as HTMLButtonElement;
 			this.initializeTerminal();
 		}
 
 		private initializeTerminal(): void {
 			// Handle mobile input focus only when clicking the terminal
-			this.terminal.addEventListener('click', () => {
-				this.mobileInput.focus();
+			this.terminal.addEventListener('click', (e) => {
+				// Don't focus if clicking the dismiss button
+				if (!(e.target as HTMLElement).closest('.keyboard-dismiss')) {
+					this.mobileInput.focus();
+				}
+			});
+
+			// Handle keyboard dismiss button
+			this.keyboardDismiss.addEventListener('click', () => {
+				this.mobileInput.blur();
+			});
+
+			// Scroll to input when keyboard appears
+			this.mobileInput.addEventListener('focus', () => {
+				setTimeout(() => {
+					this.inputLine.scrollIntoView({ behavior: 'smooth' });
+				}, 100);
 			});
 
 			// Handle mobile input
@@ -112,6 +130,8 @@ import Welcome from '../components/Welcome.astro';
 				const input = e.target as HTMLInputElement;
 				this.currentInput = input.value;
 				this.updateInputLine();
+				// Ensure input is visible
+				this.inputLine.scrollIntoView({ behavior: 'smooth' });
 			});
 
 			// Handle mobile keyboard enter
@@ -371,18 +391,33 @@ import Welcome from '../components/Welcome.astro';
 		left: -9999px;
 	}
 
+	.keyboard-dismiss {
+		@apply hidden fixed bottom-2 right-2 bg-[#7aa2f7] text-[#1a1b26] w-8 h-8 rounded-full 
+		       items-center justify-center text-sm font-bold z-50;
+	}
+
 	/* Mobile-specific styles */
 	@media (max-width: 640px) {
+		.terminal-container {
+			@apply pb-32; /* Add padding at bottom for keyboard */
+		}
+
+		.terminal-content-area {
+			height: calc(100vh - 12rem);
+			@apply pb-20; /* Extra padding for input visibility */
+			-webkit-overflow-scrolling: touch;
+		}
+
 		.command-prompt {
 			word-break: break-all;
 		}
 
-		.terminal-content-area {
-			-webkit-overflow-scrolling: touch;
+		.mobile-input:focus ~ .keyboard-dismiss {
+			@apply flex;
 		}
 
-		.mobile-input:focus + .command-prompt .cursor {
-			opacity: 1;
+		#input-line {
+			@apply sticky bottom-0 bg-[#1a1b26] py-2;
 		}
 	}
 </style>
