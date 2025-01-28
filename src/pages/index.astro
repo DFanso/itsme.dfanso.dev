@@ -21,7 +21,7 @@ import Welcome from '../components/Welcome.astro';
 
 		<!-- Terminal Header -->
 		<div class="terminal-title-bar">
-			<div class="terminal-buttons hidden sm:flex">
+			<div class="terminal-buttons flex">
 				<span class="terminal-button close"></span>
 				<span class="terminal-button minimize"></span>
 				<span class="terminal-button maximize"></span>
@@ -276,11 +276,15 @@ import Welcome from '../components/Welcome.astro';
 	}
 
 	.terminal-buttons {
-		@apply gap-2 mr-4;
+		@apply flex gap-2 mr-4;
 	}
 
 	.terminal-button {
-		@apply w-2 h-2 md:w-3 md:h-3 rounded-full;
+		@apply w-3 h-3 rounded-full transition-opacity duration-200;
+	}
+
+	.terminal-button:hover {
+		@apply opacity-80;
 	}
 
 	.terminal-button.close { @apply bg-[#f7768e]; }
