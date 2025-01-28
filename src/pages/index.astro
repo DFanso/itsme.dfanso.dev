@@ -45,8 +45,6 @@ import Welcome from '../components/Welcome.astro';
 				<div class="command-prompt text-sm md:text-base">
 					visitor@dfanso.dev:~$ <span class="command-text"></span><span class="cursor"></span>
 				</div>
-				<input type="text" class="mobile-input" aria-label="Terminal input" />
-				<button id="keyboard-dismiss" class="keyboard-dismiss" aria-label="Dismiss keyboard">✕</button>
 			</div>
 		</div>
 
@@ -89,8 +87,6 @@ import Welcome from '../components/Welcome.astro';
 		private terminal: HTMLElement;
 		private outputContainer: HTMLElement;
 		private inputLine: HTMLElement;
-		private mobileInput: HTMLInputElement;
-		private keyboardDismiss: HTMLButtonElement;
 		private currentInput: string = '';
 		private commandHistory: string[] = [];
 		private historyIndex: number = -1;
@@ -99,57 +95,12 @@ import Welcome from '../components/Welcome.astro';
 			this.terminal = document.getElementById('terminal') as HTMLElement;
 			this.outputContainer = document.getElementById('output-container') as HTMLElement;
 			this.inputLine = document.getElementById('input-line') as HTMLElement;
-			this.mobileInput = this.inputLine.querySelector('.mobile-input') as HTMLInputElement;
-			this.keyboardDismiss = this.inputLine.querySelector('.keyboard-dismiss') as HTMLButtonElement;
 			this.initializeTerminal();
 		}
 
 		private initializeTerminal(): void {
-			// Handle mobile input focus only when clicking the terminal
-			this.terminal.addEventListener('click', (e) => {
-				// Don't focus if clicking the dismiss button
-				if (!(e.target as HTMLElement).closest('.keyboard-dismiss')) {
-					this.mobileInput.focus();
-				}
-			});
-
-			// Handle keyboard dismiss button
-			this.keyboardDismiss.addEventListener('click', () => {
-				this.mobileInput.blur();
-			});
-
-			// Scroll to input when keyboard appears
-			this.mobileInput.addEventListener('focus', () => {
-				setTimeout(() => {
-					this.inputLine.scrollIntoView({ behavior: 'smooth' });
-				}, 100);
-			});
-
-			// Handle mobile input
-			this.mobileInput.addEventListener('input', (e: Event) => {
-				const input = e.target as HTMLInputElement;
-				this.currentInput = input.value;
-				this.updateInputLine();
-				// Ensure input is visible
-				this.inputLine.scrollIntoView({ behavior: 'smooth' });
-			});
-
-			// Handle mobile keyboard enter
-			this.mobileInput.addEventListener('keypress', (e: KeyboardEvent) => {
-				if (e.key === 'Enter') {
-					e.preventDefault();
-					this.handleEnter();
-					this.mobileInput.value = '';
-				}
-			});
-
-			// Desktop keyboard events - only handle if mobile input is not focused
+			document.addEventListener('click', () => this.focusInput());
 			document.addEventListener('keydown', (e: KeyboardEvent) => {
-				// Skip if mobile input is focused
-				if (document.activeElement === this.mobileInput) {
-					return;
-				}
-
 				if (e.key === 'Enter') {
 					this.handleEnter();
 				} else if (e.key === 'Backspace') {
@@ -164,9 +115,6 @@ import Welcome from '../components/Welcome.astro';
 					this.handleInput(e.key);
 				}
 			});
-
-			// Remove initial focus
-			this.mobileInput.blur();
 		}
 
 		private handleEnter(): void {
@@ -259,6 +207,19 @@ import Welcome from '../components/Welcome.astro';
 				commandText.textContent = this.currentInput;
 			}
 		}
+
+		private focusInput(): void {
+			// Just ensure cursor is visible
+			const cursor = this.inputLine.querySelector('.cursor');
+			if (!cursor) {
+				const newCursor = document.createElement('span');
+				newCursor.className = 'cursor';
+				const commandText = this.inputLine.querySelector('.command-text');
+				if (commandText) {
+					commandText.parentNode?.insertBefore(newCursor, commandText.nextSibling);
+				}
+			}
+		}
 	}
 
 	// Initialize terminal when the page loads
@@ -297,20 +258,11 @@ import Welcome from '../components/Welcome.astro';
 	}
 
 	.terminal-content-area {
-		@apply p-2 md:p-4 overflow-y-auto space-y-4 relative;
+		@apply p-2 md:p-4 overflow-auto space-y-4;
 		height: calc(100vh - 8rem);
 		@screen md {
 			height: calc(100vh - 10rem);
 		}
-	}
-
-	#output-container {
-		@apply pb-16; /* Space for input line */
-	}
-
-	#input-line {
-		@apply absolute left-0 right-0 bottom-0 bg-[#1a1b26] py-2 px-2 md:px-4;
-		background: linear-gradient(to bottom, rgba(26, 27, 38, 0.95), #1a1b26);
 	}
 
 	.command-block {
@@ -393,50 +345,14 @@ import Welcome from '../components/Welcome.astro';
 		50% { transform: scale(1.1); }
 	}
 
-	/* Mobile keyboard input */
-	.mobile-input {
-		@apply fixed opacity-0 w-0 h-0 p-0 border-0;
-		top: -9999px;
-		left: -9999px;
-	}
-
-	.keyboard-dismiss {
-		@apply hidden fixed bottom-2 right-2 bg-[#7aa2f7] text-[#1a1b26] w-8 h-8 rounded-full 
-		       items-center justify-center text-sm font-bold z-50;
-	}
-
 	/* Mobile-specific styles */
 	@media (max-width: 640px) {
-		.terminal-container {
-			@apply relative h-screen;
-		}
-
-		.terminal-content-area {
-			height: calc(100vh - 8rem);
-			@apply overflow-y-auto;
-			-webkit-overflow-scrolling: touch;
-		}
-
-		#output-container {
-			@apply pb-24; /* More space for input on mobile */
-		}
-
 		.command-prompt {
 			word-break: break-all;
 		}
 
-		.mobile-input:focus ~ .keyboard-dismiss {
-			@apply flex;
-		}
-
-		#input-line {
-			@apply fixed bottom-0 left-0 right-0 py-3 px-4;
-			background: linear-gradient(to bottom, rgba(26, 27, 38, 0.95), #1a1b26);
-		}
-
-		/* Add padding to terminal container when keyboard is active */
-		.mobile-input:focus ~ .terminal-container {
-			@apply pb-40;
+		.terminal-content-area {
+			-webkit-overflow-scrolling: touch;
 		}
 	}
 </style>
