@@ -3,7 +3,7 @@ import profileImage from '../assets/profile.webp';
 ---
 
 <!doctype html>
-<html lang="en" transition:animate="none">
+<html lang="en" transition:animate="none" class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -39,49 +39,73 @@ import profileImage from '../assets/profile.webp';
 
 		<meta name="view-transition" content="same-origin" />
 	</head>
-	<body class="bg-[#1a1b26] text-[#c0caf5] min-h-screen font-mono">
-		<main class="container mx-auto px-4 py-8 max-w-4xl">
+	<body class="bg-[#1a1b26] text-[#c0caf5] h-screen overflow-hidden font-mono selection:bg-[#7aa2f7] selection:text-[#1a1b26]">
+		<div class="fixed inset-0 -z-10 bg-[#1a1b26]">
+			<div class="absolute inset-0 bg-[#1a1b26]"></div>
+		</div>
+		<main class="relative h-full">
 			<slot />
 		</main>
 	</body>
 </html>
 
 <style is:global>
-	@keyframes blink {
-		0%, 100% { opacity: 1; }
-		50% { opacity: 0; }
+	:root {
+		--primary: #7aa2f7;
+		--secondary: #9ece6a;
+		--text: #c0caf5;
+		--bg: #1a1b26;
+		--accent: #bb9af7;
 	}
 
-	.cursor::after {
-		content: "_";
-		animation: blink 1s step-end infinite;
-		color: #7aa2f7;
+	body {
+		font-family: 'Fira Code', monospace;
 	}
 
 	.command-prompt {
-		color: #7aa2f7;
+		color: var(--primary);
 	}
 
 	a {
-		color: #7dcfff;
+		color: var(--primary);
 		text-decoration: none;
-		transition: color 0.2s;
+		transition: color 0.2s ease;
 	}
 
 	a:hover {
-		color: #bb9af7;
+		color: var(--accent);
 	}
 
 	.section-title {
-		color: #7aa2f7;
+		color: var(--primary);
+		font-size: 1rem;
+		font-weight: 500;
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
-		margin: 2rem 0 1rem;
 	}
 
-	.section-title::before {
-		content: "$";
-		color: #9ece6a;
+	/* Custom scrollbar */
+	::-webkit-scrollbar {
+		width: 4px;
+	}
+
+	::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: var(--primary);
+		border-radius: 4px;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background: var(--accent);
+	}
+
+	/* Terminal-style text selection */
+	::selection {
+		background: var(--primary);
+		color: var(--bg);
 	}
 </style>
