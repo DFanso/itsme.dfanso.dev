@@ -102,8 +102,8 @@ import Welcome from '../components/Welcome.astro';
 		}
 
 		private initializeTerminal(): void {
-			// Handle mobile input focus
-			document.addEventListener('click', () => {
+			// Handle mobile input focus only when clicking the terminal
+			this.terminal.addEventListener('click', () => {
 				this.mobileInput.focus();
 			});
 
@@ -123,30 +123,30 @@ import Welcome from '../components/Welcome.astro';
 				}
 			});
 
-			// Desktop keyboard events
+			// Desktop keyboard events - only handle if mobile input is not focused
 			document.addEventListener('keydown', (e: KeyboardEvent) => {
+				// Skip if mobile input is focused
+				if (document.activeElement === this.mobileInput) {
+					return;
+				}
+
 				if (e.key === 'Enter') {
 					this.handleEnter();
-					this.mobileInput.value = '';
 				} else if (e.key === 'Backspace') {
 					this.handleBackspace();
-					this.mobileInput.value = this.currentInput;
 				} else if (e.key === 'ArrowUp') {
 					this.handleArrowUp();
-					this.mobileInput.value = this.currentInput;
 					e.preventDefault();
 				} else if (e.key === 'ArrowDown') {
 					this.handleArrowDown();
-					this.mobileInput.value = this.currentInput;
 					e.preventDefault();
 				} else if (e.key.length === 1) {
 					this.handleInput(e.key);
-					this.mobileInput.value = this.currentInput;
 				}
 			});
 
-			// Initial focus
-			this.mobileInput.focus();
+			// Remove initial focus
+			this.mobileInput.blur();
 		}
 
 		private handleEnter(): void {
