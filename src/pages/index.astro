@@ -297,11 +297,20 @@ import Welcome from '../components/Welcome.astro';
 	}
 
 	.terminal-content-area {
-		@apply p-2 md:p-4 overflow-auto space-y-4;
+		@apply p-2 md:p-4 overflow-y-auto space-y-4 relative;
 		height: calc(100vh - 8rem);
 		@screen md {
 			height: calc(100vh - 10rem);
 		}
+	}
+
+	#output-container {
+		@apply pb-16; /* Space for input line */
+	}
+
+	#input-line {
+		@apply absolute left-0 right-0 bottom-0 bg-[#1a1b26] py-2 px-2 md:px-4;
+		background: linear-gradient(to bottom, rgba(26, 27, 38, 0.95), #1a1b26);
 	}
 
 	.command-block {
@@ -399,13 +408,17 @@ import Welcome from '../components/Welcome.astro';
 	/* Mobile-specific styles */
 	@media (max-width: 640px) {
 		.terminal-container {
-			@apply pb-32; /* Add padding at bottom for keyboard */
+			@apply relative h-screen;
 		}
 
 		.terminal-content-area {
-			height: calc(100vh - 12rem);
-			@apply pb-20; /* Extra padding for input visibility */
+			height: calc(100vh - 8rem);
+			@apply overflow-y-auto;
 			-webkit-overflow-scrolling: touch;
+		}
+
+		#output-container {
+			@apply pb-24; /* More space for input on mobile */
 		}
 
 		.command-prompt {
@@ -417,7 +430,13 @@ import Welcome from '../components/Welcome.astro';
 		}
 
 		#input-line {
-			@apply sticky bottom-0 bg-[#1a1b26] py-2;
+			@apply fixed bottom-0 left-0 right-0 py-3 px-4;
+			background: linear-gradient(to bottom, rgba(26, 27, 38, 0.95), #1a1b26);
+		}
+
+		/* Add padding to terminal container when keyboard is active */
+		.mobile-input:focus ~ .terminal-container {
+			@apply pb-40;
 		}
 	}
 </style>
