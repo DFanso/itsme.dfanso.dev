@@ -14,6 +14,11 @@ import Welcome from '../components/Welcome.astro';
 
 <Layout>
 	<div class="terminal-container min-h-screen p-4 md:p-6 font-mono text-[#c0caf5]">
+		<!-- Mobile Notice -->
+		<div class="sm:hidden bg-[#1a1b26] border border-[#f7768e] rounded-lg p-3 mb-4 text-center">
+			<p class="text-[#f7768e] text-sm">⚠️ For the best terminal experience, please use a desktop browser.</p>
+		</div>
+
 		<!-- Terminal Header -->
 		<div class="terminal-title-bar">
 			<div class="terminal-buttons hidden sm:flex">
