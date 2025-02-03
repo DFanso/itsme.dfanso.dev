@@ -35,13 +35,13 @@ import Welcome from '../components/Welcome.astro';
 				<div id="output-container">
 					<!-- Welcome message -->
 					<div class="command-block">
-						<div class="command-prompt">guest@dfanso.dev:~$ <span class="text-[#9ece6a]">welcome</span></div>
+						<div class="command-prompt"><span class="text-[#9ece6a]">❯</span> <span class="text-[#7aa2f7]">dfanso</span><span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> <span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> <span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span></div>
 						<div class="command-output"><Welcome /></div>
 					</div>
 
 					<!-- Whoami command -->
 					<div class="command-block">
-						<div class="command-prompt">guest@dfanso.dev:~$ <span class="text-[#9ece6a]">whoami</span></div>
+						<div class="command-prompt"><span class="text-[#9ece6a]">❯</span> <span class="text-[#7aa2f7]">dfanso</span><span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> <span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> <span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span></div>
 						<div class="command-output"><Header /></div>
 					</div>
 				</div>
@@ -49,7 +49,7 @@ import Welcome from '../components/Welcome.astro';
 				<!-- Command Input -->
 				<div class="command-block" id="input-line">
 					<div class="command-prompt">
-						guest@dfanso.dev:~$ <span class="command-text"></span><span class="cursor"></span>
+						<span class="text-[#9ece6a]">❯</span> <span class="text-[#7aa2f7]">dfanso</span><span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> <span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> <span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span> <span class="command-text"></span><span class="cursor"></span>
 					</div>
 				</div>
 			</div>
@@ -70,18 +70,56 @@ import Welcome from '../components/Welcome.astro';
 				<div id="contact"><Contact /></div>
 				<div id="help">
 					<div class="command-list">
-						<p>Available commands:</p>
-						<ul class="ml-4 mt-2">
-							<li><span class="text-[#9ece6a]">welcome</span> - Display welcome message</li>
-							<li><span class="text-[#9ece6a]">whoami</span> - Show profile information</li>
-							<li><span class="text-[#9ece6a]">about</span> - About me</li>
-							<li><span class="text-[#9ece6a]">projects</span> - View my projects</li>
-							<li><span class="text-[#9ece6a]">skills</span> - My technical skills</li>
-							<li><span class="text-[#9ece6a]">experience</span> - Work experience</li>
-							<li><span class="text-[#9ece6a]">contact</span> - Contact information</li>
-							<li><span class="text-[#9ece6a]">clear</span> - Clear terminal</li>
-							<li><span class="text-[#9ece6a]">help</span> - Show this help message</li>
-						</ul>
+						<p class="text-[#bb9af7] font-bold mb-4">Terminal Portfolio Help</p>
+						<div class="mb-4">
+							<p class="text-[#7aa2f7] mb-2">USAGE:</p>
+							<p class="text-[#c0caf5] ml-4">command [arguments]</p>
+						</div>
+						<div class="mb-4">
+							<p class="text-[#7aa2f7] mb-2">AVAILABLE COMMANDS:</p>
+							<ul class="command-help-list">
+								<li>
+									<div class="command-name">welcome</div>
+									<div class="command-desc">Display welcome message and ASCII art</div>
+								</li>
+								<li>
+									<div class="command-name">whoami</div>
+									<div class="command-desc">Show detailed profile information</div>
+								</li>
+								<li>
+									<div class="command-name">about</div>
+									<div class="command-desc">View my professional summary</div>
+								</li>
+								<li>
+									<div class="command-name">projects</div>
+									<div class="command-desc">Browse my featured projects</div>
+								</li>
+								<li>
+									<div class="command-name">skills</div>
+									<div class="command-desc">List technical skills and expertise</div>
+								</li>
+								<li>
+									<div class="command-name">experience</div>
+									<div class="command-desc">View work history and roles</div>
+								</li>
+								<li>
+									<div class="command-name">contact</div>
+									<div class="command-desc">Get my contact information</div>
+								</li>
+								<li>
+									<div class="command-name">clear</div>
+									<div class="command-desc">Clear terminal screen</div>
+								</li>
+								<li>
+									<div class="command-name">help</div>
+									<div class="command-desc">Show this help message</div>
+								</li>
+							</ul>
+						</div>
+						<div class="text-[#565f89] text-xs mt-6">
+							<p>Use arrow keys ↑↓ to navigate command history</p>
+							<p>Press Ctrl+L or type 'clear' to clear screen</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -177,8 +215,8 @@ import Welcome from '../components/Welcome.astro';
 				// Add interactive project prompt if it's the projects command
 				if (command === 'projects') {
 					const promptDiv = document.createElement('div');
-					promptDiv.className = 'mt-4 text-[#9ece6a]';
-					promptDiv.innerHTML = 'Would you like to see more projects? (yes/no)';
+					promptDiv.className = 'mt-4 text-[#9ece6a] command-prompt';
+					promptDiv.innerHTML = '<span class="text-[#9ece6a]">❯</span> Would you like to see more projects? (yes/no)';
 					outputDiv.appendChild(promptDiv);
 					
 					// Set a flag to handle the next input differently
@@ -187,22 +225,22 @@ import Welcome from '../components/Welcome.astro';
 			} else if (this.awaitingProjectResponse) {
 				const response = command.toLowerCase();
 				if (response === 'yes') {
-					outputDiv.innerHTML = `<div class="text-[#9ece6a]">
+					outputDiv.innerHTML = `<div class="text-[#9ece6a] command-output">
 						<p class="mb-2">🔗 Check out more of my projects:</p>
 						<a href="https://github.com/dfanso" target="_blank" class="text-[#7aa2f7] hover:text-[#9ece6a] transition-colors">
-							→ Visit my GitHub Profile
+							<span class="text-[#565f89]">└─▶</span> Visit my GitHub Profile
 						</a>
 					</div>`;
 				} else if (response === 'no') {
-					outputDiv.innerHTML = '<div class="text-[#9ece6a]">Alright! Feel free to explore other commands using `help`.</div>';
+					outputDiv.innerHTML = '<div class="text-[#9ece6a] command-output"><span class="text-[#565f89]">└─▶</span> Alright! Feel free to explore other commands using `help`.</div>';
 				} else {
-					outputDiv.innerHTML = '<div class="text-[#f7768e]">Please answer with yes or no.</div>';
+					outputDiv.innerHTML = '<div class="text-[#f7768e] command-output"><span class="text-[#565f89]">└─▶</span> Please answer with yes or no.</div>';
 					this.awaitingProjectResponse = true;
 					return;
 				}
 				this.awaitingProjectResponse = false;
 			} else {
-				outputDiv.innerHTML = `<div class="text-[#f7768e]">Command not found: ${command}</div>`;
+				outputDiv.innerHTML = `<div class="text-[#f7768e] command-output"><span class="text-[#565f89]">└─▶</span> Command not found: ${command}</div>`;
 			}
 		}
 
@@ -302,12 +340,14 @@ import Welcome from '../components/Welcome.astro';
 	}
 
 	.command-prompt {
-		@apply text-[#7aa2f7] mb-1 flex items-center flex-wrap text-sm;
+		@apply text-[#7aa2f7] mb-1 flex items-center gap-1.5 flex-wrap text-sm;
 		font-family: 'Fira Code', monospace;
 	}
 
 	.command-output {
-		@apply pl-4 py-1 text-sm opacity-90;
+		@apply pl-6 py-2 text-sm opacity-90;
+		border-left: 2px solid rgba(86, 95, 137, 0.3);
+		margin-left: 0.5rem;
 	}
 
 	.cursor {
@@ -339,11 +379,27 @@ import Welcome from '../components/Welcome.astro';
 	}
 
 	.command-list {
-		@apply text-sm opacity-90;
+		@apply text-sm p-4 rounded;
+		background: rgba(26, 27, 38, 0.6);
+		border: 1px solid rgba(86, 95, 137, 0.2);
 	}
 
-	.command-list ul {
-		@apply space-y-0.5;
+	.command-list p {
+		@apply text-[#7aa2f7] mb-2;
+	}
+
+	.command-list ul li {
+		@apply flex items-center gap-2;
+	}
+
+	.command-list ul li span {
+		@apply text-[#9ece6a] font-mono;
+	}
+
+	/* Update help command styling */
+	#help .command-list ul li::before {
+		content: "└─▶";
+		@apply text-[#565f89] mr-2;
 	}
 
 	.terminal-footer {
@@ -379,5 +435,21 @@ import Welcome from '../components/Welcome.astro';
 	/* Make the ASCII art more terminal-like */
 	.ascii-art {
 		@apply opacity-70;
+	}
+
+	.command-help-list {
+		@apply space-y-2 ml-4;
+	}
+
+	.command-help-list li {
+		@apply flex items-start gap-4;
+	}
+
+	.command-name {
+		@apply text-[#9ece6a] w-24 font-mono;
+	}
+
+	.command-desc {
+		@apply text-[#c0caf5] opacity-80;
 	}
 </style>
