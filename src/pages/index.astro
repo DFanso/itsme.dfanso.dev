@@ -339,25 +339,40 @@ Digital rain simulation...
 
 		private handleEnter(): void {
 			const command = this.currentInput.trim().toLowerCase();
-			if (command) {
-				// Clone current input line without cursor
-				const inputClone = this.inputLine.cloneNode(true) as HTMLElement;
-				inputClone.removeAttribute('id');
-				const commandText = inputClone.querySelector('.command-text');
-				if (commandText) {
-					commandText.textContent = this.currentInput;
-				}
-				const cursor = inputClone.querySelector('.cursor');
-				if (cursor) {
-					cursor.remove();
-				}
+			
+			// Clone current input line without cursor
+			const inputClone = this.inputLine.cloneNode(true) as HTMLElement;
+			inputClone.removeAttribute('id');
+			const commandText = inputClone.querySelector('.command-text');
+			if (commandText) {
+				commandText.textContent = this.currentInput;
+			}
+			const cursor = inputClone.querySelector('.cursor');
+			if (cursor) {
+				cursor.remove();
+			}
 
-				// Add command output
-				const outputDiv = document.createElement('div');
-				outputDiv.className = 'command-output';
-				inputClone.appendChild(outputDiv);
+			// Add command output
+			const outputDiv = document.createElement('div');
+			outputDiv.className = 'command-output';
+			inputClone.appendChild(outputDiv);
 
-				// Add to history
+			if (!command) {
+				// Handle empty input with random messages
+				const emptyMessages = [
+					"🤔 Hmm... trying to say something?",
+					"💭 The silence is deafening...",
+					"⌨️ The keyboard is waiting for your command!",
+					"✨ Type 'help' if you're not sure what to do",
+					"🌟 Press some keys, then press Enter!",
+					"🎯 Almost there! Just need to type a command first",
+					"🚀 Ready for your input, commander!"
+				];
+				const randomMessage = emptyMessages[Math.floor(Math.random() * emptyMessages.length)];
+				outputDiv.innerHTML = `<div class="text-[#bb9af7]">${randomMessage}</div>`;
+				this.outputContainer.appendChild(inputClone);
+			} else {
+				// Add to history only if command is not empty
 				this.commandHistory.push(command);
 				this.historyIndex = this.commandHistory.length;
 
