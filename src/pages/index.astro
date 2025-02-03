@@ -19,20 +19,20 @@ import Welcome from '../components/Welcome.astro';
 			<div class="p-4 pb-20 space-y-8">
 				<!-- Mobile Header -->
 				<div class="text-center space-y-4">
-					<Header />
+				<Header />
 					<div class="text-sm text-[#565f89]">Associate DevOps Engineer</div>
 				</div>
 
 				<!-- About Section -->
 				<div class="space-y-2">
 					<h2 class="text-[#bb9af7] text-lg font-bold">About Me</h2>
-					<About />
+				<About />
 				</div>
 
 				<!-- Skills Section -->
 				<div class="space-y-2">
 					<h2 class="text-[#bb9af7] text-lg font-bold">Skills</h2>
-					<Skills />
+				<Skills />
 				</div>
 
 				<!-- Projects Section -->
@@ -50,8 +50,8 @@ import Welcome from '../components/Welcome.astro';
 				<!-- Contact Section -->
 				<div class="space-y-2">
 					<h2 class="text-[#bb9af7] text-lg font-bold">Contact</h2>
-					<Contact />
-				</div>
+				<Contact />
+			</div>
 
 				<!-- Mobile Footer -->
 				<div class="fixed bottom-0 left-0 right-0 bg-[#1a1b26] py-4 border-t border-[#565f89]/20">
@@ -221,6 +221,38 @@ Digital rain simulation...
  █ █ █ █ █ █ █ █ █</pre>
 						</div>
 					</div>
+					<div id="ping">
+						<div class="command-output ping-animation">
+							<div class="text-[#bb9af7] font-bold mb-2">PING dfanso.dev (192.168.1.1)</div>
+							<div class="space-y-1 font-mono">
+								<div class="ping-line">
+									<span class="text-[#7aa2f7]">64 bytes from dfanso.dev</span>
+									<span class="text-[#565f89]">: icmp_seq=1 ttl=64 time=</span>
+									<span class="text-[#9ece6a]">0.045 ms</span>
+								</div>
+								<div class="ping-line">
+									<span class="text-[#7aa2f7]">64 bytes from dfanso.dev</span>
+									<span class="text-[#565f89]">: icmp_seq=2 ttl=64 time=</span>
+									<span class="text-[#9ece6a]">0.038 ms</span>
+								</div>
+								<div class="ping-line">
+									<span class="text-[#7aa2f7]">64 bytes from dfanso.dev</span>
+									<span class="text-[#565f89]">: icmp_seq=3 ttl=64 time=</span>
+									<span class="text-[#9ece6a]">0.042 ms</span>
+								</div>
+								<div class="ping-line">
+									<span class="text-[#7aa2f7]">64 bytes from dfanso.dev</span>
+									<span class="text-[#565f89]">: icmp_seq=4 ttl=64 time=</span>
+									<span class="text-[#9ece6a]">0.039 ms</span>
+								</div>
+							</div>
+							<div class="mt-4 text-[#c0caf5]">
+								<span class="text-[#565f89]">---</span> dfanso.dev ping statistics <span class="text-[#565f89]">---</span><br>
+								4 packets transmitted, 4 received, 0% packet loss, time 3ms<br>
+								rtt min/avg/max = 0.038/0.041/0.045 ms
+							</div>
+						</div>
+					</div>
 					<div id="help">
 						<div class="command-list">
 							<p class="text-[#bb9af7] font-bold mb-4">Terminal Portfolio Help</p>
@@ -286,6 +318,10 @@ Digital rain simulation...
 									<li>
 										<div class="command-name">matrix</div>
 										<div class="command-desc">Display the matrix animation</div>
+									</li>
+									<li>
+										<div class="command-name">ping</div>
+										<div class="command-desc">Test connection to dfanso.dev</div>
 									</li>
 								</ul>
 							</div>
@@ -708,5 +744,27 @@ Digital rain simulation...
 	@keyframes matrix {
 		0%, 100% { opacity: 1; }
 		50% { opacity: 0.7; }
+	}
+
+	/* Ping animation */
+	.ping-animation .ping-line {
+		animation: fade-in 0.3s ease-out forwards;
+		opacity: 0;
+	}
+
+	.ping-animation .ping-line:nth-child(1) { animation-delay: 0s; }
+	.ping-animation .ping-line:nth-child(2) { animation-delay: 0.5s; }
+	.ping-animation .ping-line:nth-child(3) { animation-delay: 1s; }
+	.ping-animation .ping-line:nth-child(4) { animation-delay: 1.5s; }
+
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+			transform: translateY(-4px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 </style>
