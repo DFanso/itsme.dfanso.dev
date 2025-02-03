@@ -10,14 +10,21 @@ const socialLinks = [
 ---
 
 <section class:list={[className]}>
-    <h2 class="section-title text-sm flex items-center gap-2">
-        <span class="text-[#9ece6a] font-mono">❯</span> #contact
-    </h2>
-    <div class="ml-4 border-l-2 border-[#565f89] pl-3 space-y-1.5 text-sm">
-        {socialLinks.map(link => (
-            <a href={link.url} target="_blank" class="block hover:text-[#9ece6a] transition-colors">
-                <span class="command-prompt">└─▶</span> <pre class="inline text-[#7aa2f7]">[{link.id}]</pre> {link.name}
-            </a>
-        ))}
+    <div class="command-output">
+        <div class="text-[#bb9af7] font-bold mb-2">Contact Information</div>
+        <div class="space-y-2">
+            {socialLinks.map(link => (
+                <div class="flex items-center gap-2">
+                    <span class="text-[#565f89]">└─▶</span>
+                    <span class="text-[#e0af68]">[{link.id}]</span>
+                    <a href={link.url} target="_blank" class="text-[#7aa2f7] hover:text-[#9ece6a] transition-colors">
+                        {link.name}
+                    </a>
+                </div>
+            ))}
+        </div>
+        <div class="mt-4 text-[#565f89] text-xs">
+            <span class="text-[#9ece6a]">Note:</span> Click on any link to open in a new tab
+        </div>
     </div>
 </section> 

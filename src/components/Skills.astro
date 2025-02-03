@@ -62,21 +62,27 @@ const skillCategories = [
 ---
 
 <section class:list={[className]}>
-    <h2 class="section-title text-sm flex items-center gap-2">
-        <span class="text-[#9ece6a] font-mono">❯</span> #skills
-    </h2>
-    <div class="ml-4 border-l-2 border-[#565f89] pl-3 space-y-2 text-sm">
-        {skillCategories.map(category => (
-            <div>
-                <span class="command-prompt">└─▶ ls {category.name}/</span>
-                <div class="ml-3 text-[#9ece6a] flex flex-wrap gap-3">
-                    {category.skills.map(skill => (
-                        <div class="flex items-center gap-2">
-                            <pre class="text-[#7aa2f7] text-xs">{skill.icon}</pre> {skill.name}
-                        </div>
-                    ))}
+    <div class="command-output">
+        <div class="text-[#bb9af7] font-bold mb-2">Technical Skills</div>
+        <div class="space-y-4">
+            {skillCategories.map((category, index) => (
+                <div class="skill-category">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="text-[#565f89]">{index === skillCategories.length - 1 ? '└─▶' : '├─▶'}</span>
+                        <span class="text-[#e0af68]">ls</span>
+                        <span class="text-[#7aa2f7]">~/{category.name}/</span>
+                    </div>
+                    <div class="ml-6 flex flex-wrap gap-4">
+                        {category.skills.map((skill, skillIndex) => (
+                            <div class="flex items-center gap-1">
+                                <span class="text-[#565f89]">│</span>
+                                <span class="text-[#7aa2f7]">{skill.icon}</span>
+                                <span class="text-[#9ece6a]">{skill.name}</span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            </div>
-        ))}
+            ))}
+        </div>
     </div>
 </section> 
