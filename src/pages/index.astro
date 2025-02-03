@@ -13,112 +13,162 @@ import Welcome from '../components/Welcome.astro';
 ---
 
 <Layout>
-	<div class="flex items-center justify-center min-h-screen bg-[#16161e] p-4">
-		<div class="terminal-container w-full max-w-6xl shadow-2xl border border-[#7aa2f7]/20 rounded overflow-hidden">
-			<!-- Mobile Notice -->
-			<div class="sm:hidden bg-[#1a1b26] border border-[#f7768e] rounded-lg p-3 mb-4 text-center">
-				<p class="text-[#f7768e] text-sm">⚠️ For the best terminal experience, please use a desktop browser.</p>
-			</div>
-
-			<!-- Terminal Header -->
-			<div class="terminal-title-bar">
-				<div class="terminal-buttons">
-					<span class="terminal-button bg-[#f7768e]"></span>
-					<span class="terminal-button bg-[#e0af68]"></span>
-					<span class="terminal-button bg-[#9ece6a]"></span>
-				</div>
-				<div class="terminal-title">guest@dfanso.dev:~</div>
-			</div>
-
-			<!-- Terminal Content -->
-			<div id="terminal" class="terminal-content-area">
-				<div id="output-container">
-					<!-- Welcome message -->
-					<div class="command-block">
-						<div class="command-prompt"><span class="text-[#9ece6a]">❯</span> <span class="text-[#7aa2f7]">dfanso</span><span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> <span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> <span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span></div>
-						<div class="command-output"><Welcome /></div>
-					</div>
-
-					<!-- Whoami command -->
-					<div class="command-block">
-						<div class="command-prompt"><span class="text-[#9ece6a]">❯</span> <span class="text-[#7aa2f7]">dfanso</span><span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> <span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> <span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span></div>
-						<div class="command-output"><Header /></div>
-					</div>
+	<div class="min-h-screen bg-[#16161e] overflow-hidden">
+		<!-- Mobile Version -->
+		<div class="block sm:hidden min-h-screen bg-[#1a1b26] text-[#c0caf5] overflow-y-auto">
+			<div class="p-4 pb-20 space-y-8">
+				<!-- Mobile Header -->
+				<div class="text-center space-y-4">
+					<Header />
+					<div class="text-sm text-[#565f89]">Associate DevOps Engineer</div>
 				</div>
 
-				<!-- Command Input -->
-				<div class="command-block" id="input-line">
-					<div class="command-prompt">
-						<span class="text-[#9ece6a]">❯</span> <span class="text-[#7aa2f7]">dfanso</span><span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> <span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> <span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span> <span class="command-text"></span><span class="cursor"></span>
-					</div>
+				<!-- About Section -->
+				<div class="space-y-2">
+					<h2 class="text-[#bb9af7] text-lg font-bold">About Me</h2>
+					<About />
+				</div>
+
+				<!-- Skills Section -->
+				<div class="space-y-2">
+					<h2 class="text-[#bb9af7] text-lg font-bold">Skills</h2>
+					<Skills />
+				</div>
+
+				<!-- Projects Section -->
+				<div class="space-y-2">
+					<h2 class="text-[#bb9af7] text-lg font-bold">Projects</h2>
+					<Projects />
+				</div>
+
+				<!-- Experience Section -->
+				<div class="space-y-2">
+					<h2 class="text-[#bb9af7] text-lg font-bold">Experience</h2>
+					<Experience />
+				</div>
+
+				<!-- Contact Section -->
+				<div class="space-y-2">
+					<h2 class="text-[#bb9af7] text-lg font-bold">Contact</h2>
+					<Contact />
+				</div>
+
+				<!-- Mobile Footer -->
+				<div class="fixed bottom-0 left-0 right-0 bg-[#1a1b26] py-4 border-t border-[#565f89]/20">
+					<p class="text-[10px] text-[#7aa2f7]">Made with <span class="text-[#f7768e]">❤</span> by DFanso</p>
+					<p class="text-[10px] text-[#565f89] mt-2">For the full terminal experience, please visit on desktop</p>
 				</div>
 			</div>
+		</div>
 
-			<!-- Terminal Footer -->
-			<div class="terminal-footer">
-				<p class="text-xs text-[#7aa2f7]">Made with <span class="text-[#f7768e]">❤</span> by DFanso</p>
-			</div>
+		<!-- Desktop Terminal Version -->
+		<div class="hidden sm:flex items-center justify-center min-h-screen p-4">
+			<div class="terminal-container w-full max-w-6xl shadow-2xl border border-[#7aa2f7]/20 rounded overflow-hidden">
+				<!-- Mobile Notice -->
+				<div class="sm:hidden bg-[#1a1b26] border border-[#f7768e] rounded-lg p-3 mb-4 text-center">
+					<p class="text-[#f7768e] text-sm">⚠️ For the best terminal experience, please use a desktop browser.</p>
+				</div>
 
-			<!-- Hidden Components -->
-			<div id="components" class="hidden">
-				<div id="welcome"><Welcome /></div>
-				<div id="whoami"><Header /></div>
-				<div id="about"><About /></div>
-				<div id="projects"><Projects /></div>
-				<div id="skills"><Skills /></div>
-				<div id="experience"><Experience /></div>
-				<div id="contact"><Contact /></div>
-				<div id="help">
-					<div class="command-list">
-						<p class="text-[#bb9af7] font-bold mb-4">Terminal Portfolio Help</p>
-						<div class="mb-4">
-							<p class="text-[#7aa2f7] mb-2">USAGE:</p>
-							<p class="text-[#c0caf5] ml-4">command [arguments]</p>
+				<!-- Terminal Header -->
+				<div class="terminal-title-bar">
+					<div class="terminal-buttons">
+						<span class="terminal-button bg-[#f7768e]"></span>
+						<span class="terminal-button bg-[#e0af68]"></span>
+						<span class="terminal-button bg-[#9ece6a]"></span>
+					</div>
+					<div class="terminal-title">guest@dfanso.dev:~</div>
+				</div>
+
+				<!-- Terminal Content -->
+				<div id="terminal" class="terminal-content-area">
+					<div id="output-container">
+						<!-- Welcome message -->
+						<div class="command-block">
+							<div class="command-prompt"><span class="text-[#9ece6a]">❯</span> <span class="text-[#7aa2f7]">dfanso</span><span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> <span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> <span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span></div>
+							<div class="command-output"><Welcome /></div>
 						</div>
-						<div class="mb-4">
-							<p class="text-[#7aa2f7] mb-2">AVAILABLE COMMANDS:</p>
-							<ul class="command-help-list">
-								<li>
-									<div class="command-name">welcome</div>
-									<div class="command-desc">Display welcome message and ASCII art</div>
-								</li>
-								<li>
-									<div class="command-name">whoami</div>
-									<div class="command-desc">Show detailed profile information</div>
-								</li>
-								<li>
-									<div class="command-name">about</div>
-									<div class="command-desc">View my professional summary</div>
-								</li>
-								<li>
-									<div class="command-name">projects</div>
-									<div class="command-desc">Browse my featured projects</div>
-								</li>
-								<li>
-									<div class="command-name">skills</div>
-									<div class="command-desc">List technical skills and expertise</div>
-								</li>
-								<li>
-									<div class="command-name">experience</div>
-									<div class="command-desc">View work history and roles</div>
-								</li>
-								<li>
-									<div class="command-name">contact</div>
-									<div class="command-desc">Get my contact information</div>
-								</li>
-								<li>
-									<div class="command-name">clear</div>
-									<div class="command-desc">Clear terminal screen</div>
-								</li>
-								<li>
-									<div class="command-name">help</div>
-									<div class="command-desc">Show this help message</div>
-								</li>
-							</ul>
+
+						<!-- Whoami command -->
+						<div class="command-block">
+							<div class="command-prompt"><span class="text-[#9ece6a]">❯</span> <span class="text-[#7aa2f7]">dfanso</span><span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> <span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> <span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span></div>
+							<div class="command-output"><Header /></div>
 						</div>
-						<div class="text-[#565f89] text-xs mt-6">
-							<p>Use arrow keys ↑↓ to navigate command history</p>
-							<p>Press Ctrl+L or type 'clear' to clear screen</p>
+					</div>
+
+					<!-- Command Input -->
+					<div class="command-block" id="input-line">
+						<div class="command-prompt">
+							<span class="text-[#9ece6a]">❯</span> <span class="text-[#7aa2f7]">dfanso</span><span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> <span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> <span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span> <span class="command-text"></span><span class="cursor"></span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Terminal Footer -->
+				<div class="terminal-footer">
+					<p class="text-xs text-[#7aa2f7]">Made with <span class="text-[#f7768e]">❤</span> by DFanso</p>
+				</div>
+
+				<!-- Hidden Components -->
+				<div id="components" class="hidden">
+					<div id="welcome"><Welcome /></div>
+					<div id="whoami"><Header /></div>
+					<div id="about"><About /></div>
+					<div id="projects"><Projects /></div>
+					<div id="skills"><Skills /></div>
+					<div id="experience"><Experience /></div>
+					<div id="contact"><Contact /></div>
+					<div id="help">
+						<div class="command-list">
+							<p class="text-[#bb9af7] font-bold mb-4">Terminal Portfolio Help</p>
+							<div class="mb-4">
+								<p class="text-[#7aa2f7] mb-2">USAGE:</p>
+								<p class="text-[#c0caf5] ml-4">command [arguments]</p>
+							</div>
+							<div class="mb-4">
+								<p class="text-[#7aa2f7] mb-2">AVAILABLE COMMANDS:</p>
+								<ul class="command-help-list">
+									<li>
+										<div class="command-name">welcome</div>
+										<div class="command-desc">Display welcome message and ASCII art</div>
+									</li>
+									<li>
+										<div class="command-name">whoami</div>
+										<div class="command-desc">Show detailed profile information</div>
+									</li>
+									<li>
+										<div class="command-name">about</div>
+										<div class="command-desc">View my professional summary</div>
+									</li>
+									<li>
+										<div class="command-name">projects</div>
+										<div class="command-desc">Browse my featured projects</div>
+									</li>
+									<li>
+										<div class="command-name">skills</div>
+										<div class="command-desc">List technical skills and expertise</div>
+									</li>
+									<li>
+										<div class="command-name">experience</div>
+										<div class="command-desc">View work history and roles</div>
+									</li>
+									<li>
+										<div class="command-name">contact</div>
+										<div class="command-desc">Get my contact information</div>
+									</li>
+									<li>
+										<div class="command-name">clear</div>
+										<div class="command-desc">Clear terminal screen</div>
+									</li>
+									<li>
+										<div class="command-name">help</div>
+										<div class="command-desc">Show this help message</div>
+									</li>
+								</ul>
+							</div>
+							<div class="text-[#565f89] text-xs mt-6">
+								<p>Use arrow keys ↑↓ to navigate command history</p>
+								<p>Press Ctrl+L or type 'clear' to clear screen</p>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -409,12 +459,47 @@ import Welcome from '../components/Welcome.astro';
 
 	/* Mobile-specific styles */
 	@media (max-width: 640px) {
-		.command-prompt {
-			word-break: break-all;
+		.mobile-section {
+			@apply bg-[#1a1b26] rounded-lg p-4;
+			border: 1px solid rgba(122, 162, 247, 0.1);
 		}
 
-		.terminal-content-area {
+		.mobile-section h2 {
+			@apply mb-4;
+		}
+
+		/* Adjust command output for mobile */
+		.command-output {
+			@apply pl-4;
+			border-left: 1px solid rgba(86, 95, 137, 0.3);
+		}
+
+		/* Make links more touchable */
+		a {
+			@apply py-2;
+		}
+
+		/* Improve mobile scrolling */
+		body {
+			@apply overflow-hidden;
+		}
+
+		.block.sm\:hidden {
+			height: 100vh;
+			overflow-y: auto;
 			-webkit-overflow-scrolling: touch;
+		}
+
+		/* Section spacing */
+		.space-y-8 > * {
+			@apply mb-8;
+		}
+
+		/* Mobile footer */
+		.fixed.bottom-0 {
+			@apply text-center shadow-lg;
+			background: rgba(26, 27, 38, 0.95);
+			backdrop-filter: blur(8px);
 		}
 	}
 
