@@ -117,6 +117,110 @@ import Welcome from '../components/Welcome.astro';
 					<div id="skills"><Skills /></div>
 					<div id="experience"><Experience /></div>
 					<div id="contact"><Contact /></div>
+					<div id="ls">
+						<div class="command-output">
+							<div class="text-[#bb9af7] font-bold mb-2">Directory listing of ~/portfolio</div>
+							<div class="space-y-1">
+								<div class="flex items-center gap-2">
+									<span class="text-[#565f89]">drwxr-xr-x</span>
+									<span class="text-[#7aa2f7]">about/</span>
+									<span class="text-[#565f89] ml-auto">professional summary</span>
+								</div>
+								<div class="flex items-center gap-2">
+									<span class="text-[#565f89]">drwxr-xr-x</span>
+									<span class="text-[#7aa2f7]">projects/</span>
+									<span class="text-[#565f89] ml-auto">featured work</span>
+								</div>
+								<div class="flex items-center gap-2">
+									<span class="text-[#565f89]">drwxr-xr-x</span>
+									<span class="text-[#7aa2f7]">skills/</span>
+									<span class="text-[#565f89] ml-auto">technical expertise</span>
+								</div>
+								<div class="flex items-center gap-2">
+									<span class="text-[#565f89]">drwxr-xr-x</span>
+									<span class="text-[#7aa2f7]">experience/</span>
+									<span class="text-[#565f89] ml-auto">work history</span>
+								</div>
+								<div class="flex items-center gap-2">
+									<span class="text-[#565f89]">drwxr-xr-x</span>
+									<span class="text-[#7aa2f7]">contact/</span>
+									<span class="text-[#565f89] ml-auto">social links</span>
+								</div>
+								<div class="flex items-center gap-2">
+									<span class="text-[#565f89]">-rw-r--r--</span>
+									<span class="text-[#e0af68]">welcome.txt</span>
+									<span class="text-[#565f89] ml-auto">welcome message</span>
+								</div>
+								<div class="flex items-center gap-2">
+									<span class="text-[#565f89]">-rw-r--r--</span>
+									<span class="text-[#e0af68]">whoami.txt</span>
+									<span class="text-[#565f89] ml-auto">profile info</span>
+								</div>
+							</div>
+							<div class="text-[#565f89] text-xs mt-4">
+								Use 'cd' to navigate or type the command directly (e.g., 'about', 'projects')
+							</div>
+						</div>
+					</div>
+					<div id="neofetch">
+						<div class="command-output">
+							<div class="flex gap-6">
+								<pre class="text-[#7aa2f7]">
+                   ▄▄▄▄▄▄▄▄▄▄▄
+                ▄▀█▀█▀█▀█▀█▀█▀▄
+               █▀█▀█▀█▀█▀█▀█▀█▀█
+              ▄█▀█▀█▀█▀█▀█▀█▀█▀█▄
+             ▀▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▀</pre>
+								<div class="space-y-1">
+									<div class="flex gap-2">
+										<span class="text-[#7aa2f7]">OS:</span>
+										<span class="text-[#c0caf5]">Portfolio v1.0.0</span>
+									</div>
+									<div class="flex gap-2">
+										<span class="text-[#7aa2f7]">Host:</span>
+										<span class="text-[#c0caf5]">dfanso.dev</span>
+									</div>
+									<div class="flex gap-2">
+										<span class="text-[#7aa2f7]">Kernel:</span>
+										<span class="text-[#c0caf5]">DevOps 5.0.1</span>
+									</div>
+									<div class="flex gap-2">
+										<span class="text-[#7aa2f7]">Uptime:</span>
+										<span class="text-[#c0caf5]">24/7</span>
+									</div>
+									<div class="flex gap-2">
+										<span class="text-[#7aa2f7]">Shell:</span>
+										<span class="text-[#c0caf5]">Portfolio-CLI</span>
+									</div>
+									<div class="flex gap-2">
+										<span class="text-[#7aa2f7]">IDE:</span>
+										<span class="text-[#c0caf5]">VS Code / Neovim</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="time">
+						<div class="command-output">
+							<div class="text-[#9ece6a]" id="current-time"></div>
+						</div>
+					</div>
+					<div id="weather">
+						<div class="command-output">
+							<div class="text-[#7aa2f7]">Weather information is not available in the terminal.</div>
+							<div class="text-[#565f89]">Try looking outside your window! 🌤️</div>
+						</div>
+					</div>
+					<div id="matrix">
+						<div class="command-output matrix-animation">
+							<pre class="text-[#9ece6a]">
+Digital rain simulation...
+█ █ █ █ █ █ █ █ █ █
+ █ █ █ █ █ █ █ █ █
+█ █ █ █ █ █ █ █ █ █
+ █ █ █ █ █ █ █ █ █</pre>
+						</div>
+					</div>
 					<div id="help">
 						<div class="command-list">
 							<p class="text-[#bb9af7] font-bold mb-4">Terminal Portfolio Help</p>
@@ -127,6 +231,10 @@ import Welcome from '../components/Welcome.astro';
 							<div class="mb-4">
 								<p class="text-[#7aa2f7] mb-2">AVAILABLE COMMANDS:</p>
 								<ul class="command-help-list">
+									<li>
+										<div class="command-name">ls</div>
+										<div class="command-desc">List available sections and commands</div>
+									</li>
 									<li>
 										<div class="command-name">welcome</div>
 										<div class="command-desc">Display welcome message and ASCII art</div>
@@ -162,6 +270,22 @@ import Welcome from '../components/Welcome.astro';
 									<li>
 										<div class="command-name">help</div>
 										<div class="command-desc">Show this help message</div>
+									</li>
+									<li>
+										<div class="command-name">neofetch</div>
+										<div class="command-desc">Display system information</div>
+									</li>
+									<li>
+										<div class="command-name">time</div>
+										<div class="command-desc">Show current time</div>
+									</li>
+									<li>
+										<div class="command-name">weather</div>
+										<div class="command-desc">Check the weather (sort of)</div>
+									</li>
+									<li>
+										<div class="command-name">matrix</div>
+										<div class="command-desc">Display the matrix animation</div>
 									</li>
 								</ul>
 							</div>
@@ -350,6 +474,18 @@ import Welcome from '../components/Welcome.astro';
 	window.addEventListener('load', () => {
 		new Terminal();
 	});
+
+	// Add time update functionality
+	function updateTime() {
+		const timeDiv = document.getElementById('current-time');
+		if (timeDiv) {
+			const now = new Date();
+			timeDiv.textContent = now.toLocaleTimeString();
+		}
+	}
+
+	setInterval(updateTime, 1000);
+	updateTime();
 </script>
 
 <style>
@@ -497,9 +633,19 @@ import Welcome from '../components/Welcome.astro';
 
 		/* Mobile footer */
 		.fixed.bottom-0 {
-			@apply text-center shadow-lg;
+			@apply text-center shadow-lg z-50;
 			background: rgba(26, 27, 38, 0.95);
 			backdrop-filter: blur(8px);
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			padding: 0.75rem;
+		}
+
+		/* Ensure content doesn't hide behind footer */
+		.p-4.pb-20 {
+			padding-bottom: 5rem;
 		}
 	}
 
@@ -536,5 +682,16 @@ import Welcome from '../components/Welcome.astro';
 
 	.command-desc {
 		@apply text-[#c0caf5] opacity-80;
+	}
+
+	/* Matrix animation */
+	.matrix-animation pre {
+		animation: matrix 2s infinite;
+		font-family: 'Fira Code', monospace;
+	}
+
+	@keyframes matrix {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.7; }
 	}
 </style>
