@@ -41,30 +41,37 @@ const projects = [
             { icon: '🍃', name: 'MongoDB' },
             { icon: '💳', name: 'PayPal' }
         ]
-    },
-
+    }
 ];
 ---
 
 <section class:list={[className]}>
-    <h2 class="section-title text-sm flex items-center gap-2">
-        <span class="text-[#9ece6a] font-mono">❯</span> #projects
-    </h2>
-    <div class="ml-4 border-l-2 border-[#565f89] pl-3 space-y-5">
-        {projects.map(project => (
-            <div class="project">
-                <h3 class="text-[#7aa2f7] font-bold text-sm flex items-center gap-2">
-                    <span class="command-prompt">└─▶</span> <pre class="inline text-[#bb9af7]">[{project.type}]</pre> ./{project.name}
-                </h3>
-                <p class="ml-3 mb-1.5 text-sm">{project.description}</p>
-                <div class="ml-3 text-xs text-[#9ece6a] flex flex-wrap gap-2">
-                    {project.tech.map(tech => (
-                        <span class="flex items-center gap-1">
-                            <pre class="text-[#7aa2f7]">{tech.icon}</pre> {tech.name}
-                        </span>
-                    ))}
+    <div class="command-output">
+        <div class="text-[#bb9af7] font-bold mb-2">Featured Projects</div>
+        <div class="space-y-6">
+            {projects.map((project, index) => (
+                <div class="project-entry">
+                    <div class="flex items-center gap-2">
+                        <span class="text-[#565f89]">{index === projects.length - 1 ? '└─▶' : '├─▶'}</span>
+                        <span class="text-[#e0af68]">cat</span>
+                        <span class="text-[#7aa2f7]">projects/{project.name}/</span>
+                        <span class="text-[#565f89]">type:</span>
+                        <span class="text-[#f7768e]">{project.type}</span>
+                    </div>
+                    <div class="ml-6 mt-2">
+                        <div class="text-[#c0caf5]">{project.description}</div>
+                        <div class="mt-2 flex flex-wrap gap-3">
+                            {project.tech.map(tech => (
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[#565f89]">│</span>
+                                    <span class="text-[#7aa2f7]">{tech.icon}</span>
+                                    <span class="text-[#9ece6a] text-sm">{tech.name}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        ))}
+            ))}
+        </div>
     </div>
 </section> 

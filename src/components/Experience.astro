@@ -40,25 +40,28 @@ const experiences = [
 ---
 
 <section class:list={[className]}>
-    <h2 class="section-title text-sm flex items-center gap-2">
-        <span class="text-[#9ece6a] font-mono">❯</span> #experience
-    </h2>
-    <div class="ml-4 border-l-2 border-[#565f89] pl-3 space-y-5">
-        {experiences.map(exp => (
-            <div class="experience">
-                <h3 class="text-[#7aa2f7] font-bold text-sm flex items-center gap-2">
-                    <span class="command-prompt">└─▶</span> <pre class="inline text-[#bb9af7]">[{exp.type}]</pre> cat {exp.file}
-                </h3>
-                <div class="ml-3">
-                    <p class="text-[#9ece6a] text-sm">{exp.title}</p>
-                    <p class="text-xs text-[#7aa2f7]">{exp.period}</p>
-                    <ul class="list-none ml-4 mt-1.5 space-y-1 text-sm">
+    <div class="command-output">
+        <div class="text-[#bb9af7] font-bold mb-2">Experience History</div>
+        <div class="space-y-6">
+            {experiences.map(exp => (
+                <div class="experience-entry">
+                    <div class="flex items-center gap-2 text-[#7aa2f7]">
+                        <span class="text-[#565f89]">└─▶</span>
+                        <span class="text-[#e0af68]">{exp.type}</span>
+                        <span class="text-[#565f89]">in</span>
+                        <span class="text-[#9ece6a]">{exp.title}</span>
+                    </div>
+                    <div class="ml-6 mt-1 text-[#565f89] text-xs">{exp.period}</div>
+                    <div class="ml-6 mt-2 space-y-1">
                         {exp.responsibilities.map(resp => (
-                            <li><span class="text-[#9ece6a]">▶</span> {resp}</li>
+                            <div class="flex items-start gap-2">
+                                <span class="text-[#565f89]">│</span>
+                                <span class="text-[#c0caf5]">{resp}</span>
+                            </div>
                         ))}
-                    </ul>
+                    </div>
                 </div>
-            </div>
-        ))}
+            ))}
+        </div>
     </div>
 </section> 
