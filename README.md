@@ -1,38 +1,72 @@
-# Astro Starter Kit: Basics
+# DFanso's Terminal Portfolio 🚀
 
-```sh
-npm create astro@latest -- --template basics
+Welcome to my personal portfolio website! This is a unique terminal-style portfolio built with Astro and TypeScript, providing an interactive command-line interface to explore my work and experience.
+
+## 🌟 Live Demo
+Visit my portfolio at [itsme.dfanso.dev](https://itsme.dfanso.dev)
+
+## ✨ Features
+
+### 🖥️ Terminal Interface
+- Interactive command-line experience
+- Real terminal-like behavior
+- Command history navigation (↑↓ keys)
+- Custom prompt styling
+- Cursor animation
+
+### 💻 Available Commands
+- `help` - Show all available commands
+- `whoami` - Display profile information
+- `about` - View professional summary
+- `projects` - Browse featured projects
+- `skills` - List technical expertise
+- `experience` - View work history
+- `contact` - Get contact information
+- `clear` - Clear terminal screen (Ctrl+L)
+- `ls` - List available sections
+- `neofetch` - Display system information
+- `time` - Show current time
+- `weather` - Check weather (fun response)
+- `matrix` - Display matrix animation
+- `ping` - Test connection
+
+### 🎯 Special Features
+- Copy/Paste functionality with visual feedback
+- Mobile-responsive design with dedicated mobile view
+- Smooth animations and transitions
+- Custom terminal-style scrollbar
+- Command auto-completion (coming soon)
+
+## 🛠️ Tech Stack
+- [Astro](https://astro.build/) - Static Site Generator
+- [TypeScript](https://www.typescriptlang.org/) - Type Safety
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [Vercel](https://vercel.com/) - Deployment
+
+## 🚀 Development
+
+1. Clone the repository:
+```bash
+git clone https://github.com/dfanso/itsme.dfanso.dev.git
+cd itsme.dfanso.dev
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+2. Install dependencies:
+```bash
+npm install
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+3. Start development server:
+```bash
+npm run dev
+```
 
-## 🧞 Commands
+4. Build for production:
+```bash
+npm run build
+```
 
-All commands are run from the root of the project, from a terminal:
+## 🧞 Available Commands
 
 | Command                   | Action                                           |
 | :------------------------ | :----------------------------------------------- |
@@ -41,8 +75,25 @@ All commands are run from the root of the project, from a terminal:
 | `npm run build`           | Build your production site to `./dist/`          |
 | `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
+## 📱 Mobile Support
+- Dedicated mobile view for better UX on small screens
+- Touch-friendly interface
+- Responsive layout and typography
+- Bottom navigation for easy access
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## 🔑 Keyboard Shortcuts
+- `↑` / `↓` - Navigate command history
+- `Ctrl + L` - Clear screen
+- `Ctrl + C` - Copy selected text
+- `Ctrl + V` - Paste text
+
+## 📄 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Credits
+Created with ❤️ by [DFanso](https://github.com/dfanso)
+
+Feel free to reach out to me on [GitHub](https://github.com/dfanso) or through my portfolio site if you have any questions!
+
+
