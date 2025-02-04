@@ -29,13 +29,18 @@ Visit my portfolio at [itsme.dfanso.dev](https://itsme.dfanso.dev)
 - `weather` - Check weather (fun response)
 - `matrix` - Display matrix animation
 - `ping` - Test connection
+- `welcome` - Show welcome message
 
 ### 🎯 Special Features
+- Intelligent command auto-completion
+  - Press `Tab` to complete commands
+  - Real-time suggestions as you type
+  - Click suggestions or use keyboard
+  - Terminal-style dimmed completion preview
 - Copy/Paste functionality with visual feedback
 - Mobile-responsive design with dedicated mobile view
 - Smooth animations and transitions
 - Custom terminal-style scrollbar
-- Command auto-completion (coming soon)
 
 ## 🛠️ Tech Stack
 - [Astro](https://astro.build/) - Static Site Generator
@@ -87,6 +92,7 @@ npm run build
 - `Ctrl + L` - Clear screen
 - `Ctrl + C` - Copy selected text
 - `Ctrl + V` - Paste text
+- `Tab` - Auto-complete commands
 
 ## 📄 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
