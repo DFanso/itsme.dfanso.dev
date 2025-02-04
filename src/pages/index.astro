@@ -8,8 +8,6 @@ import Projects from '../components/Projects.astro';
 import Experience from '../components/Experience.astro';
 import Welcome from '../components/Welcome.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
@@ -348,6 +346,13 @@ Digital rain simulation...
 		private commandHistory: string[] = [];
 		private historyIndex: number = -1;
 		private awaitingProjectResponse: boolean = false;
+		private availableCommands: string[] = [
+			'help', 'whoami', 'about', 'projects', 'skills', 
+			'experience', 'contact', 'clear', 'ls', 'neofetch', 
+			'time', 'weather', 'matrix', 'ping', 'welcome'
+		];
+		private suggestionsContainer: HTMLElement | null = null;
+
 
 		constructor() {
 			this.terminal = document.getElementById('terminal') as HTMLElement;
@@ -355,11 +360,77 @@ Digital rain simulation...
 			this.inputLine = document.getElementById('input-line') as HTMLElement;
 			this.initializeTerminal();
 			this.initializeClipboard();
+			this.createSuggestionsContainer();
+		}
+
+		private createSuggestionsContainer(): void {
+			this.suggestionsContainer = document.createElement('div');
+			this.suggestionsContainer.className = 'suggestions-container hidden';
+			this.terminal.appendChild(this.suggestionsContainer);
+		}
+
+		private showSuggestions(input: string): void {
+			if (!this.suggestionsContainer) return;
+
+			if (!input) {
+				this.suggestionsContainer.classList.add('hidden');
+				return;
+			}
+
+			const suggestions = this.availableCommands.filter(cmd => 
+				cmd.startsWith(input.toLowerCase()) && cmd !== input.toLowerCase()
+			);
+
+			if (suggestions.length === 0) {
+				this.suggestionsContainer.classList.add('hidden');
+				return;
+			}
+
+			this.suggestionsContainer.innerHTML = suggestions
+				.map(s => {
+					const matchedPart = s.substring(0, input.length);
+					const remainingPart = s.substring(input.length);
+					return `<div class="suggestion-item" data-command="${s}">
+						<span class="matched-text">${matchedPart}</span><span class="remaining-text">${remainingPart}</span>
+					</div>`;
+				})
+				.join('');
+
+			this.suggestionsContainer.classList.remove('hidden');
+
+			// Position suggestions below current input
+			const inputRect = this.inputLine.getBoundingClientRect();
+			const terminalRect = this.terminal.getBoundingClientRect();
+			this.suggestionsContainer.style.top = `${inputRect.bottom - terminalRect.top}px`;
+			this.suggestionsContainer.style.left = `${inputRect.left - terminalRect.left}px`;
+
+			// Add click handlers for suggestions
+			this.suggestionsContainer.querySelectorAll('.suggestion-item').forEach(item => {
+				item.addEventListener('click', () => {
+					this.currentInput = (item as HTMLElement).dataset.command || '';
+					this.updateInputLine();
+					this.suggestionsContainer?.classList.add('hidden');
+				});
+			});
 		}
 
 		private initializeTerminal(): void {
-			document.addEventListener('click', () => this.focusInput());
+			document.addEventListener('click', (e) => {
+				const target = e.target as HTMLElement;
+				if (!target.closest('.suggestions-container')) {
+					this.suggestionsContainer?.classList.add('hidden');
+				}
+				this.focusInput();
+			});
+
 			document.addEventListener('keydown', (e: KeyboardEvent) => {
+				// Handle Tab completion
+				if (e.key === 'Tab') {
+					e.preventDefault();
+					this.handleTabCompletion();
+					return;
+				}
+
 				// Handle Ctrl+C and Ctrl+V first
 				if (e.ctrlKey || e.metaKey) {
 					if (e.key === 'c') {
@@ -379,9 +450,11 @@ Digital rain simulation...
 
 				// Then handle other keyboard inputs
 				if (e.key === 'Enter') {
+					this.suggestionsContainer?.classList.add('hidden');
 					this.handleEnter();
 				} else if (e.key === 'Backspace') {
 					this.handleBackspace();
+					this.showSuggestions(this.currentInput);
 				} else if (e.key === 'ArrowUp') {
 					this.handleArrowUp();
 					e.preventDefault();
@@ -390,8 +463,23 @@ Digital rain simulation...
 					e.preventDefault();
 				} else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
 					this.handleInput(e.key);
+					this.showSuggestions(this.currentInput + e.key);
 				}
 			});
+		}
+
+		private handleTabCompletion(): void {
+			const suggestions = this.availableCommands.filter(cmd => 
+				cmd.startsWith(this.currentInput.toLowerCase())
+			);
+
+			if (suggestions.length === 1) {
+				this.currentInput = suggestions[0];
+				this.updateInputLine();
+				this.suggestionsContainer?.classList.add('hidden');
+			} else if (suggestions.length > 1) {
+				this.showSuggestions(this.currentInput);
+			}
 		}
 
 		private initializeClipboard(): void {
@@ -887,5 +975,49 @@ Digital rain simulation...
 	/* Selection style */
 	::selection {
 		@apply bg-[#7aa2f7]/30 text-[#c0caf5];
+	}
+
+	/* Command Auto-completion Styles */
+	.suggestions-container {
+		@apply absolute bg-[#1a1b26] border border-[#7aa2f7]/20 rounded-md 
+			   shadow-lg z-50 max-h-48 overflow-y-auto min-w-[150px];
+	}
+
+	.suggestions-container.hidden {
+		display: none;
+	}
+
+	.suggestion-item {
+		@apply px-4 py-2 text-[#c0caf5] hover:bg-[#7aa2f7]/10 cursor-pointer
+			   transition-colors text-sm font-mono;
+	}
+
+	.suggestion-item .matched-text {
+		@apply text-[#c0caf5];
+	}
+
+	.suggestion-item .remaining-text {
+		@apply text-[#c0caf5] opacity-50;
+	}
+
+	.suggestion-item:hover .remaining-text {
+		@apply opacity-70;
+	}
+
+	.suggestion-item:not(:last-child) {
+		@apply border-b border-[#7aa2f7]/10;
+	}
+
+	/* Ensure suggestions container scrollbar matches terminal style */
+	.suggestions-container::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	.suggestions-container::-webkit-scrollbar-track {
+		@apply bg-[#1a1b26];
+	}
+
+	.suggestions-container::-webkit-scrollbar-thumb {
+		@apply bg-[#7aa2f7]/20 rounded-full hover:bg-[#7aa2f7]/30 transition-colors;
 	}
 </style>
