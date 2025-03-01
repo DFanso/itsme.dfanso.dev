@@ -15,11 +15,18 @@ import profileImage from '../assets/profile.webp';
 		<title>Leo Felcianas - DevOps Engineer & Software Developer</title>
 		<meta name="title" content="Leo Felcianas - DevOps Engineer & Software Developer">
 		<meta name="description" content="DevOps/Backend specialist crafting efficient and scalable solutions. Expert in cloud architecture, containerization, and modern development practices.">
+		<meta name="author" content="Leo Felcianas">
+		<meta name="keywords" content="DevOps Engineer, Software Developer, Backend Developer, Cloud Architecture, Containerization, CI/CD, Kubernetes, Docker, NestJS, TypeScript">
+		<link rel="canonical" href="https://itsme.dfanso.dev/" />
 
 		<!-- Favicons -->
 		<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90' font-family='Fira Code' font-weight='bold' text-anchor='middle' x='50' y='50' dominant-baseline='middle' fill='%237aa2f7'>LF</text></svg>" />
 		<meta name="msapplication-TileColor" content="#1a1b26">
 		<meta name="theme-color" content="#1a1b26">
+		<meta name="robots" content="index, follow">
+		<meta name="googlebot" content="index, follow">
+		<meta name="revisit-after" content="7 days">
+		<meta name="rating" content="general">
 
 		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website">
@@ -38,6 +45,29 @@ import profileImage from '../assets/profile.webp';
 		<meta property="twitter:image" content={profileImage.src}>
 
 		<meta name="view-transition" content="same-origin" />
+
+		<!-- Structured Data / JSON-LD -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "Person",
+			"name": "Leo Felcianas",
+			"jobTitle": "DevOps Engineer & Software Developer",
+			"description": "DevOps/Backend specialist crafting efficient and scalable solutions. Expert in cloud architecture, containerization, and modern development practices.",
+			"url": "https://itsme.dfanso.dev/",
+			"image": "https://itsme.dfanso.dev/profile.webp",
+			"sameAs": [
+				"https://github.com/dfanso",
+				"https://linkedin.com/in/dfanso"
+			],
+			"alumniOf": {
+				"@type": "CollegeOrUniversity",
+				"name": "University of Plymouth",
+				"sameAs": "https://www.plymouth.ac.uk/"
+			},
+			"knowsAbout": ["DevOps", "Cloud Architecture", "Backend Development", "Kubernetes", "Docker", "NestJS", "TypeScript"]
+		}
+		</script>
 	</head>
 	<body class="bg-[#1a1b26] text-[#c0caf5] h-screen overflow-hidden font-mono selection:bg-[#7aa2f7] selection:text-[#1a1b26]">
 		<div class="fixed inset-0 -z-10 bg-[#1a1b26]">
