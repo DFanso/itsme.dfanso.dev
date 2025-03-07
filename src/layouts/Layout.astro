@@ -1,5 +1,6 @@
 ---
 import profileImage from '../assets/profile.webp';
+import SpeedInsights  from '@vercel/speed-insights/astro';
 
 interface Props {
 	title?: string;
@@ -75,8 +76,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		
-		<!-- Vercel Speed Insights -->
-		<script defer src="/_vercel/speed-insights/script.js"></script>
+		
 
 		<!-- Structured Data / JSON-LD -->
 		<script type="application/ld+json">
@@ -147,6 +147,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 		<main class="relative h-full">
 			<slot />
 		</main>
+		<SpeedInsights />
 	</body>
 </html>
 
