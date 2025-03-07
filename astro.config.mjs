@@ -15,9 +15,9 @@ export default defineConfig({
       lastmod: new Date(),
     }),
   ],
-  output: 'static',
+  output: 'server',
   adapter: vercel({ 
     webAnalytics: { enabled: true }
   }),
-  site: 'https://itsme.dfanso.dev',
+  site: 'https://itsme.dfanso.dev'
 });
