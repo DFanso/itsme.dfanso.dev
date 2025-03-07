@@ -1,5 +1,21 @@
 ---
 import profileImage from '../assets/profile.webp';
+
+interface Props {
+	title?: string;
+	description?: string;
+	image?: string;
+	articleSchema?: boolean;
+}
+
+const {
+	title = "Leo Felcianas - DevOps Engineer & Software Developer",
+	description = "DevOps/Backend specialist crafting efficient and scalable solutions. Expert in cloud architecture, containerization, and modern development practices.",
+	image = profileImage.src,
+	articleSchema = false
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
@@ -12,12 +28,12 @@ import profileImage from '../assets/profile.webp';
 		<meta name="google-site-verification" content="google34f30110b42c1453" />
 		
 		<!-- Primary Meta Tags -->
-		<title>Leo Felcianas - DevOps Engineer & Software Developer</title>
-		<meta name="title" content="Leo Felcianas - DevOps Engineer & Software Developer">
-		<meta name="description" content="DevOps/Backend specialist crafting efficient and scalable solutions. Expert in cloud architecture, containerization, and modern development practices.">
+		<title>{title}</title>
+		<meta name="title" content={title}>
+		<meta name="description" content={description}>
 		<meta name="author" content="Leo Felcianas">
 		<meta name="keywords" content="DevOps Engineer, Software Developer, Backend Developer, Cloud Architecture, Containerization, CI/CD, Kubernetes, Docker, NestJS, TypeScript">
-		<link rel="canonical" href="https://itsme.dfanso.dev/" />
+		<link rel="canonical" href={canonicalURL} />
 
 		<!-- Favicons -->
 		<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90' font-family='Fira Code' font-weight='bold' text-anchor='middle' x='50' y='50' dominant-baseline='middle' fill='%237aa2f7'>LF</text></svg>" />
@@ -27,24 +43,40 @@ import profileImage from '../assets/profile.webp';
 		<meta name="googlebot" content="index, follow">
 		<meta name="revisit-after" content="7 days">
 		<meta name="rating" content="general">
+		
+		<!-- Web App Manifest -->
+		<link rel="manifest" href="/manifest.json">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<meta name="apple-mobile-web-app-title" content="Leo Felcianas">
 
 		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website">
-		<meta property="og:url" content="https://itsme.dfanso.dev/">
-		<meta property="og:title" content="Leo Felcianas - DevOps Engineer & Software Developer">
-		<meta property="og:description" content="DevOps/Backend specialist crafting efficient and scalable solutions. Expert in cloud architecture, containerization, and modern development practices.">
-		<meta property="og:image" content={profileImage.src}>
+		<meta property="og:url" content={canonicalURL}>
+		<meta property="og:title" content={title}>
+		<meta property="og:description" content={description}>
+		<meta property="og:image" content={image}>
 		<meta property="og:image:width" content="400">
 		<meta property="og:image:height" content="400">
+		<meta property="og:locale" content="en_US">
+		<meta property="og:site_name" content="Leo Felcianas">
 
 		<!-- Twitter -->
 		<meta property="twitter:card" content="summary">
-		<meta property="twitter:url" content="https://itsme.dfanso.dev/">
-		<meta property="twitter:title" content="Leo Felcianas - DevOps Engineer & Software Developer">
-		<meta property="twitter:description" content="DevOps/Backend specialist crafting efficient and scalable solutions. Expert in cloud architecture, containerization, and modern development practices.">
-		<meta property="twitter:image" content={profileImage.src}>
+		<meta property="twitter:url" content={canonicalURL}>
+		<meta property="twitter:title" content={title}>
+		<meta property="twitter:description" content={description}>
+		<meta property="twitter:image" content={image}>
 
 		<meta name="view-transition" content="same-origin" />
+		
+		<!-- Preconnect to external resources -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		
+		<!-- Vercel Speed Insights -->
+		<script defer src="/_vercel/speed-insights/script.js"></script>
 
 		<!-- Structured Data / JSON-LD -->
 		<script type="application/ld+json">
@@ -66,6 +98,45 @@ import profileImage from '../assets/profile.webp';
 				"sameAs": "https://www.plymouth.ac.uk/"
 			},
 			"knowsAbout": ["DevOps", "Cloud Architecture", "Backend Development", "Kubernetes", "Docker", "NestJS", "TypeScript"]
+		}
+		</script>
+		
+		{articleSchema && (
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "Article",
+			"headline": title,
+			"description": description,
+			"image": image,
+			"author": {
+				"@type": "Person",
+				"name": "Leo Felcianas",
+				"url": "https://itsme.dfanso.dev/"
+			},
+			"publisher": {
+				"@type": "Person",
+				"name": "Leo Felcianas",
+				"url": "https://itsme.dfanso.dev/"
+			},
+			"url": canonicalURL,
+			"datePublished": new Date().toISOString(),
+			"dateModified": new Date().toISOString()
+		})}>
+		</script>
+		)}
+		
+		<!-- SEO improvement - website schema -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "WebSite",
+			"name": "Leo Felcianas Portfolio",
+			"url": "https://itsme.dfanso.dev/",
+			"potentialAction": {
+				"@type": "SearchAction",
+				"target": "https://itsme.dfanso.dev/?s={search_term_string}",
+				"query-input": "required name=search_term_string"
+			}
 		}
 		</script>
 	</head>
