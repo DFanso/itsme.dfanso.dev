@@ -1,0 +1,12 @@
+# robots.txt for https://itsme.dfanso.dev/
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://itsme.dfanso.dev/sitemap-index.xml
+
+# Ensure crawl efficiency
+Crawl-delay: 5
+
+# Block specific directories if needed
+# Disallow: /private/ 
