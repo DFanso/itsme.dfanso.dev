@@ -2,7 +2,7 @@
 
 Welcome to my personal portfolio website! This is a unique terminal-style portfolio built with Astro and TypeScript, providing an interactive command-line interface to explore my work and experience.
 
-## 🌟 Live Demo
+## 🌟 Live Site
 Visit my portfolio at [itsme.dfanso.dev](https://itsme.dfanso.dev)
 
 ## ✨ Features
