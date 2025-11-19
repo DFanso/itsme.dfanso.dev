@@ -14,48 +14,65 @@ export const prerender = true;
 <Layout>
 	<div class="min-h-screen bg-[#16161e] overflow-hidden">
 		<!-- Mobile Version -->
-		<div class="block sm:hidden min-h-screen bg-[#1a1b26] text-[#c0caf5] overflow-y-auto">
+		<div class="block sm:hidden min-h-screen bg-[#1a1b26] text-[#c0caf5] overflow-y-auto font-mono">
 			<div class="p-4 pb-20 space-y-8">
 				<!-- Mobile Header -->
 				<div class="text-center space-y-4">
-				<Header />
-					<div class="text-sm text-[#565f89]">DevOps Engineer</div>
+					<div class="inline-block p-2 border border-[#7aa2f7]/30 rounded-full bg-[#1a1b26]/50">
+						<Header />
+					</div>
+					<div class="text-sm text-[#565f89] font-bold">
+						<span class="text-[#9ece6a]">➜</span> DevOps Engineer
+					</div>
 				</div>
 
 				<!-- About Section -->
-				<div class="space-y-2">
-					<h2 class="text-[#bb9af7] text-lg font-bold">About Me</h2>
-				<About />
+				<div class="space-y-2 border-l-2 border-[#bb9af7]/30 pl-4">
+					<h2 class="text-[#bb9af7] text-lg font-bold flex items-center gap-2">
+						<span class="text-[#565f89]">./</span>About Me
+					</h2>
+					<About />
 				</div>
 
 				<!-- Skills Section -->
-				<div class="space-y-2">
-					<h2 class="text-[#bb9af7] text-lg font-bold">Skills</h2>
-				<Skills />
+				<div class="space-y-2 border-l-2 border-[#bb9af7]/30 pl-4">
+					<h2 class="text-[#bb9af7] text-lg font-bold flex items-center gap-2">
+						<span class="text-[#565f89]">./</span>Skills
+					</h2>
+					<Skills />
 				</div>
 
 				<!-- Projects Section -->
-				<div class="space-y-2">
-					<h2 class="text-[#bb9af7] text-lg font-bold">Projects</h2>
+				<div class="space-y-2 border-l-2 border-[#bb9af7]/30 pl-4">
+					<h2 class="text-[#bb9af7] text-lg font-bold flex items-center gap-2">
+						<span class="text-[#565f89]">./</span>Projects
+					</h2>
 					<Projects />
 				</div>
 
 				<!-- Experience Section -->
-				<div class="space-y-2">
-					<h2 class="text-[#bb9af7] text-lg font-bold">Experience</h2>
+				<div class="space-y-2 border-l-2 border-[#bb9af7]/30 pl-4">
+					<h2 class="text-[#bb9af7] text-lg font-bold flex items-center gap-2">
+						<span class="text-[#565f89]">./</span>Experience
+					</h2>
 					<Experience />
 				</div>
 
 				<!-- Contact Section -->
-				<div class="space-y-2">
-					<h2 class="text-[#bb9af7] text-lg font-bold">Contact</h2>
-				<Contact />
-			</div>
+				<div class="space-y-2 border-l-2 border-[#bb9af7]/30 pl-4">
+					<h2 class="text-[#bb9af7] text-lg font-bold flex items-center gap-2">
+						<span class="text-[#565f89]">./</span>Contact
+					</h2>
+					<Contact />
+				</div>
 
 				<!-- Mobile Footer -->
-				<div class="fixed bottom-0 left-0 right-0 bg-[#1a1b26] py-4 border-t border-[#565f89]/20">
-					<p class="text-[10px] text-[#7aa2f7]">Made with <span class="text-[#f7768e]">❤</span> by DFanso</p>
-					<p class="text-[10px] text-[#565f89] mt-2">For the full terminal experience, please visit on desktop</p>
+				<div class="fixed bottom-0 left-0 right-0 bg-[#1a1b26]/95 backdrop-blur-sm py-3 border-t border-[#565f89]/20 z-50">
+					<div class="flex justify-center items-center gap-2 text-[10px]">
+						<span class="text-[#7aa2f7]">Made with <span class="text-[#f7768e]">❤</span> by DFanso</span>
+						<span class="text-[#565f89]">|</span>
+						<span class="text-[#9ece6a]">v2.4.2</span>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -97,7 +114,9 @@ export const prerender = true;
 					<!-- Command Input -->
 					<div class="command-block" id="input-line">
 						<div class="command-prompt">
-							<span class="text-[#9ece6a]">❯</span> <span class="text-[#7aa2f7]">dfanso</span><span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> <span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> <span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span> <span class="command-text"></span><span class="cursor"></span>
+							<span class="text-[#9ece6a]">❯</span> <span class="text-[#7aa2f7]">dfanso</span><span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> <span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> <span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span> 
+							<span class="command-text"></span><span class="cursor"></span>
+							<input type="text" id="terminal-input" class="opacity-0 absolute top-0 left-0 h-0 w-0" autocomplete="off" spellcheck="false" />
 						</div>
 					</div>
 				</div>
@@ -343,6 +362,7 @@ Digital rain simulation...
 		private terminal: HTMLElement;
 		private outputContainer: HTMLElement;
 		private inputLine: HTMLElement;
+		private inputField: HTMLInputElement;
 		private currentInput: string = '';
 		private commandHistory: string[] = [];
 		private historyIndex: number = -1;
@@ -359,6 +379,7 @@ Digital rain simulation...
 			this.terminal = document.getElementById('terminal') as HTMLElement;
 			this.outputContainer = document.getElementById('output-container') as HTMLElement;
 			this.inputLine = document.getElementById('input-line') as HTMLElement;
+			this.inputField = document.getElementById('terminal-input') as HTMLInputElement;
 			this.initializeTerminal();
 			this.initializeClipboard();
 			this.createSuggestionsContainer();
@@ -409,22 +430,33 @@ Digital rain simulation...
 			this.suggestionsContainer.querySelectorAll('.suggestion-item').forEach(item => {
 				item.addEventListener('click', () => {
 					this.currentInput = (item as HTMLElement).dataset.command || '';
+					this.inputField.value = this.currentInput;
 					this.updateInputLine();
 					this.suggestionsContainer?.classList.add('hidden');
+					this.inputField.focus();
 				});
 			});
 		}
 
 		private initializeTerminal(): void {
-			document.addEventListener('click', (e) => {
+			// Focus input on click anywhere in terminal
+			this.terminal.addEventListener('click', (e) => {
 				const target = e.target as HTMLElement;
-				if (!target.closest('.suggestions-container')) {
+				if (!target.closest('.suggestions-container') && !target.closest('a')) {
 					this.suggestionsContainer?.classList.add('hidden');
+					this.inputField.focus();
 				}
-				this.focusInput();
 			});
 
-			document.addEventListener('keydown', (e: KeyboardEvent) => {
+			// Handle input changes
+			this.inputField.addEventListener('input', (e) => {
+				const target = e.target as HTMLInputElement;
+				this.currentInput = target.value;
+				this.updateInputLine();
+				this.showSuggestions(this.currentInput);
+			});
+
+			this.inputField.addEventListener('keydown', (e: KeyboardEvent) => {
 				// Handle Tab completion
 				if (e.key === 'Tab') {
 					e.preventDefault();
@@ -432,41 +464,30 @@ Digital rain simulation...
 					return;
 				}
 
-				// Handle Ctrl+C and Ctrl+V first
-				if (e.ctrlKey || e.metaKey) {
-					if (e.key === 'c') {
-						if (window.getSelection()?.toString()) {
-							this.handleCopy(e);
-							return;
-						}
-					} else if (e.key === 'v') {
-						this.handlePaste(e);
-						return;
-					} else if (e.key === 'l') {
-						this.outputContainer.innerHTML = '';
-						e.preventDefault();
-						return;
-					}
+				// Handle Ctrl+L to clear
+				if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
+					this.outputContainer.innerHTML = '';
+					e.preventDefault();
+					return;
 				}
 
-				// Then handle other keyboard inputs
+				// Handle Enter
 				if (e.key === 'Enter') {
 					this.suggestionsContainer?.classList.add('hidden');
 					this.handleEnter();
-				} else if (e.key === 'Backspace') {
-					this.handleBackspace();
-					this.showSuggestions(this.currentInput);
-				} else if (e.key === 'ArrowUp') {
+				} 
+				// Handle Arrow Up/Down for history
+				else if (e.key === 'ArrowUp') {
 					this.handleArrowUp();
 					e.preventDefault();
 				} else if (e.key === 'ArrowDown') {
 					this.handleArrowDown();
 					e.preventDefault();
-				} else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
-					this.handleInput(e.key);
-					this.showSuggestions(this.currentInput + e.key);
 				}
 			});
+			
+			// Initial focus
+			this.inputField.focus();
 		}
 
 		private handleTabCompletion(): void {
@@ -476,6 +497,7 @@ Digital rain simulation...
 
 			if (suggestions.length === 1) {
 				this.currentInput = suggestions[0];
+				this.inputField.value = this.currentInput;
 				this.updateInputLine();
 				this.suggestionsContainer?.classList.add('hidden');
 			} else if (suggestions.length > 1) {
@@ -496,23 +518,11 @@ Digital rain simulation...
 		}
 
 		private handleCopy(e: KeyboardEvent): void {
-			const selection = window.getSelection()?.toString();
-			if (selection) {
-				e.preventDefault();
-				navigator.clipboard.writeText(selection).then(() => {
-					this.showCopyFeedback();
-				});
-			}
+			// Native copy works fine with input field
 		}
 
 		private handlePaste(e: KeyboardEvent): void {
-			e.preventDefault();
-			navigator.clipboard.readText().then((text) => {
-				// Filter out any non-printable characters
-				const cleanText = text.replace(/[^\x20-\x7E]/g, '');
-				this.currentInput += cleanText;
-				this.updateInputLine();
-			});
+			// Native paste works fine with input field
 		}
 
 		private showCopyButton(text: string): void {
@@ -562,7 +572,7 @@ Digital rain simulation...
 		private handleEnter(): void {
 			const command = this.currentInput.trim().toLowerCase();
 			
-			// Clone current input line without cursor
+			// Clone current input line without cursor and input
 			const inputClone = this.inputLine.cloneNode(true) as HTMLElement;
 			inputClone.removeAttribute('id');
 			const commandText = inputClone.querySelector('.command-text');
@@ -572,6 +582,10 @@ Digital rain simulation...
 			const cursor = inputClone.querySelector('.cursor');
 			if (cursor) {
 				cursor.remove();
+			}
+			const input = inputClone.querySelector('input');
+			if (input) {
+				input.remove();
 			}
 
 			// Add command output
@@ -607,6 +621,7 @@ Digital rain simulation...
 
 			// Reset input
 			this.currentInput = '';
+			this.inputField.value = '';
 			this.updateInputLine();
 			this.terminal.scrollTop = this.terminal.scrollHeight;
 		}
@@ -614,6 +629,27 @@ Digital rain simulation...
 		private executeCommand(command: string, outputDiv: HTMLElement): void {
 			if (command === 'clear') {
 				this.outputContainer.innerHTML = '';
+				return;
+			}
+
+			// Handle interactive project response
+			if (this.awaitingProjectResponse) {
+				const response = command.toLowerCase();
+				if (response === 'y' || response === 'yes') {
+					outputDiv.innerHTML = `<div class="text-[#9ece6a] command-output">
+						<p class="mb-2">🔗 Check out more of my projects:</p>
+						<a href="https://github.com/dfanso" target="_blank" class="text-[#7aa2f7] hover:text-[#9ece6a] transition-colors">
+							<span class="text-[#565f89]">└─▶</span> Visit my GitHub Profile
+						</a>
+					</div>`;
+				} else if (response === 'n' || response === 'no') {
+					outputDiv.innerHTML = '<div class="text-[#9ece6a] command-output"><span class="text-[#565f89]">└─▶</span> Alright! Feel free to explore other commands using `help`.</div>';
+				} else {
+					outputDiv.innerHTML = '<div class="text-[#f7768e] command-output"><span class="text-[#565f89]">└─▶</span> Please answer with y/n.</div>';
+					this.awaitingProjectResponse = true;
+					return;
+				}
+				this.awaitingProjectResponse = false;
 				return;
 			}
 
@@ -633,40 +669,25 @@ Digital rain simulation...
 					// Set a flag to handle the next input differently
 					this.awaitingProjectResponse = true;
 				}
-			} else if (this.awaitingProjectResponse) {
-				const response = command.toLowerCase();
-				if (response === 'y' || response === 'Y') {
-					outputDiv.innerHTML = `<div class="text-[#9ece6a] command-output">
-						<p class="mb-2">🔗 Check out more of my projects:</p>
-						<a href="https://github.com/dfanso" target="_blank" class="text-[#7aa2f7] hover:text-[#9ece6a] transition-colors">
-							<span class="text-[#565f89]">└─▶</span> Visit my GitHub Profile
-						</a>
-					</div>`;
-				} else if (response === 'n' || response === 'N') {
-					outputDiv.innerHTML = '<div class="text-[#9ece6a] command-output"><span class="text-[#565f89]">└─▶</span> Alright! Feel free to explore other commands using `help`.</div>';
-				} else {
-					outputDiv.innerHTML = '<div class="text-[#f7768e] command-output"><span class="text-[#565f89]">└─▶</span> Please answer with y/n.</div>';
-					this.awaitingProjectResponse = true;
-					return;
-				}
-				this.awaitingProjectResponse = false;
 			} else {
 				outputDiv.innerHTML = `<div class="text-[#f7768e] command-output"><span class="text-[#565f89]">└─▶</span> Command not found: ${command}</div>`;
 			}
 		}
 
 		private handleBackspace(): void {
-			if (this.currentInput.length > 0) {
-				this.currentInput = this.currentInput.slice(0, -1);
-				this.updateInputLine();
-			}
+			// Handled natively by input field
 		}
 
 		private handleArrowUp(): void {
 			if (this.historyIndex > 0) {
 				this.historyIndex--;
 				this.currentInput = this.commandHistory[this.historyIndex];
+				this.inputField.value = this.currentInput;
 				this.updateInputLine();
+				// Move cursor to end
+				setTimeout(() => {
+					this.inputField.selectionStart = this.inputField.selectionEnd = this.currentInput.length;
+				}, 0);
 			}
 		}
 
@@ -678,12 +699,12 @@ Digital rain simulation...
 				this.historyIndex = this.commandHistory.length;
 				this.currentInput = '';
 			}
+			this.inputField.value = this.currentInput;
 			this.updateInputLine();
 		}
 
 		private handleInput(key: string): void {
-			this.currentInput += key;
-			this.updateInputLine();
+			// Handled by input event listener
 		}
 
 		private updateInputLine(): void {
@@ -694,16 +715,7 @@ Digital rain simulation...
 		}
 
 		private focusInput(): void {
-			// Just ensure cursor is visible
-			const cursor = this.inputLine.querySelector('.cursor');
-			if (!cursor) {
-				const newCursor = document.createElement('span');
-				newCursor.className = 'cursor';
-				const commandText = this.inputLine.querySelector('.command-text');
-				if (commandText) {
-					commandText.parentNode?.insertBefore(newCursor, commandText.nextSibling);
-				}
-			}
+			this.inputField.focus();
 		}
 	}
 
