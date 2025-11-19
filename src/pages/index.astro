@@ -12,343 +12,271 @@ export const prerender = true;
 ---
 
 <Layout>
-	<div class="min-h-screen bg-[#16161e] overflow-hidden">
-		<!-- Mobile Version -->
-		<div class="block sm:hidden min-h-screen bg-[#1a1b26] text-[#c0caf5] overflow-y-auto font-mono">
-			<div class="p-4 pb-20 space-y-8">
-				<!-- Mobile Header -->
-				<div class="text-center space-y-4">
-					<div class="inline-block p-2 border border-[#7aa2f7]/30 rounded-full bg-[#1a1b26]/50">
-						<Header />
+	<div class="min-h-screen bg-[#16161e] overflow-hidden flex items-center justify-center p-2 sm:p-4">
+		<div class="terminal-container w-full max-w-6xl shadow-2xl border border-[#7aa2f7]/20 rounded overflow-hidden flex flex-col">
+			<!-- Terminal Header -->
+			<div class="terminal-title-bar shrink-0">
+				<div class="terminal-buttons">
+					<span class="terminal-button bg-[#f7768e]"></span>
+					<span class="terminal-button bg-[#e0af68]"></span>
+					<span class="terminal-button bg-[#9ece6a]"></span>
+				</div>
+				<div class="terminal-title">guest@dfanso.dev:~</div>
+			</div>
+
+			<!-- Terminal Content -->
+			<div id="terminal" class="terminal-content-area flex-1 relative" onclick="document.getElementById('terminal-input').focus()">
+				<div id="output-container">
+					<!-- Welcome message -->
+					<div class="command-block">
+						<div class="command-prompt"><span class="text-[#9ece6a]">❯</span> <span class="text-[#7aa2f7]">dfanso</span><span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> <span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> <span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span></div>
+						<div class="command-output"><Welcome /></div>
 					</div>
-					<div class="text-sm text-[#565f89] font-bold">
-						<span class="text-[#9ece6a]">➜</span> DevOps Engineer
+
+					<!-- Whoami command -->
+					<div class="command-block">
+						<div class="command-prompt"><span class="text-[#9ece6a]">❯</span> <span class="text-[#7aa2f7]">dfanso</span><span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> <span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> <span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span></div>
+						<div class="command-output"><Header /></div>
 					</div>
 				</div>
 
-				<!-- About Section -->
-				<div class="space-y-2 border-l-2 border-[#bb9af7]/30 pl-4">
-					<h2 class="text-[#bb9af7] text-lg font-bold flex items-center gap-2">
-						<span class="text-[#565f89]">./</span>About Me
-					</h2>
-					<About />
-				</div>
-
-				<!-- Skills Section -->
-				<div class="space-y-2 border-l-2 border-[#bb9af7]/30 pl-4">
-					<h2 class="text-[#bb9af7] text-lg font-bold flex items-center gap-2">
-						<span class="text-[#565f89]">./</span>Skills
-					</h2>
-					<Skills />
-				</div>
-
-				<!-- Projects Section -->
-				<div class="space-y-2 border-l-2 border-[#bb9af7]/30 pl-4">
-					<h2 class="text-[#bb9af7] text-lg font-bold flex items-center gap-2">
-						<span class="text-[#565f89]">./</span>Projects
-					</h2>
-					<Projects />
-				</div>
-
-				<!-- Experience Section -->
-				<div class="space-y-2 border-l-2 border-[#bb9af7]/30 pl-4">
-					<h2 class="text-[#bb9af7] text-lg font-bold flex items-center gap-2">
-						<span class="text-[#565f89]">./</span>Experience
-					</h2>
-					<Experience />
-				</div>
-
-				<!-- Contact Section -->
-				<div class="space-y-2 border-l-2 border-[#bb9af7]/30 pl-4">
-					<h2 class="text-[#bb9af7] text-lg font-bold flex items-center gap-2">
-						<span class="text-[#565f89]">./</span>Contact
-					</h2>
-					<Contact />
-				</div>
-
-				<!-- Mobile Footer -->
-				<div class="fixed bottom-0 left-0 right-0 bg-[#1a1b26]/95 backdrop-blur-sm py-3 border-t border-[#565f89]/20 z-50">
-					<div class="flex justify-center items-center gap-2 text-[10px]">
-						<span class="text-[#7aa2f7]">Made with <span class="text-[#f7768e]">❤</span> by DFanso</span>
-						<span class="text-[#565f89]">|</span>
-						<span class="text-[#9ece6a]">v2.4.2</span>
+				<!-- Command Input -->
+				<div class="command-block" id="input-line">
+					<div class="command-prompt">
+						<span class="text-[#9ece6a]">❯</span> <span class="text-[#7aa2f7]">dfanso</span><span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> <span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> <span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span> 
+						<span class="command-text"></span><span class="cursor"></span>
+						<input type="text" id="terminal-input" class="opacity-0 absolute top-0 left-0 h-full w-full cursor-text" autocomplete="off" spellcheck="false" />
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<!-- Desktop Terminal Version -->
-		<div class="hidden sm:flex items-center justify-center min-h-screen p-4">
-			<div class="terminal-container w-full max-w-6xl shadow-2xl border border-[#7aa2f7]/20 rounded overflow-hidden">
-				<!-- Mobile Notice -->
-				<div class="sm:hidden bg-[#1a1b26] border border-[#f7768e] rounded-lg p-3 mb-4 text-center">
-					<p class="text-[#f7768e] text-sm">⚠️ For the best terminal experience, please use a desktop browser.</p>
-				</div>
+			<!-- Terminal Footer -->
+			<div class="terminal-footer shrink-0 p-2 text-center bg-[#1a1b26] border-t border-[#7aa2f7]/10">
+				<p class="text-[10px] sm:text-xs text-[#7aa2f7]">Made with <span class="text-[#f7768e]">❤</span> by DFanso</p>
+			</div>
 
-				<!-- Terminal Header -->
-				<div class="terminal-title-bar">
-					<div class="terminal-buttons">
-						<span class="terminal-button bg-[#f7768e]"></span>
-						<span class="terminal-button bg-[#e0af68]"></span>
-						<span class="terminal-button bg-[#9ece6a]"></span>
-					</div>
-					<div class="terminal-title">guest@dfanso.dev:~</div>
-				</div>
-
-				<!-- Terminal Content -->
-				<div id="terminal" class="terminal-content-area">
-					<div id="output-container">
-						<!-- Welcome message -->
-						<div class="command-block">
-							<div class="command-prompt"><span class="text-[#9ece6a]">❯</span> <span class="text-[#7aa2f7]">dfanso</span><span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> <span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> <span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span></div>
-							<div class="command-output"><Welcome /></div>
-						</div>
-
-						<!-- Whoami command -->
-						<div class="command-block">
-							<div class="command-prompt"><span class="text-[#9ece6a]">❯</span> <span class="text-[#7aa2f7]">dfanso</span><span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> <span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> <span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span></div>
-							<div class="command-output"><Header /></div>
-						</div>
-					</div>
-
-					<!-- Command Input -->
-					<div class="command-block" id="input-line">
-						<div class="command-prompt">
-							<span class="text-[#9ece6a]">❯</span> <span class="text-[#7aa2f7]">dfanso</span><span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> <span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> <span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span> 
-							<span class="command-text"></span><span class="cursor"></span>
-							<input type="text" id="terminal-input" class="opacity-0 absolute top-0 left-0 h-0 w-0" autocomplete="off" spellcheck="false" />
-						</div>
-					</div>
-				</div>
-
-				<!-- Terminal Footer -->
-				<div class="terminal-footer">
-					<p class="text-xs text-[#7aa2f7]">Made with <span class="text-[#f7768e]">❤</span> by DFanso</p>
-				</div>
-
-				<!-- Hidden Components -->
-				<div id="components" class="hidden">
-					<div id="welcome"><Welcome /></div>
-					<div id="whoami"><Header /></div>
-					<div id="about"><About /></div>
-					<div id="projects"><Projects /></div>
-					<div id="skills"><Skills /></div>
-					<div id="experience"><Experience /></div>
-					<div id="contact"><Contact /></div>
-					<div id="ls">
-						<div class="command-output">
-							<div class="text-[#bb9af7] font-bold mb-2">Directory listing of ~/portfolio</div>
-							<div class="space-y-1">
-								<div class="flex items-center gap-2">
-									<span class="text-[#565f89]">drwxr-xr-x</span>
-									<span class="text-[#7aa2f7]">about/</span>
-									<span class="text-[#565f89] ml-auto">professional summary</span>
-								</div>
-								<div class="flex items-center gap-2">
-									<span class="text-[#565f89]">drwxr-xr-x</span>
-									<span class="text-[#7aa2f7]">projects/</span>
-									<span class="text-[#565f89] ml-auto">featured work</span>
-								</div>
-								<div class="flex items-center gap-2">
-									<span class="text-[#565f89]">drwxr-xr-x</span>
-									<span class="text-[#7aa2f7]">skills/</span>
-									<span class="text-[#565f89] ml-auto">technical expertise</span>
-								</div>
-								<div class="flex items-center gap-2">
-									<span class="text-[#565f89]">drwxr-xr-x</span>
-									<span class="text-[#7aa2f7]">experience/</span>
-									<span class="text-[#565f89] ml-auto">work history</span>
-								</div>
-								<div class="flex items-center gap-2">
-									<span class="text-[#565f89]">drwxr-xr-x</span>
-									<span class="text-[#7aa2f7]">contact/</span>
-									<span class="text-[#565f89] ml-auto">social links</span>
-								</div>
-								<div class="flex items-center gap-2">
-									<span class="text-[#565f89]">-rw-r--r--</span>
-									<span class="text-[#e0af68]">welcome.txt</span>
-									<span class="text-[#565f89] ml-auto">welcome message</span>
-								</div>
-								<div class="flex items-center gap-2">
-									<span class="text-[#565f89]">-rw-r--r--</span>
-									<span class="text-[#e0af68]">whoami.txt</span>
-									<span class="text-[#565f89] ml-auto">profile info</span>
-								</div>
+			<!-- Hidden Components -->
+			<div id="components" class="hidden">
+				<div id="welcome"><Welcome /></div>
+				<div id="whoami"><Header /></div>
+				<div id="about"><About /></div>
+				<div id="projects"><Projects /></div>
+				<div id="skills"><Skills /></div>
+				<div id="experience"><Experience /></div>
+				<div id="contact"><Contact /></div>
+				<div id="ls">
+					<div class="command-output">
+						<div class="text-[#bb9af7] font-bold mb-2">Directory listing of ~/portfolio</div>
+						<div class="space-y-1">
+							<div class="flex items-center gap-2">
+								<span class="text-[#565f89]">drwxr-xr-x</span>
+								<span class="text-[#7aa2f7]">about/</span>
+								<span class="text-[#565f89] ml-auto">professional summary</span>
 							</div>
-							<div class="text-[#565f89] text-xs mt-4">
-								Use 'cd' to navigate or type the command directly (e.g., 'about', 'projects')
+							<div class="flex items-center gap-2">
+								<span class="text-[#565f89]">drwxr-xr-x</span>
+								<span class="text-[#7aa2f7]">projects/</span>
+								<span class="text-[#565f89] ml-auto">featured work</span>
+							</div>
+							<div class="flex items-center gap-2">
+								<span class="text-[#565f89]">drwxr-xr-x</span>
+								<span class="text-[#7aa2f7]">skills/</span>
+								<span class="text-[#565f89] ml-auto">technical expertise</span>
+							</div>
+							<div class="flex items-center gap-2">
+								<span class="text-[#565f89]">drwxr-xr-x</span>
+								<span class="text-[#7aa2f7]">experience/</span>
+								<span class="text-[#565f89] ml-auto">work history</span>
+							</div>
+							<div class="flex items-center gap-2">
+								<span class="text-[#565f89]">drwxr-xr-x</span>
+								<span class="text-[#7aa2f7]">contact/</span>
+								<span class="text-[#565f89] ml-auto">social links</span>
+							</div>
+							<div class="flex items-center gap-2">
+								<span class="text-[#565f89]">-rw-r--r--</span>
+								<span class="text-[#e0af68]">welcome.txt</span>
+								<span class="text-[#565f89] ml-auto">welcome message</span>
+							</div>
+							<div class="flex items-center gap-2">
+								<span class="text-[#565f89]">-rw-r--r--</span>
+								<span class="text-[#e0af68]">whoami.txt</span>
+								<span class="text-[#565f89] ml-auto">profile info</span>
 							</div>
 						</div>
+						<div class="text-[#565f89] text-xs mt-4">
+							Use 'cd' to navigate or type the command directly (e.g., 'about', 'projects')
+						</div>
 					</div>
-					<div id="neofetch">
-						<div class="command-output">
-							<div class="flex gap-6">
-								<pre class="text-[#7aa2f7]">
+				</div>
+				<div id="neofetch">
+					<div class="command-output">
+						<div class="flex flex-col sm:flex-row gap-6">
+							<pre class="text-[#7aa2f7] text-[8px] sm:text-base leading-none sm:leading-normal">
                   ▄▄▄▄▄▄▄▄▄▄▄
                 ▄▀█▀█▀█▀█▀█▀█▀▄
                █▀█▀█▀█▀█▀█▀█▀█▀█
               ▄█▀█▀█▀█▀█▀█▀█▀█▀█▄
              ▀▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▀
 			</pre>
-								<div class="space-y-1">
-									<div class="flex gap-2">
-										<span class="text-[#7aa2f7]">OS:</span>
-										<span class="text-[#c0caf5]">Portfolio v2.4.2</span>
-									</div>
-									<div class="flex gap-2">
-										<span class="text-[#7aa2f7]">Host:</span>
+							<div class="space-y-1">
+								<div class="flex gap-2">
+									<span class="text-[#7aa2f7]">OS:</span>
+									<span class="text-[#c0caf5]">Portfolio v2.4.2</span>
+								</div>
+								<div class="flex gap-2">
+									<span class="text-[#7aa2f7]">Host:</span>
 
-										<span class="text-[#c0caf5]">dfanso.dev</span>
-									</div>
-									<div class="flex gap-2">
-										<span class="text-[#7aa2f7]">Kernel:</span>
-										<span class="text-[#c0caf5]">DevOps 5.0.1</span>
-									</div>
-									<div class="flex gap-2">
-										<span class="text-[#7aa2f7]">Uptime:</span>
-										<span class="text-[#c0caf5]">24/7</span>
-									</div>
-									<div class="flex gap-2">
-										<span class="text-[#7aa2f7]">Shell:</span>
-										<span class="text-[#c0caf5]">Portfolio-CLI</span>
-									</div>
-									<div class="flex gap-2">
-										<span class="text-[#7aa2f7]">IDE:</span>
-										<span class="text-[#c0caf5]">VS Code / Neovim</span>
-									</div>
+									<span class="text-[#c0caf5]">dfanso.dev</span>
+								</div>
+								<div class="flex gap-2">
+									<span class="text-[#7aa2f7]">Kernel:</span>
+									<span class="text-[#c0caf5]">DevOps 5.0.1</span>
+								</div>
+								<div class="flex gap-2">
+									<span class="text-[#7aa2f7]">Uptime:</span>
+									<span class="text-[#c0caf5]">24/7</span>
+								</div>
+								<div class="flex gap-2">
+									<span class="text-[#7aa2f7]">Shell:</span>
+									<span class="text-[#c0caf5]">Portfolio-CLI</span>
+								</div>
+								<div class="flex gap-2">
+									<span class="text-[#7aa2f7]">IDE:</span>
+									<span class="text-[#c0caf5]">VS Code / Neovim</span>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div id="time">
-						<div class="command-output">
-							<div class="text-[#9ece6a]" id="current-time"></div>
-						</div>
+				</div>
+				<div id="time">
+					<div class="command-output">
+						<div class="text-[#9ece6a]" id="current-time"></div>
 					</div>
-					<div id="weather">
-						<div class="command-output">
-							<div class="text-[#7aa2f7]">Weather information is not available in the terminal.</div>
-							<div class="text-[#565f89]">Try looking outside your window! 🌤️</div>
-						</div>
+				</div>
+				<div id="weather">
+					<div class="command-output">
+						<div class="text-[#7aa2f7]">Weather information is not available in the terminal.</div>
+						<div class="text-[#565f89]">Try looking outside your window! 🌤️</div>
 					</div>
-					<div id="matrix">
-						<div class="command-output matrix-animation">
-							<pre class="text-[#9ece6a]">
+				</div>
+				<div id="matrix">
+					<div class="command-output matrix-animation">
+						<pre class="text-[#9ece6a]">
 Digital rain simulation...
 █ █ █ █ █ █ █ █ █ █
  █ █ █ █ █ █ █ █ █
 █ █ █ █ █ █ █ █ █ █
  █ █ █ █ █ █ █ █ █</pre>
-						</div>
 					</div>
-					<div id="ping">
-						<div class="command-output ping-animation">
-							<div class="text-[#bb9af7] font-bold mb-2">PING dfanso.dev (192.168.1.1)</div>
-							<div class="space-y-1 font-mono">
-								<div class="ping-line">
-									<span class="text-[#7aa2f7]">64 bytes from dfanso.dev</span>
-									<span class="text-[#565f89]">: icmp_seq=1 ttl=64 time=</span>
-									<span class="text-[#9ece6a]">0.045 ms</span>
-								</div>
-								<div class="ping-line">
-									<span class="text-[#7aa2f7]">64 bytes from dfanso.dev</span>
-									<span class="text-[#565f89]">: icmp_seq=2 ttl=64 time=</span>
-									<span class="text-[#9ece6a]">0.038 ms</span>
-								</div>
-								<div class="ping-line">
-									<span class="text-[#7aa2f7]">64 bytes from dfanso.dev</span>
-									<span class="text-[#565f89]">: icmp_seq=3 ttl=64 time=</span>
-									<span class="text-[#9ece6a]">0.042 ms</span>
-								</div>
-								<div class="ping-line">
-									<span class="text-[#7aa2f7]">64 bytes from dfanso.dev</span>
-									<span class="text-[#565f89]">: icmp_seq=4 ttl=64 time=</span>
-									<span class="text-[#9ece6a]">0.039 ms</span>
-								</div>
+				</div>
+				<div id="ping">
+					<div class="command-output ping-animation">
+						<div class="text-[#bb9af7] font-bold mb-2">PING dfanso.dev (192.168.1.1)</div>
+						<div class="space-y-1 font-mono">
+							<div class="ping-line">
+								<span class="text-[#7aa2f7]">64 bytes from dfanso.dev</span>
+								<span class="text-[#565f89]">: icmp_seq=1 ttl=64 time=</span>
+								<span class="text-[#9ece6a]">0.045 ms</span>
 							</div>
-							<div class="mt-4 text-[#c0caf5]">
-								<span class="text-[#565f89]">---</span> dfanso.dev ping statistics <span class="text-[#565f89]">---</span><br>
-								4 packets transmitted, 4 received, 0% packet loss, time 3ms<br>
-								rtt min/avg/max = 0.038/0.041/0.045 ms
+							<div class="ping-line">
+								<span class="text-[#7aa2f7]">64 bytes from dfanso.dev</span>
+								<span class="text-[#565f89]">: icmp_seq=2 ttl=64 time=</span>
+								<span class="text-[#9ece6a]">0.038 ms</span>
+							</div>
+							<div class="ping-line">
+								<span class="text-[#7aa2f7]">64 bytes from dfanso.dev</span>
+								<span class="text-[#565f89]">: icmp_seq=3 ttl=64 time=</span>
+								<span class="text-[#9ece6a]">0.042 ms</span>
+							</div>
+							<div class="ping-line">
+								<span class="text-[#7aa2f7]">64 bytes from dfanso.dev</span>
+								<span class="text-[#565f89]">: icmp_seq=4 ttl=64 time=</span>
+								<span class="text-[#9ece6a]">0.039 ms</span>
 							</div>
 						</div>
+						<div class="mt-4 text-[#c0caf5]">
+							<span class="text-[#565f89]">---</span> dfanso.dev ping statistics <span class="text-[#565f89]">---</span><br>
+							4 packets transmitted, 4 received, 0% packet loss, time 3ms<br>
+							rtt min/avg/max = 0.038/0.041/0.045 ms
+						</div>
 					</div>
-					<div id="help">
-						<div class="command-list">
-							<p class="text-[#bb9af7] font-bold mb-4">Terminal Portfolio Help</p>
-							<div class="mb-4">
-								<p class="text-[#7aa2f7] mb-2">USAGE:</p>
-								<p class="text-[#c0caf5] ml-4">command [arguments]</p>
-							</div>
-							<div class="mb-4">
-								<p class="text-[#7aa2f7] mb-2">AVAILABLE COMMANDS:</p>
-								<ul class="command-help-list">
-									<li>
-										<div class="command-name">ls</div>
-										<div class="command-desc">List available sections and commands</div>
-									</li>
-									<li>
-										<div class="command-name">welcome</div>
-										<div class="command-desc">Display welcome message and ASCII art</div>
-									</li>
-									<li>
-										<div class="command-name">whoami</div>
-										<div class="command-desc">Show detailed profile information</div>
-									</li>
-									<li>
-										<div class="command-name">about</div>
-										<div class="command-desc">View my professional summary</div>
-									</li>
-									<li>
-										<div class="command-name">projects</div>
-										<div class="command-desc">Browse my featured projects</div>
-									</li>
-									<li>
-										<div class="command-name">skills</div>
-										<div class="command-desc">List technical skills and expertise</div>
-									</li>
-									<li>
-										<div class="command-name">experience</div>
-										<div class="command-desc">View work history and roles</div>
-									</li>
-									<li>
-										<div class="command-name">contact</div>
-										<div class="command-desc">Get my contact information</div>
-									</li>
-									<li>
-										<div class="command-name">clear</div>
-										<div class="command-desc">Clear terminal screen</div>
-									</li>
-									<li>
-										<div class="command-name">help</div>
-										<div class="command-desc">Show this help message</div>
-									</li>
-									<li>
-										<div class="command-name">neofetch</div>
-										<div class="command-desc">Display system information</div>
-									</li>
-									<li>
-										<div class="command-name">time</div>
-										<div class="command-desc">Show current time</div>
-									</li>
-									<li>
-										<div class="command-name">weather</div>
-										<div class="command-desc">Check the weather (sort of)</div>
-									</li>
-									<li>
-										<div class="command-name">matrix</div>
-										<div class="command-desc">Display the matrix animation</div>
-									</li>
-									<li>
-										<div class="command-name">ping</div>
-										<div class="command-desc">Test connection to dfanso.dev</div>
-									</li>
-								</ul>
-							</div>
-							<div class="text-[#565f89] text-xs mt-6">
-								<p>Use arrow keys ↑↓ to navigate command history</p>
-								<p>Press Ctrl+L or type 'clear' to clear screen</p>
-							</div>
+				</div>
+				<div id="help">
+					<div class="command-list">
+						<p class="text-[#bb9af7] font-bold mb-4">Terminal Portfolio Help</p>
+						<div class="mb-4">
+							<p class="text-[#7aa2f7] mb-2">USAGE:</p>
+							<p class="text-[#c0caf5] ml-4">command [arguments]</p>
+						</div>
+						<div class="mb-4">
+							<p class="text-[#7aa2f7] mb-2">AVAILABLE COMMANDS:</p>
+							<ul class="command-help-list">
+								<li>
+									<div class="command-name">ls</div>
+									<div class="command-desc">List available sections and commands</div>
+								</li>
+								<li>
+									<div class="command-name">welcome</div>
+									<div class="command-desc">Display welcome message and ASCII art</div>
+								</li>
+								<li>
+									<div class="command-name">whoami</div>
+									<div class="command-desc">Show detailed profile information</div>
+								</li>
+								<li>
+									<div class="command-name">about</div>
+									<div class="command-desc">View my professional summary</div>
+								</li>
+								<li>
+									<div class="command-name">projects</div>
+									<div class="command-desc">Browse my featured projects</div>
+								</li>
+								<li>
+									<div class="command-name">skills</div>
+									<div class="command-desc">List technical skills and expertise</div>
+								</li>
+								<li>
+									<div class="command-name">experience</div>
+									<div class="command-desc">View work history and roles</div>
+								</li>
+								<li>
+									<div class="command-name">contact</div>
+									<div class="command-desc">Get my contact information</div>
+								</li>
+								<li>
+									<div class="command-name">clear</div>
+									<div class="command-desc">Clear terminal screen</div>
+								</li>
+								<li>
+									<div class="command-name">help</div>
+									<div class="command-desc">Show this help message</div>
+								</li>
+								<li>
+									<div class="command-name">neofetch</div>
+									<div class="command-desc">Display system information</div>
+								</li>
+								<li>
+									<div class="command-name">time</div>
+									<div class="command-desc">Show current time</div>
+								</li>
+								<li>
+									<div class="command-name">weather</div>
+									<div class="command-desc">Check the weather (sort of)</div>
+								</li>
+								<li>
+									<div class="command-name">matrix</div>
+									<div class="command-desc">Display the matrix animation</div>
+								</li>
+								<li>
+									<div class="command-name">ping</div>
+									<div class="command-desc">Test connection to dfanso.dev</div>
+								</li>
+							</ul>
+						</div>
+						<div class="text-[#565f89] text-xs mt-6">
+							<p>Use arrow keys ↑↓ to navigate command history</p>
+							<p>Press Ctrl+L or type 'clear' to clear screen</p>
 						</div>
 					</div>
 				</div>
@@ -742,30 +670,23 @@ Digital rain simulation...
 		@apply bg-[#1a1b26];
 		font-family: 'JetBrains Mono', monospace;
 		height: 90vh;
+		/* Mobile height adjustment */
+		@media (max-width: 640px) {
+			height: 85vh;
+		}
 		box-shadow: 0 0 20px rgba(0, 0, 0, 0.4),
 					0 0 60px rgba(122, 162, 247, 0.1);
 	}
 
 	.terminal-title-bar {
-		@apply flex items-center bg-[#1a1b26] border-b border-[#7aa2f7]/20 p-1;
+		@apply flex items-center bg-[#1a1b26] border-b border-[#7aa2f7]/20 p-2 sm:p-1;
 		background: #1a1b26;
 	}
 
-	.terminal-buttons {
-		@apply flex gap-1.5 mr-3;
-	}
-
-	.terminal-button {
-		@apply w-2.5 h-2.5 rounded-full opacity-70 hover:opacity-100;
-	}
-
-	.terminal-title {
-		@apply text-[#7aa2f7] text-xs opacity-80;
-	}
-
 	.terminal-content-area {
-		@apply p-2 overflow-auto space-y-2;
-		height: calc(90vh - 6rem);
+		@apply p-2 sm:p-4 overflow-auto space-y-2;
+		/* Dynamic height calculation */
+		height: 100%;
 		background: #1a1b26;
 		font-family: 'JetBrains Mono', monospace;
 	}
@@ -838,7 +759,7 @@ Digital rain simulation...
 	}
 
 	.terminal-footer {
-		@apply fixed bottom-2 right-2 text-center opacity-50 hover:opacity-80 transition-opacity;
+		@apply text-center opacity-50 hover:opacity-80 transition-opacity;
 		font-family: 'JetBrains Mono', monospace;
 	}
 
