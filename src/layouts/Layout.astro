@@ -7,16 +7,20 @@ interface Props {
 	description?: string;
 	image?: string;
 	articleSchema?: boolean;
+	robots?: string;
 }
 
 const {
 	title = "Leo Felcianas - DevOps Engineer & Software Developer",
 	description = "DevOps/Backend specialist crafting efficient and scalable solutions. Expert in cloud architecture, containerization, and modern development practices.",
-	image = profileImage.src,
-	articleSchema = false
+	image = "/og-image.svg",
+	articleSchema = false,
+	robots = "index, follow"
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImageURL = new URL(image, Astro.site);
+const profileImageURL = new URL(profileImage.src, Astro.site);
 ---
 
 <!doctype html>
@@ -40,8 +44,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 		<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90' font-family='Fira Code' font-weight='bold' text-anchor='middle' x='50' y='50' dominant-baseline='middle' fill='%237aa2f7'>LF</text></svg>" />
 		<meta name="msapplication-TileColor" content="#1a1b26">
 		<meta name="theme-color" content="#1a1b26">
-		<meta name="robots" content="index, follow">
-		<meta name="googlebot" content="index, follow">
+		<meta name="robots" content={robots}>
+		<meta name="googlebot" content={robots}>
 		<meta name="revisit-after" content="7 days">
 		<meta name="rating" content="general">
 		
@@ -57,18 +61,18 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 		<meta property="og:url" content={canonicalURL}>
 		<meta property="og:title" content={title}>
 		<meta property="og:description" content={description}>
-		<meta property="og:image" content={image}>
-		<meta property="og:image:width" content="400">
-		<meta property="og:image:height" content="400">
+		<meta property="og:image" content={socialImageURL}>
+		<meta property="og:image:width" content="1200">
+		<meta property="og:image:height" content="630">
 		<meta property="og:locale" content="en_US">
 		<meta property="og:site_name" content="Leo Felcianas">
 
 		<!-- Twitter -->
-		<meta property="twitter:card" content="summary">
+		<meta property="twitter:card" content="summary_large_image">
 		<meta property="twitter:url" content={canonicalURL}>
 		<meta property="twitter:title" content={title}>
 		<meta property="twitter:description" content={description}>
-		<meta property="twitter:image" content={image}>
+		<meta property="twitter:image" content={socialImageURL}>
 
 		<meta name="view-transition" content="same-origin" />
 		
@@ -79,15 +83,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 		
 
 		<!-- Structured Data / JSON-LD -->
-		<script type="application/ld+json">
-		{
+		<script type="application/ld+json" set:html={JSON.stringify({
 			"@context": "https://schema.org",
 			"@type": "Person",
 			"name": "Leo Felcianas",
 			"jobTitle": "DevOps Engineer & Software Developer",
 			"description": "DevOps/Backend specialist crafting efficient and scalable solutions. Expert in cloud architecture, containerization, and modern development practices.",
 			"url": "https://itsme.dfanso.dev/",
-			"image": "https://itsme.dfanso.dev/profile.webp",
+			"image": profileImageURL,
 			"sameAs": [
 				"https://github.com/dfanso",
 				"https://linkedin.com/in/dfanso"
@@ -98,7 +101,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 				"sameAs": "https://www.plymouth.ac.uk/"
 			},
 			"knowsAbout": ["DevOps", "Cloud Architecture", "Backend Development", "Kubernetes", "Docker", "NestJS", "TypeScript"]
-		}
+		})}>
 		</script>
 		
 		{articleSchema && (
@@ -107,7 +110,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 			"@type": "Article",
 			"headline": title,
 			"description": description,
-			"image": image,
+			"image": socialImageURL,
 			"author": {
 				"@type": "Person",
 				"name": "Leo Felcianas",
