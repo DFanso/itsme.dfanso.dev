@@ -144,7 +144,7 @@ const profileImageURL = new URL(profileImage.src, Astro.site);
 		}
 		</script>
 	</head>
-	<body class="bg-[#1a1b26] text-[#c0caf5] h-screen overflow-hidden font-mono selection:bg-[#7aa2f7] selection:text-[#1a1b26]">
+	<body class="no-js bg-[#1a1b26] text-[#c0caf5] h-screen overflow-hidden font-mono selection:bg-[#7aa2f7] selection:text-[#1a1b26]">
 		<div class="fixed inset-0 -z-10 bg-[#1a1b26]">
 			<div class="absolute inset-0 bg-[#1a1b26]"></div>
 		</div>
@@ -166,6 +166,53 @@ const profileImageURL = new URL(profileImage.src, Astro.site);
 
 	body {
 		font-family: 'JetBrains Mono', monospace;
+		background-color: var(--bg);
+		position: relative;
+		min-height: 100vh;
+		overflow: hidden;
+	}
+
+	body::before,
+	body::after {
+		content: '';
+		position: fixed;
+		inset: 0;
+		pointer-events: none;
+		z-index: -2;
+	}
+
+	body::before {
+		background: radial-gradient(circle at 20% 20%, rgba(122, 162, 247, 0.25), transparent 45%),
+					radial-gradient(circle at 80% 0%, rgba(187, 154, 247, 0.18), transparent 40%),
+					radial-gradient(circle at 50% 80%, rgba(158, 206, 106, 0.12), transparent 35%);
+		filter: blur(40px);
+		animation: auroraShift 18s ease-in-out infinite alternate;
+	}
+
+	body::after {
+		background-image: 
+			repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.01) 0, rgba(255, 255, 255, 0.01) 2px, transparent 2px, transparent 4px),
+			repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.015) 0, rgba(255, 255, 255, 0.015) 2px, transparent 2px, transparent 4px);
+		mix-blend-mode: screen;
+		opacity: 0.3;
+		animation: noiseDrift 6s steps(2) infinite;
+	}
+
+	@keyframes auroraShift {
+		0% {
+			transform: translate3d(-5%, -5%, 0) scale(1);
+		}
+		50% {
+			transform: translate3d(5%, 3%, 0) scale(1.05);
+		}
+		100% {
+			transform: translate3d(-3%, 4%, 0) scale(1.02);
+		}
+	}
+
+	@keyframes noiseDrift {
+		0% { transform: translate3d(0, 0, 0); }
+		100% { transform: translate3d(-3%, 3%, 0); }
 	}
 
 	.command-prompt {
