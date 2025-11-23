@@ -6,6 +6,8 @@ import Skills from '../components/Skills.astro';
 import Contact from '../components/Contact.astro';
 import Projects from '../components/Projects.astro';
 import Experience from '../components/Experience.astro';
+import Education from '../components/Education.astro';
+import Certifications from '../components/Certifications.astro';
 import Welcome from '../components/Welcome.astro';
 
 export const prerender = true;
@@ -63,6 +65,8 @@ export const prerender = true;
 				<div id="projects"><Projects /></div>
 				<div id="skills"><Skills /></div>
 				<div id="experience"><Experience /></div>
+				<div id="education"><Education /></div>
+				<div id="certifications"><Certifications /></div>
 				<div id="contact"><Contact /></div>
 				<div id="ls">
 					<div class="command-output">
@@ -87,6 +91,16 @@ export const prerender = true;
 								<span class="text-[#565f89]">drwxr-xr-x</span>
 								<span class="text-[#7aa2f7]">experience/</span>
 								<span class="text-[#565f89] ml-auto">work history</span>
+							</div>
+							<div class="flex items-center gap-2">
+								<span class="text-[#565f89]">drwxr-xr-x</span>
+								<span class="text-[#7aa2f7]">education/</span>
+								<span class="text-[#565f89] ml-auto">academic background</span>
+							</div>
+							<div class="flex items-center gap-2">
+								<span class="text-[#565f89]">drwxr-xr-x</span>
+								<span class="text-[#7aa2f7]">certifications/</span>
+								<span class="text-[#565f89] ml-auto">licenses & certs</span>
 							</div>
 							<div class="flex items-center gap-2">
 								<span class="text-[#565f89]">drwxr-xr-x</span>
@@ -246,6 +260,14 @@ Digital rain simulation...
 									<div class="command-desc">View work history and roles</div>
 								</li>
 								<li>
+									<div class="command-name">education</div>
+									<div class="command-desc">View academic background</div>
+								</li>
+								<li>
+									<div class="command-name">certifications</div>
+									<div class="command-desc">View professional certificates</div>
+								</li>
+								<li>
 									<div class="command-name">contact</div>
 									<div class="command-desc">Get my contact information</div>
 								</li>
@@ -306,7 +328,7 @@ Digital rain simulation...
 		private awaitingProjectResponse: boolean = false;
 		private availableCommands: string[] = [
 			'help', 'whoami', 'about', 'projects', 'skills', 
-			'experience', 'contact', 'clear', 'ls', 'neofetch', 
+			'experience', 'education', 'certifications', 'contact', 'clear', 'ls', 'neofetch', 
 			'time', 'weather', 'matrix', 'ping', 'welcome',
 			'resume', 'sudo', 'rm', 'vi', 'vim', 'nano'
 		];

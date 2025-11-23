@@ -1,0 +1,40 @@
+---
+const { class: className } = Astro.props;
+
+const education = [
+    {
+        degree: 'BSc in Software Engineering',
+        institution: 'University of Plymouth',
+        grade: 'First Class Honors',
+        period: '03/2020 - 12/2024',
+        location: 'Plymouth, United Kingdom',
+        desc: 'Focused on backend development, automation, and infrastructure management.'
+    }
+];
+---
+
+<section class:list={[className]}>
+    <div class="command-output">
+        <div class="text-[#bb9af7] font-bold mb-2">Education</div>
+        <div class="space-y-4">
+            {education.map(edu => (
+                <div class="education-entry">
+                    <div class="flex items-center gap-2 text-[#7aa2f7]">
+                        <span class="text-[#565f89]">└─▶</span>
+                        <span class="text-[#e0af68]">{edu.degree}</span>
+                    </div>
+                    <div class="ml-6 mt-1 flex flex-wrap gap-x-4 text-xs">
+                        <span class="text-[#9ece6a]">{edu.institution}</span>
+                        <span class="text-[#565f89]">|</span>
+                        <span class="text-[#c0caf5]">{edu.location}</span>
+                        <span class="text-[#565f89]">|</span>
+                        <span class="text-[#f7768e]">{edu.grade}</span>
+                    </div>
+                    <div class="ml-6 mt-1 text-[#565f89] text-xs">
+                        {edu.period}
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
