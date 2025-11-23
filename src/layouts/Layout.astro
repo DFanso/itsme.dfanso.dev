@@ -1,6 +1,7 @@
 ---
 import profileImage from '../assets/profile.webp';
 import SpeedInsights  from '@vercel/speed-insights/astro';
+import Analytics from '@vercel/analytics/astro'
 
 interface Props {
 	title?: string;
@@ -26,6 +27,7 @@ const profileImageURL = new URL(profileImage.src, Astro.site);
 <!doctype html>
 <html lang="en" transition:animate="none" class="scroll-smooth">
 	<head>
+		<Analytics />
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		
