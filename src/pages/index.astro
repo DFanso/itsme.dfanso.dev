@@ -17,13 +17,14 @@ export const prerender = true;
 	<div class="min-h-screen bg-[#16161e] overflow-hidden flex items-center justify-center p-2 sm:p-4">
 		<div class="terminal-container w-full max-w-6xl shadow-2xl border border-[#7aa2f7]/20 rounded overflow-hidden flex flex-col">
 			<!-- Terminal Header -->
-			<div class="terminal-title-bar shrink-0">
-				<div class="terminal-buttons">
-					<span class="terminal-button bg-[#f7768e]"></span>
-					<span class="terminal-button bg-[#e0af68]"></span>
-					<span class="terminal-button bg-[#9ece6a]"></span>
+			<div class="terminal-title-bar shrink-0 flex justify-between items-center">
+				<div class="terminal-buttons flex gap-2">
+					<button id="btn-close" class="terminal-button bg-[#f7768e] hover:bg-[#db4b4b] transition-colors" aria-label="Close"></button>
+					<button id="btn-minimize" class="terminal-button bg-[#e0af68] hover:bg-[#c09040] transition-colors" aria-label="Minimize"></button>
+					<button id="btn-maximize" class="terminal-button bg-[#9ece6a] hover:bg-[#78ac3e] transition-colors" aria-label="Maximize"></button>
 				</div>
-				<div class="terminal-title">guest@dfanso.dev:~</div>
+				<div class="terminal-title absolute left-1/2 -translate-x-1/2 text-[#c0caf5] text-xs font-medium opacity-80">guest@dfanso.dev:~</div>
+				<div class="terminal-time text-[#565f89] text-xs font-mono" id="header-time">--:--</div>
 			</div>
 
 			<!-- Terminal Content -->
@@ -309,6 +310,13 @@ Digital rain simulation...
 				</div>
 			</div>
 		</div>
+	<!-- Shutdown Screen -->
+	<div id="shutdown-screen" class="fixed inset-0 z-50 hidden bg-[#16161e] flex-col items-center justify-center text-center p-4">
+		<div class="text-[#f7768e] font-bold text-xl mb-4">System Halted</div>
+		<div class="text-[#565f89] mb-8">It is now safe to turn off your computer.</div>
+		<button id="btn-reboot" class="px-6 py-2 border border-[#7aa2f7] text-[#7aa2f7] hover:bg-[#7aa2f7]/10 rounded transition-colors font-mono">
+			REBOOT SYSTEM
+		</button>
 	</div>
 </Layout>
 
@@ -342,7 +350,7 @@ Digital rain simulation...
 			{ regex: /(https?:\/\/[^\s<]+)/gi, className: 'syntax-link' },
 			{ regex: /(--?[a-z0-9\-]+)/gi, className: 'syntax-flag' },
 			{ regex: /(~\/[a-z0-9_\-\/]+)/gi, className: 'syntax-path' },
-			{ regex: /\b(ls|cat|cd|touch|mkdir|ping|curl|grep|git)\b/gi, className: 'syntax-command' }
+			{ regex: /\b(ls|cat|touch|mkdir|ping|curl|grep|git)\b/gi, className: 'syntax-command' }
 		];
 		private resetIdleTimer = () => {
 			document.body.classList.remove('terminal-idle');
@@ -365,6 +373,66 @@ Digital rain simulation...
 			this.createSuggestionsContainer();
 			this.attachGlobalIdleListeners();
 			this.resetIdleTimer();
+			this.initializeWindowControls();
+		}
+
+		private initializeWindowControls(): void {
+			const container = document.querySelector('.terminal-container');
+			const btnClose = document.getElementById('btn-close');
+			const btnMinimize = document.getElementById('btn-minimize');
+			const btnMaximize = document.getElementById('btn-maximize');
+			const shutdownScreen = document.getElementById('shutdown-screen');
+			const btnReboot = document.getElementById('btn-reboot');
+
+			// Close / Reboot Logic
+			btnClose?.addEventListener('click', () => {
+				container?.classList.add('opacity-0', 'scale-95');
+				setTimeout(() => {
+					shutdownScreen?.classList.remove('hidden');
+					shutdownScreen?.classList.add('flex');
+				}, 300);
+			});
+
+			btnReboot?.addEventListener('click', () => {
+				shutdownScreen?.classList.add('hidden');
+				shutdownScreen?.classList.remove('flex');
+				container?.classList.remove('opacity-0', 'scale-95');
+				this.outputContainer.innerHTML = '';
+				const inputLine = document.getElementById('input-line');
+				if (inputLine) {
+					inputLine.innerHTML = `
+						<div class="command-prompt">
+							<span class="text-[#9ece6a]">❯</span> <span class="text-[#7aa2f7]">dfanso</span><span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> <span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> <span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span> 
+							<span class="command-text"></span><span class="cursor"></span>
+							<input type="text" id="terminal-input" class="opacity-0 absolute top-0 left-0 h-full w-full cursor-text" autocomplete="off" spellcheck="false" />
+						</div>
+					`;
+					// Re-attach input listener to new input element
+					this.inputField = document.getElementById('terminal-input') as HTMLInputElement;
+					this.inputLine = document.getElementById('input-line') as HTMLElement;
+					this.initializeTerminal(); 
+				}
+				this.executeCommand('welcome', document.createElement('div'));
+				setTimeout(() => this.executeCommand('whoami', document.createElement('div')), 500);
+			});
+
+			// Maximize Logic
+			btnMaximize?.addEventListener('click', () => {
+				container?.classList.toggle('max-w-6xl');
+				container?.classList.toggle('w-full');
+				container?.classList.toggle('h-full');
+				container?.classList.toggle('max-w-full');
+				container?.classList.toggle('rounded-none');
+				container?.classList.toggle('m-0');
+			});
+			
+			// Minimize Logic (Just a visual feedback for now)
+			btnMinimize?.addEventListener('click', () => {
+				container?.classList.add('translate-y-4', 'opacity-80');
+				setTimeout(() => {
+					container?.classList.remove('translate-y-4', 'opacity-80');
+				}, 200);
+			});
 		}
 
 		private createSuggestionsContainer(): void {
@@ -620,12 +688,16 @@ Digital rain simulation...
 		}
 
 		private executeCommand(command: string, outputDiv: HTMLElement): void {
-			if (command === 'clear') {
+			const args = command.split(' ');
+			const cmd = args[0];
+			const arg = args[1];
+
+			if (cmd === 'clear') {
 				this.outputContainer.innerHTML = '';
 				return;
 			}
 
-			if (command === 'resume') {
+			if (cmd === 'resume') {
 				this.renderOutputHTML(outputDiv, `<div class="command-output">
 					<p class="text-[#c0caf5] mb-2">Opening resume...</p>
 					<p class="text-[#565f89] text-xs">(If it doesn't open, <a href="/resume.pdf" target="_blank" class="text-[#7aa2f7] underline">click here</a>)</p>
@@ -809,10 +881,17 @@ Digital rain simulation...
 
 	// Add time update functionality
 	function updateTime() {
+		const now = new Date();
+		const timeString = now.toLocaleTimeString();
+		
 		const timeDiv = document.getElementById('current-time');
 		if (timeDiv) {
-			const now = new Date();
-			timeDiv.textContent = now.toLocaleTimeString();
+			timeDiv.textContent = timeString;
+		}
+		
+		const headerTime = document.getElementById('header-time');
+		if (headerTime) {
+			headerTime.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 		}
 	}
 
@@ -983,6 +1062,20 @@ Digital rain simulation...
 	.terminal-footer {
 		@apply text-center opacity-50 hover:opacity-80 transition-opacity;
 		font-family: 'JetBrains Mono', monospace;
+	}
+
+	/* Window Controls */
+	.terminal-button {
+		@apply w-3 h-3 rounded-full border border-black/10 relative flex items-center justify-center;
+	}
+
+	.terminal-button::before {
+		content: '';
+		@apply opacity-0 transition-opacity duration-200 text-[8px] font-bold text-black/50;
+	}
+
+	.terminal-buttons:hover .terminal-button::before {
+		@apply opacity-100;
 	}
 
 	/* Mobile-specific styles */
