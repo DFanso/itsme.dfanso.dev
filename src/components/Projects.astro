@@ -5,6 +5,7 @@ const projects = [
     {
         type: 'WEB',
         name: 'techxeed',
+        url: 'https://www.techxeed.com/',
         description: 'A comprehensive digital solutions platform offering web development, mobile apps, \nAI solutions, and digital marketing services.',
         tech: [
             { icon: '⚛', name: 'Next.js' },
@@ -20,6 +21,7 @@ const projects = [
     {
         type: 'APP',
         name: 'quickquest',
+        url: 'https://github.com/DFanso/QuickQuest',
         description: 'A location-based platform connecting customers with laborers, featuring real-time chat \nvia SSE and geospatial queries.',
         tech: [
             { icon: '⚛', name: 'Next.js' },
@@ -31,15 +33,34 @@ const projects = [
         ]
     },
     {
-        type: 'SYS',
-        name: 'cinemagic',
-        description: 'A comprehensive cinema ticket booking system with real-time seat selection and \nsecure payments.',
+        type: 'APP',
+        name: 'rss-reader',
+        url: 'https://github.com/DFanso/rss',
+        description: 'A simple, modern RSS reader and generator built with Go and HTMX, featuring \npersistent storage and a clean UI.',
         tech: [
-            { icon: '⚛', name: 'React.js' },
-            { icon: '⚡', name: 'Redux' },
-            { icon: '⬡', name: 'Nest.js' },
-            { icon: '🍃', name: 'MongoDB' },
-            { icon: '💳', name: 'PayPal' }
+            { icon: '🐹', name: 'Go' },
+            { icon: '⚡', name: 'HTMX' },
+            { icon: '🎨', name: 'TailwindCSS' }
+        ]
+    },
+    {
+        type: 'CLI',
+        name: 'commit-msg',
+        url: 'https://github.com/DFanso/commit-msg',
+        description: 'AI-powered CLI tool that generates conventional commit messages using various \nLLMs including Gemini, Grok, and OpenAI.',
+        tech: [
+            { icon: '🐹', name: 'Go' },
+            { icon: '🤖', name: 'LLMs' }
+        ]
+    },
+    {
+        type: 'OPS',
+        name: 'aws-ecs-infra',
+        url: 'https://github.com/DFanso/aws-ecs-infrastructure',
+        description: 'Infrastructure as Code configurations for deploying scalable applications on \nAWS ECS using Terraform.',
+        tech: [
+            { icon: '⚙', name: 'Terraform' },
+            { icon: '⠿', name: 'AWS' }
         ]
     }
 ];
@@ -54,7 +75,7 @@ const projects = [
                     <div class="flex items-center gap-2">
                         <span class="text-[#565f89]">{index === projects.length - 1 ? '└─▶' : '├─▶'}</span>
                         <span class="text-[#e0af68]">cat</span>
-                        <span class="text-[#7aa2f7]">projects/{project.name}/</span>
+                        <a href={project.url} target="_blank" rel="noopener noreferrer" class="text-[#7aa2f7] hover:underline">projects/{project.name}/</a>
                         <span class="text-[#565f89]">type:</span>
                         <span class="text-[#f7768e]">{project.type}</span>
                     </div>
