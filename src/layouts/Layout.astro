@@ -144,9 +144,9 @@ const profileImageURL = new URL(profileImage.src, Astro.site);
 		}
 		</script>
 	</head>
-	<body class="no-js bg-[#1a1b26] text-[#c0caf5] h-screen overflow-hidden font-mono selection:bg-[#7aa2f7] selection:text-[#1a1b26]">
-		<div class="fixed inset-0 -z-10 bg-[#1a1b26]">
-			<div class="absolute inset-0 bg-[#1a1b26]"></div>
+	<body class="no-js bg-[var(--bg)] text-[var(--text)] h-screen overflow-hidden font-mono selection:bg-[var(--primary)] selection:text-[var(--bg)]">
+		<div class="fixed inset-0 -z-10 bg-[var(--bg)]">
+			<div class="absolute inset-0 bg-[var(--bg)]"></div>
 		</div>
 		<main class="relative h-full">
 			<slot />
@@ -162,6 +162,9 @@ const profileImageURL = new URL(profileImage.src, Astro.site);
 		--text: #c0caf5;
 		--bg: #1a1b26;
 		--accent: #bb9af7;
+		--error: #f7768e;
+		--warning: #e0af68;
+		--muted: #565f89;
 	}
 
 	body {

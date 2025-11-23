@@ -302,7 +302,8 @@ Digital rain simulation...
 		private availableCommands: string[] = [
 			'help', 'whoami', 'about', 'projects', 'skills', 
 			'experience', 'contact', 'clear', 'ls', 'neofetch', 
-			'time', 'weather', 'matrix', 'ping', 'welcome'
+			'time', 'weather', 'matrix', 'ping', 'welcome',
+			'resume', 'sudo', 'rm', 'vi', 'vim', 'nano'
 		];
 		private suggestionsContainer: HTMLElement | null = null;
 		private idleTimeout?: number;
@@ -594,6 +595,34 @@ Digital rain simulation...
 		private executeCommand(command: string, outputDiv: HTMLElement): void {
 			if (command === 'clear') {
 				this.outputContainer.innerHTML = '';
+				return;
+			}
+
+			if (command === 'resume') {
+				this.renderOutputHTML(outputDiv, `<div class="command-output">
+					<p class="text-[#c0caf5] mb-2">Opening resume...</p>
+					<p class="text-[#565f89] text-xs">(If it doesn't open, <a href="/resume.pdf" target="_blank" class="text-[#7aa2f7] underline">click here</a>)</p>
+				</div>`);
+				window.open('/resume.pdf', '_blank');
+				return;
+			}
+
+			if (command === 'sudo') {
+				this.renderOutputHTML(outputDiv, `<div class="command-output text-[#f7768e]">Permission denied: You are not in the sudoers file. This incident will be reported to Santa Claus. 🎅</div>`);
+				return;
+			}
+
+			if (command.startsWith('rm')) {
+				if (command.includes('-rf') && (command.includes('/') || command.includes('*'))) {
+					this.renderOutputHTML(outputDiv, `<div class="command-output text-[#f7768e] font-bold">⚠️ CRITICAL ERROR: Nice try! But I can't let you delete my portfolio.</div>`);
+				} else {
+					this.renderOutputHTML(outputDiv, `<div class="command-output text-[#f7768e]">rm: missing operand</div>`);
+				}
+				return;
+			}
+
+			if (['vi', 'vim', 'nano'].includes(command)) {
+				this.renderOutputHTML(outputDiv, `<div class="command-output text-[#e0af68]">Error: Text editor functionality not implemented yet. Try 'code .' instead? 😉</div>`);
 				return;
 			}
 
