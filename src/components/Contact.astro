@@ -1,11 +1,14 @@
 ---
+import { Icon } from 'astro-icon/components';
 const { class: className } = Astro.props;
 
-const socialLinks = [
-    { id: 'GH', name: 'github/dfanso', url: 'https://github.com/dfanso' },
-    { id: 'IN', name: 'linkedin/leogavin', url: 'https://www.linkedin.com/in/leogavin/' },
-    { id: 'DC', name: 'discord', url: 'https://discord.gg/DcFFdcjfAf' },
-    { id: 'IG', name: 'instagram', url: 'https://instagram.com/dfansoo' }
+const contactInfo = [
+    { id: 'EM', name: 'leogavin123@outlook.com', url: 'mailto:leogavin123@outlook.com', icon: 'lucide:mail' },
+    { id: 'LO', name: 'Sri Lanka', url: '#', icon: 'lucide:map-pin' },
+    { id: 'GH', name: 'github.com/dfanso', url: 'https://github.com/dfanso', icon: 'simple-icons:github' },
+    { id: 'IN', name: 'linkedin.com/in/leogavin', url: 'https://www.linkedin.com/in/leogavin/', icon: 'simple-icons:linkedin' },
+    { id: 'DC', name: 'discord', url: 'https://discord.gg/DcFFdcjfAf', icon: 'simple-icons:discord' },
+    { id: 'IG', name: 'instagram.com/dfansoo', url: 'https://instagram.com/dfansoo', icon: 'simple-icons:instagram' }
 ];
 ---
 
@@ -13,18 +16,21 @@ const socialLinks = [
     <div class="command-output">
         <div class="text-[#bb9af7] font-bold mb-2">Contact Information</div>
         <div class="space-y-2">
-            {socialLinks.map(link => (
+            {contactInfo.map(link => (
                 <div class="flex items-center gap-2">
                     <span class="text-[#565f89]">└─▶</span>
-                    <span class="text-[#e0af68]">[{link.id}]</span>
-                    <a href={link.url} target="_blank" class="text-[#7aa2f7] hover:text-[#9ece6a] transition-colors">
-                        {link.name}
-                    </a>
+                    <span class="text-[#e0af68] min-w-[30px]">[{link.id}]</span>
+                    <div class="flex items-center gap-2">
+                        <Icon name={link.icon} class="w-4 h-4 text-[#7aa2f7]" />
+                        <a href={link.url} target={link.url.startsWith('#') ? '_self' : '_blank'} class="text-[#7aa2f7] hover:text-[#9ece6a] transition-colors">
+                            {link.name}
+                        </a>
+                    </div>
                 </div>
             ))}
         </div>
         <div class="mt-4 text-[#565f89] text-xs">
-            <span class="text-[#9ece6a]">Note:</span> Click on any link to open in a new tab
+            <span class="text-[#9ece6a]">Note:</span> Click on any link to connect
         </div>
     </div>
 </section> 
