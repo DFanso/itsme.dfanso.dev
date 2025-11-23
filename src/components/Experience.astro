@@ -1,52 +1,85 @@
 ---
+import { Icon } from 'astro-icon/components';
 const { class: className } = Astro.props;
 
 const experiences = [
     {
         type: 'DEV',
+        typeColor: 'text-[#e0af68]', // Yellow
         file: 'devops.md',
         title: 'DevOps Engineer @ Empite',
         period: 'August 2025 - Present',
         responsibilities: [
-            'Leading DevOps initiatives and infrastructure modernization',
-            'Designing and implementing scalable CI/CD pipelines using Azure DevOps',
-            'Architecting cloud infrastructure with Terraform and Infrastructure as Code',
-            'Managing container orchestration with Docker and Kubernetes',
-            'Mentoring junior team members on DevOps best practices'
+            'Spearheading DevOps initiatives and modernizing infrastructure architecture',
+            'Architecting scalable CI/CD pipelines using Azure DevOps for automated delivery',
+            'Managing production-grade cloud infrastructure via Terraform (IaC)',
+            'Orchestrating containerized microservices with Docker and Kubernetes',
+            'Mentoring junior developers on DevOps culture and best practices'
+        ],
+        tech: [
+            { name: 'Azure', icon: 'mdi:microsoft-azure' },
+            { name: 'Terraform', icon: 'simple-icons:terraform' },
+            { name: 'Go', icon: 'simple-icons:go' },
+            { name: 'K8s', icon: 'simple-icons:kubernetes' },
+            { name: 'Docker', icon: 'simple-icons:docker' }
         ]
     },
     {
         type: 'DEV',
+        typeColor: 'text-[#e0af68]',
         file: 'associate.md',
         title: 'Associate DevOps Engineer @ Empite',
         period: 'November 2024 - August 2025',
         responsibilities: [
-            'Building and maintaining CI/CD pipelines using Azure DevOps',
-            'Developing backend services using NestJS and TypeScript',
-            'Infrastructure as Code (IaC) implementation with Terraform',
-            'Container orchestration with Docker and Kubernetes'
+            'Implemented automated CI/CD workflows reducing deployment time',
+            'Developed robust backend services using NestJS, Go, and TypeScript',
+            'Maintained Infrastructure as Code (IaC) repositories using Terraform',
+            'Optimized container orchestration workflows for development environments'
+        ],
+        tech: [
+            { name: 'Nest.js', icon: 'simple-icons:nestjs' },
+            { name: 'Go', icon: 'simple-icons:go' },
+            { name: 'TypeScript', icon: 'simple-icons:typescript' },
+            { name: 'Azure DevOps', icon: 'simple-icons:azuredevops' },
+            { name: 'Terraform', icon: 'simple-icons:terraform' }
         ]
     },
     {
         type: 'INT',
+        typeColor: 'text-[#9ece6a]', // Green
         file: 'intern.md',
         title: 'Software Engineer Intern @ Empite',
         period: 'July 2024 - October 2024',
         responsibilities: [
-            'Developed web applications using modern frameworks',
-            'Collaborated with senior developers on project implementations',
-            'Participated in code reviews and agile development processes'
+            'Contributed to full-stack web application development using modern frameworks',
+            'Collaborated in Agile sprints and participated in daily stand-ups',
+            'Assisted in code reviews and documentation of system components'
+        ],
+        tech: [
+            { name: 'React', icon: 'simple-icons:react' },
+            { name: 'Nest.js', icon: 'simple-icons:nestjs' },
+            { name: 'Node.js', icon: 'simple-icons:nodedotjs' },
+            { name: 'Git', icon: 'simple-icons:git' }
         ]
     },
     {
         type: 'FRL',
+        typeColor: 'text-[#bb9af7]', // Purple
         file: 'freelance.md',
-        title: 'Software Engineer',
+        title: 'Software Engineer (Freelance)',
         period: 'May 2023 - Present',
         responsibilities: [
-            'Developing custom web and mobile applications for clients',
-            'Implementing full-stack solutions with modern technologies',
-            'Managing client relationships and project deliverables'
+            'Delivering custom web and mobile solutions for diverse client requirements',
+            'Implementing secure, scalable full-stack architectures with Go and Node.js',
+            'Managing end-to-end project lifecycle from requirements to deployment'
+        ],
+        tech: [
+            { name: 'Next.js', icon: 'simple-icons:nextdotjs' },
+            { name: 'Nest.js', icon: 'simple-icons:nestjs' },
+            { name: 'Go', icon: 'simple-icons:go' },
+            { name: 'Prisma', icon: 'simple-icons:prisma' },
+            { name: 'Tailwind', icon: 'simple-icons:tailwindcss' },
+            { name: 'Firebase', icon: 'simple-icons:firebase' }
         ]
     }
 ];
@@ -60,7 +93,7 @@ const experiences = [
                 <div class="experience-entry">
                     <div class="flex items-center gap-2 text-[#7aa2f7]">
                         <span class="text-[#565f89]">└─▶</span>
-                        <span class="text-[#e0af68]">{exp.type}</span>
+                        <span class={exp.typeColor}>{exp.type}</span>
                         <span class="text-[#565f89]">in</span>
                         <span class="text-[#9ece6a]">{exp.title}</span>
                     </div>
@@ -72,6 +105,14 @@ const experiences = [
                                 <span class="text-[#c0caf5]">{resp}</span>
                             </div>
                         ))}
+                        <div class="flex flex-wrap gap-3 mt-3 pl-4 border-l border-[#565f89]/30">
+                            {exp.tech.map(t => (
+                                <div class="flex items-center gap-1 bg-[#1a1b26] border border-[#565f89]/40 rounded px-1.5 py-0.5">
+                                    <Icon name={t.icon} class="w-3 h-3 text-[#7aa2f7]" />
+                                    <span class="text-[#9ece6a] text-[10px]">{t.name}</span>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             ))}
