@@ -3,11 +3,36 @@ const { class: className } = Astro.props;
 ---
 
 <section class:list={[className]}>
-    <div class="ml-4 border-l-2 border-[#565f89] pl-3 text-sm">
-        <p class="leading-relaxed">
-            DevOps/Backend specialist crafting efficient and scalable solutions. 
-            Transforming complex challenges into elegant architectures.
-            BSc (Hons) Software Engineering @ University of Plymouth
-        </p>
+    <div class="command-output">
+        <div class="text-[#bb9af7] font-bold mb-2">Professional Summary</div>
+        <div class="ml-4 border-l-2 border-[#565f89] pl-4 text-sm space-y-4">
+            <p class="leading-relaxed text-[#c0caf5]">
+                <span class="text-[#7aa2f7] font-bold">DevOps Engineer</span> & <span class="text-[#9ece6a] font-bold">Software Engineer</span> with a 
+                <span class="text-[#e0af68]">First Class Honors</span> degree in Software Engineering. 
+                Experienced in backend development, automation, and infrastructure management.
+            </p>
+            
+            <p class="leading-relaxed text-[#c0caf5]">
+                Currently optimizing system performance, leading migrations, and enhancing CI/CD pipelines at 
+                <span class="text-[#7aa2f7]">Empite</span>. Passionate about building scalable systems and efficient software solutions.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                <div>
+                    <div class="text-[#565f89] text-xs mb-1">FOCUS</div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-[#1a1b26] border border-[#7aa2f7]/30 text-[#7aa2f7] px-2 py-1 rounded text-xs">Cloud Architecture</span>
+                        <span class="bg-[#1a1b26] border border-[#9ece6a]/30 text-[#9ece6a] px-2 py-1 rounded text-xs">Automation</span>
+                        <span class="bg-[#1a1b26] border border-[#bb9af7]/30 text-[#bb9af7] px-2 py-1 rounded text-xs">Backend</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="text-[#565f89] text-xs mb-1">LOCATION</div>
+                    <div class="text-[#c0caf5] flex items-center gap-2">
+                        <span class="text-[#f7768e]">📍</span> Sri Lanka (Open to Remote)
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section> 
