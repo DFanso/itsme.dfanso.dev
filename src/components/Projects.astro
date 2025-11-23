@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 const { class: className } = Astro.props;
 
 const projects = [
@@ -8,14 +9,14 @@ const projects = [
         url: 'https://www.techxeed.com/',
         description: 'A comprehensive digital solutions platform offering web development, mobile apps, \nAI solutions, and digital marketing services.',
         tech: [
-            { icon: '⚛', name: 'Next.js' },
-            { icon: '⬡', name: 'Nest.js' },
-            { icon: '🍃', name: 'MongoDB' },
-            { icon: '🎨', name: 'TailwindCSS' },
-            { icon: '🔥', name: 'Firebase' },
-            { icon: '⠿', name: 'AWS' },
-            { icon: '💳', name: 'Stripe' },
-            { icon: '⚙', name: 'Terraform' }
+            { icon: 'simple-icons:nextdotjs', name: 'Next.js' },
+            { icon: 'simple-icons:nestjs', name: 'Nest.js' },
+            { icon: 'simple-icons:mongodb', name: 'MongoDB' },
+            { icon: 'simple-icons:tailwindcss', name: 'TailwindCSS' },
+            { icon: 'simple-icons:firebase', name: 'Firebase' },
+            { icon: 'simple-icons:amazonaws', name: 'AWS' },
+            { icon: 'simple-icons:stripe', name: 'Stripe' },
+            { icon: 'simple-icons:terraform', name: 'Terraform' }
         ]
     },
     {
@@ -24,12 +25,12 @@ const projects = [
         url: 'https://github.com/DFanso/QuickQuest',
         description: 'A location-based platform connecting customers with laborers, featuring real-time chat \nvia SSE and geospatial queries.',
         tech: [
-            { icon: '⚛', name: 'Next.js' },
-            { icon: '⬡', name: 'Nest.js' },
-            { icon: '🍃', name: 'MongoDB' },
-            { icon: '🐍', name: 'Python' },
-            { icon: '⠿', name: 'AWS' },
-            { icon: '💳', name: 'PayPal' }
+            { icon: 'simple-icons:nextdotjs', name: 'Next.js' },
+            { icon: 'simple-icons:nestjs', name: 'Nest.js' },
+            { icon: 'simple-icons:mongodb', name: 'MongoDB' },
+            { icon: 'simple-icons:python', name: 'Python' },
+            { icon: 'simple-icons:amazonaws', name: 'AWS' },
+            { icon: 'simple-icons:paypal', name: 'PayPal' }
         ]
     },
     {
@@ -38,9 +39,9 @@ const projects = [
         url: 'https://github.com/DFanso/rss',
         description: 'A simple, modern RSS reader and generator built with Go and HTMX, featuring \npersistent storage and a clean UI.',
         tech: [
-            { icon: '🐹', name: 'Go' },
-            { icon: '⚡', name: 'HTMX' },
-            { icon: '🎨', name: 'TailwindCSS' }
+            { icon: 'simple-icons:go', name: 'Go' },
+            { icon: 'simple-icons:htmx', name: 'HTMX' },
+            { icon: 'simple-icons:tailwindcss', name: 'TailwindCSS' }
         ]
     },
     {
@@ -49,8 +50,8 @@ const projects = [
         url: 'https://github.com/DFanso/commit-msg',
         description: 'AI-powered CLI tool that generates conventional commit messages using various \nLLMs including Gemini, Grok, and OpenAI.',
         tech: [
-            { icon: '🐹', name: 'Go' },
-            { icon: '🤖', name: 'LLMs' }
+            { icon: 'simple-icons:go', name: 'Go' },
+            { icon: 'lucide:brain', name: 'LLMs' }
         ]
     },
     {
@@ -59,8 +60,8 @@ const projects = [
         url: 'https://github.com/DFanso/aws-ecs-infrastructure',
         description: 'Infrastructure as Code configurations for deploying scalable applications on \nAWS ECS using Terraform.',
         tech: [
-            { icon: '⚙', name: 'Terraform' },
-            { icon: '⠿', name: 'AWS' }
+            { icon: 'simple-icons:terraform', name: 'Terraform' },
+            { icon: 'simple-icons:amazonaws', name: 'AWS' }
         ]
     }
 ];
@@ -85,7 +86,9 @@ const projects = [
                             {project.tech.map(tech => (
                                 <div class="flex items-center gap-1">
                                     <span class="text-[#565f89]">│</span>
-                                    <span class="text-[#7aa2f7]">{tech.icon}</span>
+                                    <span class="text-[#7aa2f7]">
+                                        <Icon name={tech.icon} class="w-4 h-4" />
+                                    </span>
                                     <span class="text-[#9ece6a] text-sm">{tech.name}</span>
                                 </div>
                             ))}
