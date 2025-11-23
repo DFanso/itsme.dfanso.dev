@@ -1,61 +1,74 @@
 ---
+import { Icon } from 'astro-icon/components';
 const { class: className } = Astro.props;
 
 const skillCategories = [
     {
         name: 'cloud',
         skills: [
-            { icon: '⠿', name: 'AWS' },
-            { icon: '⚡', name: 'Azure' },
-            { icon: '☁', name: 'Cloudflare' }
+            { icon: 'simple-icons:amazonaws', name: 'AWS' },
+            { icon: 'simple-icons:googlecloud', name: 'GCP' },
+            { icon: 'mdi:microsoft-azure', name: 'Azure' },
+            { icon: 'simple-icons:cloudflare', name: 'Cloudflare' }
         ]
     },
     {
         name: 'containers',
         skills: [
-            { icon: '🐳', name: 'Docker' },
-            { icon: '☸', name: 'Kubernetes' }
+            { icon: 'simple-icons:docker', name: 'Docker' },
+            { icon: 'simple-icons:kubernetes', name: 'Kubernetes' }
         ]
     },
     {
         name: 'infra',
         skills: [
-            { icon: '⚙', name: 'Terraform' },
-            { icon: '⚡', name: 'Jenkins' },
-            { icon: '⭐', name: 'GitHub-Actions' }
+            { icon: 'simple-icons:terraform', name: 'Terraform' },
+            { icon: 'simple-icons:jenkins', name: 'Jenkins' },
+            { icon: 'simple-icons:githubactions', name: 'GitHub Actions' }
         ]
     },
     {
         name: 'lang',
         skills: [
-            { icon: '⚡', name: 'Go' },
-            { icon: '🐍', name: 'Python' },
-            { icon: '⚛', name: 'TypeScript' },
-            { icon: '⬡', name: 'Node.js' }
+            { icon: 'simple-icons:go', name: 'Go' },
+            { icon: 'simple-icons:python', name: 'Python' },
+            { icon: 'simple-icons:typescript', name: 'TypeScript' },
+            { icon: 'simple-icons:nodedotjs', name: 'Node.js' }
+        ]
+    },
+    {
+        name: 'frameworks',
+        skills: [
+            { icon: 'simple-icons:nextdotjs', name: 'Next.js' },
+            { icon: 'simple-icons:nestjs', name: 'Nest.js' },
+            { icon: 'simple-icons:htmx', name: 'HTMX' },
+            { icon: 'simple-icons:tailwindcss', name: 'Tailwind' }
         ]
     },
     {
         name: 'db',
         skills: [
-            { icon: '🐘', name: 'PostgreSQL' },
-            { icon: '🍃', name: 'MongoDB' },
-            { icon: '⚡', name: 'Redis' }
+            { icon: 'simple-icons:postgresql', name: 'PostgreSQL' },
+            { icon: 'simple-icons:mysql', name: 'MySQL' },
+            { icon: 'simple-icons:mongodb', name: 'MongoDB' },
+            { icon: 'simple-icons:redis', name: 'Redis' },
+            { icon: 'simple-icons:firebase', name: 'Firebase' }
         ]
     },
     {
         name: 'monitor',
         skills: [
-            { icon: '📊', name: 'Prometheus' },
-            { icon: '📈', name: 'Grafana' },
-            { icon: '🔍', name: 'ELK' }
+            { icon: 'simple-icons:prometheus', name: 'Prometheus' },
+            { icon: 'simple-icons:grafana', name: 'Grafana' },
+            { icon: 'simple-icons:elastic', name: 'ELK Stack' }
         ]
     },
     {
         name: 'arch',
         skills: [
-            { icon: '⚡', name: 'Microservices' },
-            { icon: '⚙', name: 'System' },
-            { icon: '🔒', name: 'Network' }
+            { icon: 'lucide:blocks', name: 'Microservices' },
+            { icon: 'lucide:cpu', name: 'System Design' },
+            { icon: 'lucide:globe', name: 'Network Security' }
         ]
     }
 ];
@@ -76,7 +89,9 @@ const skillCategories = [
                         {category.skills.map((skill, skillIndex) => (
                             <div class="flex items-center gap-1">
                                 <span class="text-[#565f89]">│</span>
-                                <span class="text-[#7aa2f7]">{skill.icon}</span>
+                                <span class="text-[#7aa2f7]">
+                                    <Icon name={skill.icon} class="w-4 h-4" />
+                                </span>
                                 <span class="text-[#9ece6a]">{skill.name}</span>
                             </div>
                         ))}
