@@ -1,54 +1,69 @@
-# DFanso's Terminal Portfolio 🚀
+# DFanso's Terminal Portfolio
 
-Welcome to my personal portfolio website! This is a unique terminal-style portfolio built with Astro and TypeScript, providing an interactive command-line interface to explore my work and experience.
+A unique terminal-style portfolio built with Astro and TypeScript, providing an interactive command-line interface to explore my work and experience.
 
-## 🌟 Live Site
+## Live Site
+
 Visit my portfolio at [itsme.dfanso.dev](https://itsme.dfanso.dev)
 
-## ✨ Features
+## Features
 
-### 🖥️ Terminal Interface
+### Terminal Interface
 - Interactive command-line experience
 - Real terminal-like behavior
-- Command history navigation (↑↓ keys)
-- Custom prompt styling
-- Cursor animation
+- Command history navigation (Arrow Up/Down keys)
+- Tab auto-completion with suggestions
+- Custom prompt styling and cursor animation
+- Syntax highlighting for commands
 
-### 💻 Available Commands
-- `help` - Show all available commands
-- `whoami` - Display profile information
-- `about` - View professional summary
-- `projects` - Browse featured projects
-- `skills` - List technical expertise
-- `experience` - View work history
-- `contact` - Get contact information
-- `clear` - Clear terminal screen (Ctrl+L)
-- `ls` - List available sections
-- `neofetch` - Display system information
-- `time` - Show current time
-- `weather` - Check weather (fun response)
-- `matrix` - Display matrix animation
-- `ping` - Test connection
-- `welcome` - Show welcome message
+### Available Commands
 
-### 🎯 Special Features
-- Intelligent command auto-completion
-  - Press `Tab` to complete commands
-  - Real-time suggestions as you type
-  - Click suggestions or use keyboard
-  - Terminal-style dimmed completion preview
-- Copy/Paste functionality with visual feedback
-- Mobile-responsive design with dedicated mobile view
-- Smooth animations and transitions
-- Custom terminal-style scrollbar
+| Command | Description |
+|---------|-------------|
+| `help` | Show all available commands |
+| `whoami` | Display profile information |
+| `about` | View professional summary |
+| `projects` | Browse featured projects with GitHub stats |
+| `skills` | List technical expertise |
+| `experience` | View work history |
+| `education` | View academic background |
+| `certifications` | View professional certificates |
+| `contact` | Get contact information |
+| `github` | Show GitHub stats and contributions |
+| `clear` | Clear terminal screen (Ctrl+L) |
+| `ls` | List available sections |
+| `neofetch` | Display system information |
+| `resume` | Download/view resume |
 
-## 🛠️ Tech Stack
+### GitHub Integration
+- Contribution graph (heatmap)
+- Language statistics with visual bar
+- Commits, PRs, and issues count
+- Pinned repositories display
+- Repository stats (stars, forks)
+
+### Visual Effects
+- ASCII art banner with glow effect
+- Typewriter animation on first visit
+- Scanline CRT terminal effect
+- Smooth staggered line animations
+- Dynamic time-based greetings
+
+## Tech Stack
+
 - [Astro](https://astro.build/) - Static Site Generator
 - [TypeScript](https://www.typescriptlang.org/) - Type Safety
 - [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [GitHub GraphQL API](https://docs.github.com/en/graphql) - GitHub Stats
 - [Vercel](https://vercel.com/) - Deployment
 
-## 🚀 Development
+## Development
+
+### Prerequisites
+- Node.js 18+
+- Yarn package manager
+
+### Setup
 
 1. Clone the repository:
 ```bash
@@ -61,45 +76,62 @@ cd itsme.dfanso.dev
 yarn install
 ```
 
-3. Start development server:
+3. Create environment file (optional, for GitHub stats):
 ```bash
-yarn run dev
+cp .env.example .env
+# Add your GITHUB_TOKEN
 ```
 
-4. Build for production:
+4. Start development server:
 ```bash
-yarn run build
+yarn dev
 ```
 
-## 🧞 Available Commands
+5. Build for production:
+```bash
+yarn build
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `yarn install`             | Installs dependencies                            |
-| `yarn run dev`             | Starts local dev server at `localhost:4321`      |
-| `yarn run build`           | Build your production site to `./dist/`          |
-| `yarn run preview`         | Preview your build locally, before deploying     |
-| `yarn run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+### Environment Variables
 
-## 📱 Mobile Support
-- Dedicated mobile view for better UX on small screens
-- Touch-friendly interface
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `GITHUB_TOKEN` | Optional | GitHub personal access token for full stats |
+
+Without the token, basic GitHub stats (stars, forks, repos) will still work via the public API.
+
+## Project Commands
+
+| Command | Action |
+|---------|--------|
+| `yarn install` | Install dependencies |
+| `yarn dev` | Start local dev server at `localhost:4321` |
+| `yarn build` | Build production site to `./dist/` |
+| `yarn preview` | Preview build locally |
+| `yarn astro ...` | Run Astro CLI commands |
+
+## Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `Arrow Up/Down` | Navigate command history |
+| `Tab` | Auto-complete commands |
+| `Ctrl + L` | Clear screen |
+| `Ctrl + C` | Copy selected text |
+| `Ctrl + V` | Paste text |
+
+## Mobile Support
+
 - Responsive layout and typography
-- Bottom navigation for easy access
+- Touch-friendly interface
+- Dedicated mobile view for small screens
 
-## 🔑 Keyboard Shortcuts
-- `↑` / `↓` - Navigate command history
-- `Ctrl + L` - Clear screen
-- `Ctrl + C` - Copy selected text
-- `Ctrl + V` - Paste text
-- `Tab` - Auto-complete commands
+## License
 
-## 📄 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Credits
-Created with ❤️ by [DFanso](https://github.com/dfanso)
+## Credits
 
-Feel free to reach out to me on [GitHub](https://github.com/dfanso) or through my portfolio site if you have any questions!
+Created by [DFanso](https://github.com/dfanso)
 
-
+Feel free to reach out on [GitHub](https://github.com/dfanso) or through my portfolio site!
