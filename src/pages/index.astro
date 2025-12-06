@@ -905,11 +905,42 @@ Digital rain simulation...
 		}
 
 		private animateOutput(root: HTMLElement): void {
+			const textContent = root.textContent || '';
 			const elements = root.children.length ? Array.from(root.children) : [root];
-			elements.forEach((el, index) => {
-				(el as HTMLElement).classList.add('typing-line');
-				(el as HTMLElement).style.animationDelay = `${index * 60}ms`;
-			});
+			
+			// For very short content, use character-by-character typing
+			if (textContent.length < 100 && elements.length === 1) {
+				this.typeCharByChar(root);
+			} else {
+				// For longer content, use staggered line reveal
+				elements.forEach((el, index) => {
+					(el as HTMLElement).classList.add('typing-line');
+					(el as HTMLElement).style.animationDelay = `${index * 40}ms`;
+				});
+			}
+		}
+
+		private typeCharByChar(element: HTMLElement): void {
+			const originalHTML = element.innerHTML;
+			const textOnly = element.textContent || '';
+			element.innerHTML = '';
+			element.style.visibility = 'visible';
+			
+			let charIndex = 0;
+			const typeSpeed = 15; // ms per character
+			
+			const typeNextChar = () => {
+				if (charIndex < textOnly.length) {
+					element.textContent += textOnly[charIndex];
+					charIndex++;
+					setTimeout(typeNextChar, typeSpeed + Math.random() * 10);
+				} else {
+					// Restore original HTML with formatting after typing
+					element.innerHTML = originalHTML;
+				}
+			};
+			
+			typeNextChar();
 		}
 	}
 
@@ -1052,6 +1083,34 @@ Digital rain simulation...
 	@keyframes cursor-blink {
 		0%, 100% { opacity: 1; }
 		50% { opacity: 0; }
+	}
+
+	/* Character typing cursor */
+	.typing-cursor::after {
+		content: "█";
+		color: #7aa2f7;
+		animation: typing-cursor-blink 0.5s step-end infinite;
+	}
+
+	@keyframes typing-cursor-blink {
+		0%, 50% { opacity: 1; }
+		51%, 100% { opacity: 0; }
+	}
+
+	/* Scanline effect for terminal feel */
+	.terminal-content-area::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		background: repeating-linear-gradient(
+			0deg,
+			transparent,
+			transparent 2px,
+			rgba(0, 0, 0, 0.03) 2px,
+			rgba(0, 0, 0, 0.03) 4px
+		);
+		z-index: 10;
 	}
 
 	body.terminal-idle .cursor::after {
