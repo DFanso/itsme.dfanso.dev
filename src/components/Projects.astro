@@ -4,6 +4,21 @@ const { class: className } = Astro.props;
 
 const projects = [
     {
+        type: 'OPS',
+        name: 'k3s-cicd',
+        url: 'https://github.com/DFanso/k3s',
+        description: 'A complete Kubernetes deployment setup with automated CI/CD using GitHub Actions, Helm, and full observability stack.',
+        tech: [
+            { icon: 'simple-icons:kubernetes', name: 'K3s' },
+            { icon: 'simple-icons:githubactions', name: 'GitHub Actions' },
+            { icon: 'simple-icons:helm', name: 'Helm' },
+            { icon: 'simple-icons:prometheus', name: 'Prometheus' },
+            { icon: 'simple-icons:grafana', name: 'Grafana' },
+            { icon: 'simple-icons:nginx', name: 'Nginx' },
+            { icon: 'simple-icons:fastapi', name: 'FastAPI' }
+        ]
+    },
+    {
         type: 'WEB',
         name: 'techxeed',
         url: 'https://www.techxeed.com/',
