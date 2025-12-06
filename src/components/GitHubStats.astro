@@ -207,7 +207,7 @@ if (graphqlData) {
     };
 }
 
-const recentWeeks = contributionCalendar?.weeks?.slice(-20) || [];
+const recentWeeks = contributionCalendar?.weeks || [];
 const hasData = graphqlData || restData;
 ---
 
