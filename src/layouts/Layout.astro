@@ -266,4 +266,20 @@ const profileImageURL = new URL(profileImage.src, Astro.site);
 		background: var(--primary);
 		color: var(--bg);
 	}
+
+	/* Prevent icon FOUC (Flash of Unstyled Content) */
+	svg[data-icon] {
+		opacity: 0;
+		animation: icon-fade-in 0.2s ease forwards;
+		animation-delay: 0.1s;
+	}
+
+	@keyframes icon-fade-in {
+		to { opacity: 1; }
+	}
+
+	/* Hide empty icon containers */
+	[data-icon]:empty {
+		display: none;
+	}
 </style>
