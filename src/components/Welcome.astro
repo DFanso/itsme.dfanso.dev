@@ -1,36 +1,165 @@
 ---
+const date = new Date();
+const hours = date.getHours();
+let greeting = "Hello";
+if (hours < 12) greeting = "Good morning";
+else if (hours < 18) greeting = "Good afternoon";
+else greeting = "Good evening";
+
 const asciiArt = `
-     _  __                     
-  __| |/ _| __ _ _ __  ___  ___  
- / _\` | |_ / _\` | '_ \\/ __|/ _ \\ 
-| (_| |  _| (_| | | | \\__ \\ (_) |
- \\__,_|_|  \\__,_|_| |_|___/\\___/ 
+ ██████╗ ███████╗ █████╗ ███╗   ██╗███████╗ ██████╗ 
+ ██╔══██╗██╔════╝██╔══██╗████╗  ██║██╔════╝██╔═══██╗
+ ██║  ██║█████╗  ███████║██╔██╗ ██║███████╗██║   ██║
+ ██║  ██║██╔══╝  ██╔══██║██║╚██╗██║╚════██║██║   ██║
+ ██████╔╝██║     ██║  ██║██║ ╚████║███████║╚██████╔╝
+ ╚═════╝ ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝ ╚═════╝ 
 `;
 
-const version = "v2.4.2";
+const tagline = "DevOps Engineer & Backend Developer";
+const version = "v2.5.0";
 ---
 
 <div class="welcome-container">
-	<pre class="ascii-art text-[#7aa2f7] text-[10px] sm:text-base leading-none sm:leading-normal">{asciiArt}</pre>
+	<div class="ascii-wrapper">
+		<pre class="ascii-art">{asciiArt}</pre>
+		<div class="ascii-glow"></div>
+	</div>
 	<div class="welcome-text mt-4">
-		<p>Welcome to my terminal portfolio. (Version {version})</p>
-		<p class="mt-2 text-[#a9b1d6]">----</p>
-		<p class="mt-2">Type <span class="text-[#9ece6a]">'help'</span> to see available commands.</p>
+		<p class="greeting" id="welcome-greeting">{greeting}, visitor! 👋</p>
+		<p class="tagline mt-2">{tagline}</p>
+		<p class="mt-3 text-[#a9b1d6]">────────────────────────────────────</p>
+		<p class="mt-3">
+			Welcome to my terminal portfolio. <span class="version">(Version {version})</span>
+		</p>
+		<p class="mt-2 hint">
+			Type <span class="command">'help'</span> to see available commands, or try <span class="command">'github'</span> for stats.
+		</p>
 	</div>
 </div>
+
+<script>
+	// Only play animation on first visit (per session)
+	const greeting = document.getElementById('welcome-greeting');
+	if (greeting) {
+		const hasAnimated = sessionStorage.getItem('welcomeAnimated');
+		if (!hasAnimated) {
+			greeting.classList.add('typewriter');
+			sessionStorage.setItem('welcomeAnimated', 'true');
+		} else {
+			// Skip animation, show immediately
+			greeting.style.width = '100%';
+			greeting.style.borderRight = 'none';
+		}
+	}
+</script>
 
 <style>
 	.welcome-container {
 		@apply font-mono;
 	}
 
+	.ascii-wrapper {
+		position: relative;
+		display: inline-block;
+	}
+
 	.ascii-art {
-		font-family: 'Fira Code', monospace;
-		line-height: 1.2;
+		font-family: 'JetBrains Mono', 'Fira Code', monospace;
+		font-size: clamp(6px, 1.5vw, 14px);
+		line-height: 1.1;
 		white-space: pre;
+		color: #7aa2f7;
+		text-shadow: 0 0 10px rgba(122, 162, 247, 0.5);
+		animation: ascii-pulse 3s ease-in-out infinite alternate;
+	}
+
+	.ascii-glow {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(45deg, rgba(122, 162, 247, 0.1), rgba(187, 154, 247, 0.1));
+		filter: blur(20px);
+		z-index: -1;
+		animation: glow-pulse 4s ease-in-out infinite alternate;
+	}
+
+	@keyframes ascii-pulse {
+		0% { text-shadow: 0 0 10px rgba(122, 162, 247, 0.5); }
+		100% { text-shadow: 0 0 20px rgba(122, 162, 247, 0.8), 0 0 40px rgba(187, 154, 247, 0.3); }
+	}
+
+	@keyframes glow-pulse {
+		0% { opacity: 0.3; }
+		100% { opacity: 0.6; }
 	}
 
 	.welcome-text {
 		@apply text-[#c0caf5] text-sm;
+	}
+
+	.greeting {
+		@apply text-[#9ece6a] text-lg font-bold;
+	}
+
+	.tagline {
+		@apply text-[#bb9af7] text-sm italic;
+	}
+
+	.version {
+		@apply text-[#565f89];
+	}
+
+	.hint {
+		@apply text-[#565f89] text-xs;
+	}
+
+	.command {
+		@apply text-[#9ece6a] font-bold;
+		background: rgba(154, 206, 106, 0.1);
+		padding: 0.1rem 0.3rem;
+		border-radius: 4px;
+	}
+
+	/* Typewriter effect for greeting - only applied via JS on first visit */
+	.typewriter {
+		overflow: hidden;
+		border-right: 2px solid #9ece6a;
+		white-space: nowrap;
+		animation: 
+			typing 1.5s steps(25, end) forwards,
+			blink-caret 0.75s step-end 3,
+			hide-caret 0s 2.5s forwards;
+		width: 0;
+	}
+
+	@keyframes typing {
+		from { width: 0; }
+		to { width: 100%; }
+	}
+
+	@keyframes blink-caret {
+		from, to { border-color: transparent; }
+		50% { border-color: #9ece6a; }
+	}
+
+	@keyframes hide-caret {
+		to { border-color: transparent; }
+	}
+
+	/* Mobile adjustments */
+	@media (max-width: 640px) {
+		.ascii-art {
+			font-size: 5px;
+		}
+		.typewriter {
+			white-space: normal;
+			border-right: none;
+			animation: fade-in 0.5s ease forwards;
+			width: auto;
+		}
+	}
+
+	@keyframes fade-in {
+		from { opacity: 0; transform: translateY(10px); }
+		to { opacity: 1; transform: translateY(0); }
 	}
 </style>
