@@ -9,6 +9,7 @@ import Experience from '../components/Experience.astro';
 import Education from '../components/Education.astro';
 import Certifications from '../components/Certifications.astro';
 import Welcome from '../components/Welcome.astro';
+import GitHubStats from '../components/GitHubStats.astro';
 
 export const prerender = true;
 ---
@@ -94,6 +95,7 @@ export const prerender = true;
 				<div id="education"><Education /></div>
 				<div id="certifications"><Certifications /></div>
 				<div id="contact"><Contact /></div>
+				<div id="github"><GitHubStats /></div>
 				<div id="ls">
 					<div class="command-output">
 						<div class="text-[#bb9af7] font-bold mb-2">Directory listing of ~/portfolio</div>
@@ -129,10 +131,15 @@ export const prerender = true;
 								<span class="text-[#565f89] ml-auto text-xs sm:text-sm">licenses & certs</span>
 							</div>
 							<div class="flex items-center gap-2">
-								<span class="text-[#565f89] hidden sm:inline">drwxr-xr-x</span>
-								<span class="text-[#7aa2f7]">contact/</span>
-								<span class="text-[#565f89] ml-auto text-xs sm:text-sm">social links</span>
-							</div>
+							<span class="text-[#565f89] hidden sm:inline">drwxr-xr-x</span>
+							<span class="text-[#7aa2f7]">contact/</span>
+							<span class="text-[#565f89] ml-auto text-xs sm:text-sm">social links</span>
+						</div>
+						<div class="flex items-center gap-2">
+							<span class="text-[#565f89] hidden sm:inline">drwxr-xr-x</span>
+							<span class="text-[#7aa2f7]">github/</span>
+							<span class="text-[#565f89] ml-auto text-xs sm:text-sm">stats & contributions</span>
+						</div>
 							<div class="flex items-center gap-2">
 								<span class="text-[#565f89] hidden sm:inline">-rw-r--r--</span>
 								<span class="text-[#e0af68]">welcome.txt</span>
@@ -325,6 +332,10 @@ Digital rain simulation...
 									<div class="command-name">ping</div>
 									<div class="command-desc">Test connection to dfanso.dev</div>
 								</li>
+								<li>
+									<div class="command-name">github</div>
+									<div class="command-desc">Show GitHub stats and contributions</div>
+								</li>
 							</ul>
 						</div>
 						<div class="text-[#565f89] text-xs mt-6">
@@ -363,7 +374,7 @@ Digital rain simulation...
 			'help', 'whoami', 'about', 'projects', 'skills', 
 			'experience', 'education', 'certifications', 'contact', 'clear', 'ls', 'neofetch', 
 			'time', 'weather', 'matrix', 'ping', 'welcome',
-			'resume', 'sudo', 'rm', 'vi', 'vim', 'nano'
+			'resume', 'sudo', 'rm', 'vi', 'vim', 'nano', 'github'
 		];
 		private suggestionsContainer: HTMLElement | null = null;
 		private idleTimeout?: number;
