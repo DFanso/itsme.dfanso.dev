@@ -51,11 +51,11 @@ Visit my portfolio at [itsme.dfanso.dev](https://itsme.dfanso.dev)
 
 ## Tech Stack
 
-- [Astro](https://astro.build/) - Static Site Generator
-- [TypeScript](https://www.typescriptlang.org/) - Type Safety
-- [Tailwind CSS](https://tailwindcss.com/) - Styling
-- [GitHub GraphQL API](https://docs.github.com/en/graphql) - GitHub Stats
-- [Vercel](https://vercel.com/) - Deployment
+![Astro](https://img.shields.io/badge/Astro-FF5D01?style=for-the-badge&logo=astro&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![GitHub GraphQL](https://img.shields.io/badge/GitHub_GraphQL-181717?style=for-the-badge&logo=github&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
 ## Development
 
