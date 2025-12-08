@@ -1,100 +1,101 @@
 ---
-import { Icon } from 'astro-icon/components';
+import { Icon } from "astro-icon/components";
 const { class: className } = Astro.props;
 
 const experiences = [
     {
-        type: 'DEV',
-        typeColor: 'text-[#e0af68]', // Yellow
-        file: 'devops.md',
-        title: 'DevOps Engineer @ Empite',
-        period: 'August 2025 - Present',
+        type: "DEV",
+        typeColor: "text-[#e0af68]", // Yellow
+        file: "devops.md",
+        title: "DevOps Engineer @ Empite",
+        period: "August 2025 - Present",
         responsibilities: [
-            'Implemented auto-scaling solutions, achieving a 20% cost reduction while maintaining high availability',
-            'Executed disaster recovery plans and led migrations to immutable infrastructure using Terraform',
-            'Conducted load testing using Artillery, improving infrastructure scalability by 70%',
-            'Collaborated with developers to optimize codebases, ensuring systems handled increased traffic',
-            'Enhanced CI/CD pipelines and containerized services, accelerating deployments'
+            "Implemented auto-scaling solutions, achieving a 20% cost reduction while maintaining high availability",
+            "Executed disaster recovery plans and led migrations to immutable infrastructure using Terraform",
+            "Conducted load testing using Artillery, improving infrastructure scalability by 70%",
+            "Collaborated with developers to optimize codebases, ensuring systems handled increased traffic",
+            "Enhanced CI/CD pipelines and containerized services, accelerating deployments",
         ],
         tech: [
-            { name: 'AWS', icon: 'simple-icons:amazonaws' },
-            { name: 'Azure', icon: 'mdi:microsoft-azure' },
-            { name: 'Linux', icon: 'simple-icons:linux' },
-            { name: 'Terraform', icon: 'simple-icons:terraform' },
-            { name: 'Packer', icon: 'simple-icons:packer' },
-            { name: 'Go', icon: 'simple-icons:go' },
-            { name: 'K8s', icon: 'simple-icons:kubernetes' },
-            { name: 'Docker', icon: 'simple-icons:docker' },
-            { name: 'Artillery', icon: 'lucide:crosshair' }
-        ]
+            { name: "AWS", icon: "simple-icons:amazonaws" },
+            { name: "Azure", icon: "mdi:microsoft-azure" },
+            { name: "Linux", icon: "simple-icons:linux" },
+            { name: "Terraform", icon: "simple-icons:terraform" },
+            { name: "Packer", icon: "simple-icons:packer" },
+            { name: "Go", icon: "simple-icons:go" },
+            { name: "K8s", icon: "simple-icons:kubernetes" },
+            { name: "Docker", icon: "simple-icons:docker" },
+            { name: "Artillery", icon: "lucide:crosshair" },
+            { name: "Rapid7", icon: "lucide:shield-check" },
+        ],
     },
     {
-        type: 'DEV',
-        typeColor: 'text-[#e0af68]',
-        file: 'associate.md',
-        title: 'Associate DevOps Engineer @ Empite',
-        period: 'November 2024 - August 2025',
+        type: "DEV",
+        typeColor: "text-[#e0af68]",
+        file: "associate.md",
+        title: "Associate DevOps Engineer @ Empite",
+        period: "November 2024 - August 2025",
         responsibilities: [
-            'Migrated legacy project to modern Docker/ECS, reducing costs by 3x and enhancing maintainability',
-            'Built Azure IaC with Terraform, reducing provisioning time by 60% and standardizing deployments',
-            'Recovered an abandoned project, designing the infrastructure charter and deploying to production',
-            'Refactored legacy Terraform scripts to integrate with modern services for easier scaling',
-            'Designed and executed artillery-based load testing and auto-scaling improvements'
+            "Migrated legacy project to modern Docker/ECS, reducing costs by 3x and enhancing maintainability",
+            "Built Azure IaC with Terraform, reducing provisioning time by 60% and standardizing deployments",
+            "Recovered an abandoned project, designing the infrastructure charter and deploying to production",
+            "Refactored legacy Terraform scripts to integrate with modern services for easier scaling",
+            "Designed and executed artillery-based load testing and auto-scaling improvements",
         ],
         tech: [
-            { name: 'AWS', icon: 'simple-icons:amazonaws' },
-            { name: 'Nest.js', icon: 'simple-icons:nestjs' },
-            { name: 'Go', icon: 'simple-icons:go' },
-            { name: 'Linux', icon: 'simple-icons:linux' },
-            { name: 'TypeScript', icon: 'simple-icons:typescript' },
-            { name: 'Azure DevOps', icon: 'simple-icons:azuredevops' },
-            { name: 'Terraform', icon: 'simple-icons:terraform' },
-            { name: 'Artillery', icon: 'lucide:crosshair' }
-        ]
+            { name: "AWS", icon: "simple-icons:amazonaws" },
+            { name: "Nest.js", icon: "simple-icons:nestjs" },
+            { name: "Go", icon: "simple-icons:go" },
+            { name: "Linux", icon: "simple-icons:linux" },
+            { name: "TypeScript", icon: "simple-icons:typescript" },
+            { name: "Azure DevOps", icon: "simple-icons:azuredevops" },
+            { name: "Terraform", icon: "simple-icons:terraform" },
+            { name: "Artillery", icon: "lucide:crosshair" },
+        ],
     },
     {
-        type: 'INT',
-        typeColor: 'text-[#9ece6a]', // Green
-        file: 'intern.md',
-        title: 'Software Engineer Intern @ Empite',
-        period: 'July 2024 - October 2024',
+        type: "INT",
+        typeColor: "text-[#9ece6a]", // Green
+        file: "intern.md",
+        title: "Software Engineer Intern @ Empite",
+        period: "July 2024 - October 2024",
         responsibilities: [
-            'Developed NestJS microservices backends and integrated Next.js frontends',
-            'Optimized code performance by refactoring core services, reducing latency',
-            'Contributed to microservices-based architecture, enhancing modularity',
-            'Assisted in CI/CD pipeline improvements and containerization of services'
+            "Developed NestJS microservices backends and integrated Next.js frontends",
+            "Optimized code performance by refactoring core services, reducing latency",
+            "Contributed to microservices-based architecture, enhancing modularity",
+            "Assisted in CI/CD pipeline improvements and containerization of services",
         ],
         tech: [
-            { name: 'AWS', icon: 'simple-icons:amazonaws' },
-            { name: 'React', icon: 'simple-icons:react' },
-            { name: 'Nest.js', icon: 'simple-icons:nestjs' },
-            { name: 'Node.js', icon: 'simple-icons:nodedotjs' },
-            { name: 'Linux', icon: 'simple-icons:linux' },
-            { name: 'Git', icon: 'simple-icons:git' }
-        ]
+            { name: "AWS", icon: "simple-icons:amazonaws" },
+            { name: "React", icon: "simple-icons:react" },
+            { name: "Nest.js", icon: "simple-icons:nestjs" },
+            { name: "Node.js", icon: "simple-icons:nodedotjs" },
+            { name: "Linux", icon: "simple-icons:linux" },
+            { name: "Git", icon: "simple-icons:git" },
+        ],
     },
     {
-        type: 'FRL',
-        typeColor: 'text-[#bb9af7]', // Purple
-        file: 'freelance.md',
-        title: 'Software Engineer (Freelance)',
-        period: 'May 2023 - Present',
+        type: "FRL",
+        typeColor: "text-[#bb9af7]", // Purple
+        file: "freelance.md",
+        title: "Software Engineer (Freelance)",
+        period: "May 2023 - Present",
         responsibilities: [
-            'Delivering custom web and mobile solutions for diverse client requirements',
-            'Implementing secure, scalable full-stack architectures with Go and Node.js',
-            'Managing end-to-end project lifecycle from requirements to deployment'
+            "Delivering custom web and mobile solutions for diverse client requirements",
+            "Implementing secure, scalable full-stack architectures with Go and Node.js",
+            "Managing end-to-end project lifecycle from requirements to deployment",
         ],
         tech: [
-            { name: 'AWS', icon: 'simple-icons:amazonaws' },
-            { name: 'Next.js', icon: 'simple-icons:nextdotjs' },
-            { name: 'Nest.js', icon: 'simple-icons:nestjs' },
-            { name: 'Go', icon: 'simple-icons:go' },
-            { name: 'Linux', icon: 'simple-icons:linux' },
-            { name: 'Prisma', icon: 'simple-icons:prisma' },
-            { name: 'Tailwind', icon: 'simple-icons:tailwindcss' },
-            { name: 'Firebase', icon: 'simple-icons:firebase' }
-        ]
-    }
+            { name: "AWS", icon: "simple-icons:amazonaws" },
+            { name: "Next.js", icon: "simple-icons:nextdotjs" },
+            { name: "Nest.js", icon: "simple-icons:nestjs" },
+            { name: "Go", icon: "simple-icons:go" },
+            { name: "Linux", icon: "simple-icons:linux" },
+            { name: "Prisma", icon: "simple-icons:prisma" },
+            { name: "Tailwind", icon: "simple-icons:tailwindcss" },
+            { name: "Firebase", icon: "simple-icons:firebase" },
+        ],
+    },
 ];
 ---
 
@@ -102,33 +103,43 @@ const experiences = [
     <div class="command-output">
         <div class="text-[#bb9af7] font-bold mb-2">Experience History</div>
         <div class="space-y-6">
-            {experiences.map(exp => (
-                <div class="experience-entry">
-                    <div class="flex items-center gap-2 text-[#7aa2f7]">
-                        <span class="text-[#565f89]">└─▶</span>
-                        <span class={exp.typeColor}>{exp.type}</span>
-                        <span class="text-[#565f89]">in</span>
-                        <span class="text-[#9ece6a]">{exp.title}</span>
-                    </div>
-                    <div class="ml-6 mt-1 text-[#565f89] text-xs">{exp.period}</div>
-                    <div class="ml-6 mt-2 space-y-1">
-                        {exp.responsibilities.map(resp => (
-                            <div class="flex items-start gap-2">
-                                <span class="text-[#565f89]">│</span>
-                                <span class="text-[#c0caf5]">{resp}</span>
-                            </div>
-                        ))}
-                        <div class="flex flex-wrap gap-3 mt-3 pl-4 border-l border-[#565f89]/30">
-                            {exp.tech.map(t => (
-                                <div class="flex items-center gap-1 bg-[#1a1b26] border border-[#565f89]/40 rounded px-1.5 py-0.5">
-                                    <Icon name={t.icon} class="w-3 h-3 text-[#7aa2f7]" />
-                                    <span class="text-[#9ece6a] text-[10px]">{t.name}</span>
+            {
+                experiences.map((exp) => (
+                    <div class="experience-entry">
+                        <div class="flex items-center gap-2 text-[#7aa2f7]">
+                            <span class="text-[#565f89]">└─▶</span>
+                            <span class={exp.typeColor}>{exp.type}</span>
+                            <span class="text-[#565f89]">in</span>
+                            <span class="text-[#9ece6a]">{exp.title}</span>
+                        </div>
+                        <div class="ml-6 mt-1 text-[#565f89] text-xs">
+                            {exp.period}
+                        </div>
+                        <div class="ml-6 mt-2 space-y-1">
+                            {exp.responsibilities.map((resp) => (
+                                <div class="flex items-start gap-2">
+                                    <span class="text-[#565f89]">│</span>
+                                    <span class="text-[#c0caf5]">{resp}</span>
                                 </div>
                             ))}
+                            <div class="flex flex-wrap gap-3 mt-3 pl-4 border-l border-[#565f89]/30">
+                                {exp.tech.map((t) => (
+                                    <div class="flex items-center gap-1 bg-[#1a1b26] border border-[#565f89]/40 rounded px-1.5 py-0.5">
+                                        <Icon
+                                            name={t.icon}
+                                            class="w-3 h-3 text-[#7aa2f7]"
+                                        />
+                                        <span class="text-[#9ece6a] text-[10px]">
+                                            {t.name}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
-                </div>
-            ))}
+                ))
+            }
         </div>
     </div>
-</section> 
+</section>
+
