@@ -1,105 +1,106 @@
 ---
-import { Icon } from 'astro-icon/components';
+import { Icon } from "astro-icon/components";
 const { class: className } = Astro.props;
 
 const skillCategories = [
     {
-        name: 'cloud',
+        name: "cloud",
         skills: [
-            { icon: 'simple-icons:amazonaws', name: 'AWS' },
-            { icon: 'simple-icons:googlecloud', name: 'GCP' },
-            { icon: 'mdi:microsoft-azure', name: 'Azure' },
-            { icon: 'simple-icons:cloudflare', name: 'Cloudflare' }
-        ]
+            { icon: "simple-icons:amazonaws", name: "AWS" },
+            { icon: "simple-icons:googlecloud", name: "GCP" },
+            { icon: "mdi:microsoft-azure", name: "Azure" },
+            { icon: "simple-icons:cloudflare", name: "Cloudflare" },
+        ],
     },
     {
-        name: 'containers',
+        name: "containers",
         skills: [
-            { icon: 'simple-icons:docker', name: 'Docker' },
-            { icon: 'simple-icons:kubernetes', name: 'Kubernetes' },
-            { icon: 'simple-icons:k3s', name: 'K3s' },
-            { icon: 'simple-icons:amazonecs', name: 'ECS' },
-            { icon: 'simple-icons:elastic', name: 'ELK' }
-        ]
+            { icon: "simple-icons:docker", name: "Docker" },
+            { icon: "simple-icons:kubernetes", name: "Kubernetes" },
+            { icon: "simple-icons:k3s", name: "K3s" },
+            { icon: "simple-icons:amazonecs", name: "ECS" },
+            { icon: "simple-icons:elastic", name: "ELK" },
+        ],
     },
     {
-        name: 'infra',
+        name: "infra",
         skills: [
-            { icon: 'simple-icons:linux', name: 'Linux' },
-            { icon: 'simple-icons:helm', name: 'Helm' },
-            { icon: 'simple-icons:nginx', name: 'Nginx' },
-            { icon: 'simple-icons:terraform', name: 'Terraform' },
-            { icon: 'simple-icons:packer', name: 'Packer' },
-            { icon: 'simple-icons:ansible', name: 'Ansible' },
-            { icon: 'simple-icons:jenkins', name: 'Jenkins' },
-            { icon: 'simple-icons:githubactions', name: 'GitHub Actions' },
-            { icon: 'lucide:crosshair', name: 'Artillery' }
-        ]
+            { icon: "simple-icons:linux", name: "Linux" },
+            { icon: "simple-icons:helm", name: "Helm" },
+            { icon: "simple-icons:nginx", name: "Nginx" },
+            { icon: "simple-icons:terraform", name: "Terraform" },
+            { icon: "simple-icons:packer", name: "Packer" },
+            { icon: "simple-icons:ansible", name: "Ansible" },
+            { icon: "simple-icons:jenkins", name: "Jenkins" },
+            { icon: "simple-icons:githubactions", name: "GitHub Actions" },
+            { icon: "lucide:crosshair", name: "Artillery" },
+        ],
     },
     {
-        name: 'lang',
+        name: "lang",
         skills: [
-            { icon: 'simple-icons:go', name: 'Go' },
-            { icon: 'simple-icons:rust', name: 'Rust' },
-            { icon: 'simple-icons:python', name: 'Python' },
-            { icon: 'simple-icons:typescript', name: 'TypeScript' },
-            { icon: 'simple-icons:javascript', name: 'JavaScript' },
-            { icon: 'simple-icons:nodedotjs', name: 'Node.js' }
-        ]
+            { icon: "simple-icons:go", name: "Go" },
+            { icon: "simple-icons:rust", name: "Rust" },
+            { icon: "simple-icons:python", name: "Python" },
+            { icon: "simple-icons:typescript", name: "TypeScript" },
+            { icon: "simple-icons:javascript", name: "JavaScript" },
+            { icon: "simple-icons:nodedotjs", name: "Node.js" },
+        ],
     },
     {
-        name: 'frameworks',
+        name: "frameworks",
         skills: [
-            { icon: 'simple-icons:nextdotjs', name: 'Next.js' },
-            { icon: 'simple-icons:fastapi', name: 'FastAPI' },
-            { icon: 'simple-icons:eleventy', name: '11ty' },
-            { icon: 'simple-icons:nestjs', name: 'Nest.js' },
-            { icon: 'simple-icons:go', name: 'Fiber' },
-            { icon: 'simple-icons:htmx', name: 'HTMX' },
-            { icon: 'simple-icons:tailwindcss', name: 'Tailwind' }
-        ]
+            { icon: "simple-icons:nextdotjs", name: "Next.js" },
+            { icon: "simple-icons:fastapi", name: "FastAPI" },
+            { icon: "simple-icons:eleventy", name: "11ty" },
+            { icon: "simple-icons:nestjs", name: "Nest.js" },
+            { icon: "simple-icons:go", name: "Fiber" },
+            { icon: "simple-icons:htmx", name: "HTMX" },
+            { icon: "simple-icons:tailwindcss", name: "Tailwind" },
+        ],
     },
     {
-        name: 'db',
+        name: "db",
         skills: [
-            { icon: 'simple-icons:postgresql', name: 'PostgreSQL' },
-            { icon: 'simple-icons:mysql', name: 'MySQL' },
-            { icon: 'simple-icons:mongodb', name: 'MongoDB' },
-            { icon: 'simple-icons:redis', name: 'Redis' },
-            { icon: 'simple-icons:firebase', name: 'Firebase' },
-            { icon: 'simple-icons:prisma', name: 'Prisma' },
-            { icon: 'simple-icons:go', name: 'GORM' }
-        ]
+            { icon: "simple-icons:postgresql", name: "PostgreSQL" },
+            { icon: "simple-icons:mysql", name: "MySQL" },
+            { icon: "simple-icons:mongodb", name: "MongoDB" },
+            { icon: "simple-icons:redis", name: "Redis" },
+            { icon: "simple-icons:firebase", name: "Firebase" },
+            { icon: "simple-icons:prisma", name: "Prisma" },
+            { icon: "simple-icons:go", name: "GORM" },
+        ],
     },
     {
-        name: 'serverless',
+        name: "serverless",
         skills: [
-            { icon: 'simple-icons:vercel', name: 'Vercel' },
-            { icon: 'simple-icons:amazonaws', name: 'App Runner' },
-            { icon: 'mdi:microsoft-azure', name: 'App Service' },
-            { icon: 'simple-icons:awslambda', name: 'Lambda' },
-            { icon: 'simple-icons:cloudflare', name: 'Workers' }
-        ]
+            { icon: "simple-icons:vercel", name: "Vercel" },
+            { icon: "simple-icons:amazonaws", name: "App Runner" },
+            { icon: "mdi:microsoft-azure", name: "App Service" },
+            { icon: "simple-icons:awslambda", name: "Lambda" },
+            { icon: "simple-icons:cloudflare", name: "Workers" },
+        ],
     },
     {
-        name: 'monitor',
+        name: "monitor",
         skills: [
-            { icon: 'simple-icons:prometheus', name: 'Prometheus' },
-            { icon: 'simple-icons:grafana', name: 'Grafana' },
-            { icon: 'simple-icons:grafana', name: 'Loki' },
-            { icon: 'simple-icons:grafana', name: 'Tempo' },
-            { icon: 'simple-icons:grafana', name: 'Mimir' },
-            { icon: 'simple-icons:elastic', name: 'ELK Stack' }
-        ]
+            { icon: "simple-icons:prometheus", name: "Prometheus" },
+            { icon: "simple-icons:grafana", name: "Grafana" },
+            { icon: "simple-icons:grafana", name: "Loki" },
+            { icon: "simple-icons:grafana", name: "Tempo" },
+            { icon: "simple-icons:grafana", name: "Mimir" },
+            { icon: "simple-icons:elastic", name: "ELK Stack" },
+            { icon: "lucide:shield-check", name: "Rapid7" },
+        ],
     },
     {
-        name: 'arch',
+        name: "arch",
         skills: [
-            { icon: 'lucide:blocks', name: 'Microservices' },
-            { icon: 'lucide:cpu', name: 'System Design' },
-            { icon: 'lucide:globe', name: 'Network Security' }
-        ]
-    }
+            { icon: "lucide:blocks", name: "Microservices" },
+            { icon: "lucide:cpu", name: "System Design" },
+            { icon: "lucide:globe", name: "Network Security" },
+        ],
+    },
 ];
 ---
 
@@ -107,26 +108,40 @@ const skillCategories = [
     <div class="command-output">
         <div class="text-[#bb9af7] font-bold mb-2">Technical Skills</div>
         <div class="space-y-4">
-            {skillCategories.map((category, index) => (
-                <div class="skill-category">
-                    <div class="flex items-center gap-2 mb-1">
-                        <span class="text-[#565f89]">{index === skillCategories.length - 1 ? '└─▶' : '├─▶'}</span>
-                        <span class="text-[#e0af68]">ls</span>
-                        <span class="text-[#7aa2f7]">~/{category.name}/</span>
+            {
+                skillCategories.map((category, index) => (
+                    <div class="skill-category">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-[#565f89]">
+                                {index === skillCategories.length - 1
+                                    ? "└─▶"
+                                    : "├─▶"}
+                            </span>
+                            <span class="text-[#e0af68]">ls</span>
+                            <span class="text-[#7aa2f7]">
+                                ~/{category.name}/
+                            </span>
+                        </div>
+                        <div class="ml-6 flex flex-wrap gap-4">
+                            {category.skills.map((skill, skillIndex) => (
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[#565f89]">│</span>
+                                    <span class="text-[#7aa2f7]">
+                                        <Icon
+                                            name={skill.icon}
+                                            class="w-4 h-4"
+                                        />
+                                    </span>
+                                    <span class="text-[#9ece6a]">
+                                        {skill.name}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                    <div class="ml-6 flex flex-wrap gap-4">
-                        {category.skills.map((skill, skillIndex) => (
-                            <div class="flex items-center gap-1">
-                                <span class="text-[#565f89]">│</span>
-                                <span class="text-[#7aa2f7]">
-                                    <Icon name={skill.icon} class="w-4 h-4" />
-                                </span>
-                                <span class="text-[#9ece6a]">{skill.name}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            ))}
+                ))
+            }
         </div>
     </div>
-</section> 
+</section>
+
