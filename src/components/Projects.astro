@@ -27,6 +27,23 @@ async function getGitHubStats(repo: string) {
 const projectsData = [
     {
         type: 'OPS',
+        name: 'eks-gitops-platform',
+        url: 'https://github.com/DFanso?tab=repositories&q=DevOps-Project-001&type=&language=&sort=',
+        github: 'DFanso/DevOps-Project-001',
+        description: 'Production-grade 3-repo GitOps platform on AWS EKS with Terraform IaC, GitHub Actions CI, and ArgoCD for continuous deployment with DataDog observability.',
+        tech: [
+            { icon: 'simple-icons:amazonaws', name: 'AWS EKS' },
+            { icon: 'simple-icons:terraform', name: 'Terraform' },
+            { icon: 'simple-icons:kubernetes', name: 'Kubernetes' },
+            { icon: 'simple-icons:helm', name: 'Helm' },
+            { icon: 'simple-icons:argo', name: 'ArgoCD' },
+            { icon: 'simple-icons:datadog', name: 'DataDog' },
+            { icon: 'simple-icons:githubactions', name: 'GitHub Actions' },
+            { icon: 'simple-icons:go', name: 'Go' }
+        ]
+    },
+    {
+        type: 'OPS',
         name: 'k3s-cicd',
         url: 'https://github.com/DFanso/k3s',
         github: 'DFanso/k3s',
