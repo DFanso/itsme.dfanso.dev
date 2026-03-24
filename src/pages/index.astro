@@ -98,65 +98,65 @@ export const prerender = true;
 				<div id="github"><GitHubStats /></div>
 				<div id="ls">
 					<div class="command-output">
-						<div class="text-[#bb9af7] font-bold mb-2">Directory listing of ~/portfolio</div>
+						<div class="text-[#bb9af7] font-bold mb-2 ls-header">Directory listing of ~/portfolio</div>
 						<div class="space-y-1">
-							<div class="flex items-center gap-2">
+							<div class="ls-entry flex items-center gap-2">
 								<span class="text-[#565f89] hidden sm:inline">drwxr-xr-x</span>
-								<span class="text-[#7aa2f7]">about/</span>
+								<span class="ls-name text-[#7aa2f7]">about/</span>
 								<span class="text-[#565f89] ml-auto text-xs sm:text-sm">professional summary</span>
 							</div>
-							<div class="flex items-center gap-2">
+							<div class="ls-entry flex items-center gap-2">
 								<span class="text-[#565f89] hidden sm:inline">drwxr-xr-x</span>
-								<span class="text-[#7aa2f7]">projects/</span>
+								<span class="ls-name text-[#7aa2f7]">projects/</span>
 								<span class="text-[#565f89] ml-auto text-xs sm:text-sm">featured work</span>
 							</div>
-							<div class="flex items-center gap-2">
+							<div class="ls-entry flex items-center gap-2">
 								<span class="text-[#565f89] hidden sm:inline">drwxr-xr-x</span>
-								<span class="text-[#7aa2f7]">skills/</span>
+								<span class="ls-name text-[#7aa2f7]">skills/</span>
 								<span class="text-[#565f89] ml-auto text-xs sm:text-sm">technical expertise</span>
 							</div>
-							<div class="flex items-center gap-2">
+							<div class="ls-entry flex items-center gap-2">
 								<span class="text-[#565f89] hidden sm:inline">drwxr-xr-x</span>
-								<span class="text-[#7aa2f7]">experience/</span>
+								<span class="ls-name text-[#7aa2f7]">experience/</span>
 								<span class="text-[#565f89] ml-auto text-xs sm:text-sm">work history</span>
 							</div>
-							<div class="flex items-center gap-2">
+							<div class="ls-entry flex items-center gap-2">
 								<span class="text-[#565f89] hidden sm:inline">drwxr-xr-x</span>
-								<span class="text-[#7aa2f7]">education/</span>
+								<span class="ls-name text-[#7aa2f7]">education/</span>
 								<span class="text-[#565f89] ml-auto text-xs sm:text-sm">academic background</span>
 							</div>
-							<div class="flex items-center gap-2">
+							<div class="ls-entry flex items-center gap-2">
 								<span class="text-[#565f89] hidden sm:inline">drwxr-xr-x</span>
-								<span class="text-[#7aa2f7]">certifications/</span>
+								<span class="ls-name text-[#7aa2f7]">certifications/</span>
 								<span class="text-[#565f89] ml-auto text-xs sm:text-sm">licenses & certs</span>
 							</div>
-							<div class="flex items-center gap-2">
+							<div class="ls-entry flex items-center gap-2">
 							<span class="text-[#565f89] hidden sm:inline">drwxr-xr-x</span>
-							<span class="text-[#7aa2f7]">contact/</span>
+							<span class="ls-name text-[#7aa2f7]">contact/</span>
 							<span class="text-[#565f89] ml-auto text-xs sm:text-sm">social links</span>
 						</div>
-						<div class="flex items-center gap-2">
+						<div class="ls-entry flex items-center gap-2">
 							<span class="text-[#565f89] hidden sm:inline">drwxr-xr-x</span>
-							<span class="text-[#7aa2f7]">github/</span>
+							<span class="ls-name text-[#7aa2f7]">github/</span>
 							<span class="text-[#565f89] ml-auto text-xs sm:text-sm">stats & contributions</span>
 						</div>
-							<div class="flex items-center gap-2">
+							<div class="ls-entry flex items-center gap-2">
 								<span class="text-[#565f89] hidden sm:inline">-rw-r--r--</span>
-								<span class="text-[#e0af68]">welcome.txt</span>
+								<span class="ls-name text-[#e0af68]">welcome.txt</span>
 								<span class="text-[#565f89] ml-auto text-xs sm:text-sm">welcome message</span>
 							</div>
-							<div class="flex items-center gap-2">
+							<div class="ls-entry flex items-center gap-2">
 								<span class="text-[#565f89] hidden sm:inline">-rw-r--r--</span>
-								<span class="text-[#e0af68]">whoami.txt</span>
+								<span class="ls-name text-[#e0af68]">whoami.txt</span>
 								<span class="text-[#565f89] ml-auto text-xs sm:text-sm">profile info</span>
 							</div>
-							<div class="flex items-center gap-2">
+							<div class="ls-entry flex items-center gap-2">
 								<span class="text-[#565f89] hidden sm:inline">-rw-r--r--</span>
-								<span class="text-[#e0af68]">resume.pdf</span>
+								<span class="ls-name text-[#e0af68]">resume.pdf</span>
 								<span class="text-[#565f89] ml-auto text-xs sm:text-sm">curriculum vitae</span>
 							</div>
 						</div>
-						<div class="text-[#565f89] text-xs mt-4">
+						<div class="text-[#565f89] text-xs mt-4 ls-footer">
 							Use 'cd' to navigate or type the command directly (e.g., 'about', 'projects')
 						</div>
 					</div>
@@ -792,6 +792,55 @@ Digital rain simulation...
 					return;
 				}
 				this.awaitingProjectResponse = false;
+				return;
+			}
+
+			if (cmd === 'ls') {
+				const component = document.getElementById('ls');
+				if (component) {
+					outputDiv.innerHTML = component.innerHTML;
+					this.applySyntaxHighlight(outputDiv);
+					requestAnimationFrame(() => {
+						const header  = outputDiv.querySelector('.ls-header') as HTMLElement | null;
+						const entries = Array.from(outputDiv.querySelectorAll('.ls-entry')) as HTMLElement[];
+						const names   = Array.from(outputDiv.querySelectorAll('.ls-name'))  as HTMLElement[];
+						const footer  = outputDiv.querySelector('.ls-footer')  as HTMLElement | null;
+
+						[header, footer, ...entries].forEach(el => {
+							if (el) { el.style.opacity = '0'; el.style.transform = 'translateX(-14px)'; }
+						});
+
+						anime({ targets: header, opacity: [0, 1], translateX: [-14, 0], duration: 260, easing: 'easeOutCubic' });
+
+						anime({
+							targets: entries,
+							opacity: [0, 1],
+							translateX: [-14, 0],
+							duration: 240,
+							delay: anime.stagger(55, { start: 120 }),
+							easing: 'easeOutCubic',
+						});
+
+						anime({
+							targets: names,
+							textShadow: [
+								{ value: '0 0 14px currentColor', duration: 120 },
+								{ value: '0 0 0px currentColor',  duration: 280 },
+							],
+							delay: anime.stagger(55, { start: 160 }),
+							easing: 'easeOutQuad',
+						});
+
+						anime({
+							targets: footer,
+							opacity: [0, 1],
+							translateX: [-14, 0],
+							duration: 240,
+							delay: entries.length * 55 + 200,
+							easing: 'easeOutCubic',
+						});
+					});
+				}
 				return;
 			}
 
@@ -1759,6 +1808,25 @@ Digital rain simulation...
 			opacity: 1;
 			transform: translateY(0);
 		}
+	}
+
+	/* ── ls directory listing ──────────────────────────────────────────────── */
+	.ls-entry {
+		border-radius: 3px;
+		padding: 1px 6px;
+		margin: 0 -6px;
+		transition: background 0.15s ease, transform 0.15s ease;
+		cursor: default;
+	}
+
+	.ls-entry:hover {
+		background: rgba(122, 162, 247, 0.08);
+		transform: translateX(4px);
+	}
+
+	.ls-entry:hover .ls-name {
+		text-shadow: 0 0 10px currentColor;
+		transition: text-shadow 0.15s ease;
 	}
 
 	/* Copy/Paste Styles */
