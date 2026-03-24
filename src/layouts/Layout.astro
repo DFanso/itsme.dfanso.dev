@@ -153,7 +153,87 @@ const profileImageURL = new URL(profileImage.src, Astro.site);
 		<main class="relative h-full">
 			<slot />
 		</main>
+
+		<!-- CRT Monitor Overlay -->
+		<div id="crt-overlay" aria-hidden="true">
+			<div class="crt-scanlines"></div>
+			<div class="crt-vignette"></div>
+			<div class="crt-glare"></div>
+			<div class="crt-rolling"></div>
+		</div>
+		<!-- CRT Power-On Flash -->
+		<div id="crt-poweron" aria-hidden="true"></div>
+
 		<SpeedInsights />
+
+<script>
+	import anime from 'animejs';
+
+	document.addEventListener('DOMContentLoaded', () => {
+		const poweron  = document.getElementById('crt-poweron') as HTMLElement;
+		const overlay  = document.getElementById('crt-overlay') as HTMLElement;
+		const rolling  = overlay?.querySelector('.crt-rolling') as HTMLElement;
+
+		// ── CRT Power-On ─────────────────────────────────────────────────────
+		// 1. Tiny horizontal line bursts in
+		// 2. Expands to fill screen
+		// 3. Fades out, leaving content visible
+		anime.timeline({ easing: 'easeOutQuart' })
+			.add({
+				targets: poweron,
+				scaleY: [0, 0.0035],
+				opacity: [0, 1],
+				duration: 80,
+				easing: 'easeInQuad',
+			})
+			.add({
+				targets: poweron,
+				scaleY: [0.0035, 1],
+				duration: 320,
+				easing: 'easeOutQuart',
+			})
+			.add({
+				targets: poweron,
+				opacity: [1, 0],
+				duration: 480,
+				easing: 'easeInQuad',
+				complete: () => poweron.remove(),
+			});
+
+		// ── Rolling Scanline ─────────────────────────────────────────────────
+		// A faint bright band that drifts from top to bottom every ~22s
+		function rollScanline() {
+			if (!rolling) return;
+			anime({
+				targets: rolling,
+				translateY: ['-80px', `${window.innerHeight + 80}px`],
+				duration: 4500,
+				delay: 1000,
+				easing: 'linear',
+				complete: () => setTimeout(rollScanline, 16000 + Math.random() * 12000),
+			});
+		}
+		setTimeout(rollScanline, 3500);
+
+		// ── Flicker ──────────────────────────────────────────────────────────
+		// Brief opacity stutter, like an old CRT struggling
+		function flicker() {
+			if (!overlay) return;
+			const steps = Math.random() > 0.5 ? 2 : 4;
+			const opacities = steps === 2
+				? [1, 0.88, 1]
+				: [1, 0.82, 1, 0.91, 1];
+			anime({
+				targets: overlay,
+				opacity: opacities,
+				duration: 90 * opacities.length,
+				easing: 'linear',
+				complete: () => setTimeout(flicker, 7000 + Math.random() * 20000),
+			});
+		}
+		setTimeout(flicker, 5000);
+	});
+</script>
 	</body>
 </html>
 
@@ -281,5 +361,81 @@ const profileImageURL = new URL(profileImage.src, Astro.site);
 	/* Hide empty icon containers */
 	[data-icon]:empty {
 		display: none;
+	}
+
+	/* ── CRT Monitor Effects ───────────────────────────────────────────── */
+	#crt-overlay {
+		position: fixed;
+		inset: 0;
+		z-index: 9980;
+		pointer-events: none;
+		border-radius: 2px;
+	}
+
+	/* Static scanline grid */
+	.crt-scanlines {
+		position: absolute;
+		inset: 0;
+		background: repeating-linear-gradient(
+			0deg,
+			rgba(0, 0, 0, 0.06) 0px,
+			rgba(0, 0, 0, 0.06) 1px,
+			transparent 1px,
+			transparent 3px
+		);
+		animation: crt-scanlines-drift 12s linear infinite;
+	}
+
+	@keyframes crt-scanlines-drift {
+		from { background-position: 0 0; }
+		to   { background-position: 0 12px; }
+	}
+
+	/* Edge vignette */
+	.crt-vignette {
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(ellipse at 50% 50%, transparent 52%, rgba(0, 0, 0, 0.62) 100%);
+	}
+
+	/* Top-left glare reflection */
+	.crt-glare {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(
+			135deg,
+			rgba(255, 255, 255, 0.028) 0%,
+			transparent 40%,
+			rgba(0, 0, 0, 0.07) 100%
+		);
+	}
+
+	/* Rolling scanline sweep */
+	.crt-rolling {
+		position: absolute;
+		left: 0;
+		right: 0;
+		height: 80px;
+		top: -80px;
+		background: linear-gradient(
+			to bottom,
+			transparent 0%,
+			rgba(255, 255, 255, 0.018) 40%,
+			rgba(255, 255, 255, 0.032) 50%,
+			rgba(255, 255, 255, 0.018) 60%,
+			transparent 100%
+		);
+	}
+
+	/* CRT power-on element */
+	#crt-poweron {
+		position: fixed;
+		inset: 0;
+		z-index: 9985;
+		background: linear-gradient(180deg, #bbd0ff 0%, #ffffff 50%, #bbd0ff 100%);
+		transform: scaleY(0);
+		transform-origin: center center;
+		pointer-events: none;
+		border-radius: 2px;
 	}
 </style>

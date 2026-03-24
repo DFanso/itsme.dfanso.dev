@@ -326,7 +326,11 @@ Digital rain simulation...
 								</li>
 								<li>
 									<div class="command-name">matrix</div>
-									<div class="command-desc">Display the matrix animation</div>
+									<div class="command-desc">Full-screen matrix rain simulation</div>
+								</li>
+								<li>
+									<div class="command-name">hack</div>
+									<div class="command-desc">Initiate a totally real hacking sequence 😈</div>
 								</li>
 								<li>
 									<div class="command-name">ping</div>
@@ -357,6 +361,8 @@ Digital rain simulation...
 </Layout>
 
 <script>
+	import anime from 'animejs';
+
 	const body = document.body;
 	body.classList.remove('no-js');
 	body.classList.add('booting');
@@ -371,9 +377,9 @@ Digital rain simulation...
 		private historyIndex: number = -1;
 		private awaitingProjectResponse: boolean = false;
 		private availableCommands: string[] = [
-			'help', 'whoami', 'about', 'projects', 'skills', 
-			'experience', 'education', 'certifications', 'contact', 'clear', 'ls', 'neofetch', 
-			'time', 'weather', 'matrix', 'ping', 'welcome',
+			'help', 'whoami', 'about', 'projects', 'skills',
+			'experience', 'education', 'certifications', 'contact', 'clear', 'ls', 'neofetch',
+			'time', 'weather', 'matrix', 'hack', 'ping', 'welcome',
 			'resume', 'sudo', 'rm', 'vi', 'vim', 'nano', 'github'
 		];
 		private suggestionsContainer: HTMLElement | null = null;
@@ -789,6 +795,18 @@ Digital rain simulation...
 				return;
 			}
 
+			if (cmd === 'matrix') {
+				this.renderOutputHTML(outputDiv, `<div class="text-[#9ece6a]">Launching matrix simulation... <span class="text-[#565f89] text-xs">(press ESC or click anywhere to exit)</span></div>`);
+				setTimeout(() => launchMatrixAnimation(), 300);
+				return;
+			}
+
+			if (cmd === 'hack') {
+				this.renderOutputHTML(outputDiv, `<div class="text-[#f7768e]">Initiating hack sequence... <span class="text-[#565f89] text-xs">(stand by)</span></div>`);
+				setTimeout(() => launchHackSequence(), 300);
+				return;
+			}
+
 			const componentId = command === 'whoami' ? 'whoami' : command;
 			const component = document.getElementById(componentId);
 
@@ -944,6 +962,297 @@ Digital rain simulation...
 		}
 	}
 
+	// ─── Matrix Rain Animation ───────────────────────────────────────────────
+	function launchMatrixAnimation(): void {
+		const overlay = document.createElement('div');
+		overlay.id = 'matrix-overlay';
+		overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#000;overflow:hidden;cursor:pointer;';
+		document.body.appendChild(overlay);
+
+		// Canvas
+		const canvas = document.createElement('canvas');
+		const W = window.innerWidth, H = window.innerHeight;
+		canvas.width = W; canvas.height = H;
+		canvas.style.display = 'block';
+		overlay.appendChild(canvas);
+
+		// Quote element
+		const quoteEl = document.createElement('div');
+		quoteEl.style.cssText = [
+			'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);',
+			'color:#00ff41;font-family:"JetBrains Mono",monospace;',
+			'font-size:clamp(1rem,3vw,2.2rem);text-align:center;',
+			'text-shadow:0 0 20px #00ff41,0 0 50px #00ff4180;',
+			'z-index:2;opacity:0;pointer-events:none;white-space:nowrap;letter-spacing:0.1em;',
+		].join('');
+		overlay.appendChild(quoteEl);
+
+		// Exit hint
+		const hint = document.createElement('div');
+		hint.textContent = '[ PRESS ESC OR CLICK TO EXIT ]';
+		hint.style.cssText = 'position:absolute;bottom:24px;left:50%;transform:translateX(-50%);color:#00ff4145;font-family:monospace;font-size:0.7rem;z-index:2;letter-spacing:0.3em;opacity:0;';
+		overlay.appendChild(hint);
+
+		// Scanlines
+		const scan = document.createElement('div');
+		scan.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:1;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,65,0.04) 2px,rgba(0,255,65,0.04) 4px);';
+		overlay.appendChild(scan);
+
+		// Matrix rain
+		const ctx = canvas.getContext('2d')!;
+		const FS = 14;
+		const cols = Math.floor(W / FS);
+		const drops: number[] = Array.from({ length: cols }, () => Math.random() * -(H / FS));
+		const CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF!@#$%^&*';
+		let rafId: number;
+		let alive = true;
+
+		function drawRain() {
+			if (!alive) return;
+			ctx.fillStyle = 'rgba(0,0,0,0.04)';
+			ctx.fillRect(0, 0, W, H);
+
+			for (let i = 0; i < cols; i++) {
+				const ch = CHARS[Math.floor(Math.random() * CHARS.length)];
+				const x = i * FS;
+				const y = drops[i] * FS;
+
+				if (drops[i] >= 0) {
+					ctx.font = `bold ${FS}px monospace`;
+					ctx.fillStyle = '#ffffff';
+					ctx.shadowColor = '#00ff41';
+					ctx.shadowBlur = 12;
+					ctx.fillText(ch, x, y);
+
+					ctx.font = `${FS}px monospace`;
+					ctx.fillStyle = '#00ff41';
+					ctx.shadowBlur = 4;
+					if (y - FS > 0) ctx.fillText(CHARS[Math.floor(Math.random() * CHARS.length)], x, y - FS);
+					if (y - FS * 2 > 0) {
+						ctx.fillStyle = '#00aa28';
+						ctx.fillText(CHARS[Math.floor(Math.random() * CHARS.length)], x, y - FS * 2);
+					}
+				}
+
+				drops[i]++;
+				if (drops[i] * FS > H && Math.random() > 0.975) drops[i] = Math.floor(Math.random() * -20);
+			}
+			ctx.shadowBlur = 0;
+			rafId = requestAnimationFrame(drawRain);
+		}
+		drawRain();
+
+		// Quote cycling via anime.js
+		const quotes = [
+			'Wake up, Neo...',
+			'The Matrix has you.',
+			'Follow the white rabbit.',
+			'Knock, knock, Neo.',
+			'There is no spoon.',
+			'Free your mind.',
+			'01001000 01100101 01101100 01101100 01101111',
+			'// TODO: escape the simulation',
+		];
+		let qi = 0;
+
+		function cycleQuote() {
+			if (!alive) return;
+			quoteEl.textContent = quotes[qi++ % quotes.length];
+			anime({
+				targets: quoteEl,
+				opacity: [0, 1, 1, 0],
+				scale: [0.94, 1, 1, 1.03],
+				duration: 3800,
+				easing: 'easeInOutSine',
+				complete: () => { if (alive) setTimeout(cycleQuote, 400); },
+			});
+		}
+
+		// Random canvas glitch pulses
+		function glitch() {
+			if (!alive) return;
+			anime({
+				targets: canvas,
+				translateX: [0, () => (Math.random() - 0.5) * 12, 0, () => (Math.random() - 0.5) * 6, 0],
+				skewX: [0, () => (Math.random() - 0.5) * 2, 0],
+				duration: 120,
+				easing: 'linear',
+				complete: () => { if (alive) setTimeout(glitch, 1800 + Math.random() * 4000); },
+			});
+		}
+
+		// Entry animation
+		anime({
+			targets: overlay,
+			opacity: [0, 1],
+			duration: 500,
+			easing: 'easeOutQuad',
+			complete: () => {
+				setTimeout(cycleQuote, 800);
+				setTimeout(glitch, 2500);
+				anime({ targets: hint, opacity: [0, 0.45], duration: 1200, delay: 600, easing: 'easeOutQuad' });
+			},
+		});
+
+		// Exit
+		const exit = () => {
+			alive = false;
+			cancelAnimationFrame(rafId);
+			anime({
+				targets: overlay,
+				opacity: 0,
+				scaleY: [1, 0.03],
+				scaleX: [1, 1.08],
+				duration: 550,
+				easing: 'easeInBack',
+				complete: () => overlay.remove(),
+			});
+			document.removeEventListener('keydown', onKey);
+			overlay.removeEventListener('click', exit);
+		};
+		const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') exit(); };
+		document.addEventListener('keydown', onKey);
+		overlay.addEventListener('click', exit);
+	}
+
+	// ─── Hack Sequence Animation ──────────────────────────────────────────────
+	function launchHackSequence(): void {
+		const overlay = document.createElement('div');
+		overlay.id = 'hack-overlay';
+		overlay.style.cssText = [
+			'position:fixed;inset:0;z-index:9999;background:#080808;overflow:hidden;',
+			'font-family:"JetBrains Mono",monospace;',
+			'display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;',
+		].join('');
+		document.body.appendChild(overlay);
+
+		// Scanlines
+		const scan = document.createElement('div');
+		scan.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,65,0.025) 2px,rgba(0,255,65,0.025) 4px);';
+		overlay.appendChild(scan);
+
+		const content = document.createElement('div');
+		content.style.cssText = 'width:min(720px,90%);position:relative;z-index:1;';
+		overlay.appendChild(content);
+
+		const mkLine = (text: string, color = '#00ff41', extraStyle = '') => {
+			const d = document.createElement('div');
+			d.textContent = text;
+			d.style.cssText = `color:${color};opacity:0;margin:3px 0;font-size:clamp(0.65rem,1.8vw,0.85rem);${extraStyle}`;
+			content.appendChild(d);
+			return d;
+		};
+
+		const mkBar = (label: string, color = '#00ff41') => {
+			const wrap = document.createElement('div');
+			wrap.style.cssText = 'margin:5px 0;opacity:0;';
+			const lbl = document.createElement('div');
+			lbl.textContent = label;
+			lbl.style.cssText = `color:${color};font-size:0.75rem;margin-bottom:3px;`;
+			const bc = document.createElement('div');
+			bc.style.cssText = `width:100%;height:10px;background:#0a1a0a;border:1px solid ${color}35;position:relative;overflow:hidden;`;
+			const bar = document.createElement('div');
+			bar.style.cssText = `height:100%;width:0%;background:${color};box-shadow:0 0 8px ${color};`;
+			const pct = document.createElement('span');
+			pct.textContent = '0%';
+			pct.style.cssText = 'position:absolute;right:4px;top:50%;transform:translateY(-50%);color:#000;font-size:0.6rem;font-weight:bold;mix-blend-mode:difference;color:#fff;';
+			bc.appendChild(bar); bc.appendChild(pct);
+			wrap.appendChild(lbl); wrap.appendChild(bc);
+			content.appendChild(wrap);
+			return { wrap, bar, pct };
+		};
+
+		// Build elements
+		const l1 = mkLine('> Establishing encrypted tunnel to itsme.dfanso.dev...');
+		const l2 = mkLine('> Resolved IP: 76.76.21.21 | ASN: Vercel Inc.', '#7aa2f7');
+		const l3 = mkLine('> RTT: 0.4ms  |  Packet loss: 0%  |  TTL: 64', '#565f89');
+		const l4 = mkLine('> TLS 1.3 handshake complete. Session key established. ✓', '#9ece6a');
+		const sep1 = mkLine('─'.repeat(60), '#1a3a1a');
+		const pb1 = mkBar('[ BYPASSING CLOUDFLARE WAF ]', '#f7768e');
+		const pb2 = mkBar('[ EXPLOITING CVE-2024-LMAO ]', '#e0af68');
+		const pb3 = mkBar('[ INJECTING REVERSE SHELL PAYLOAD ]', '#bb9af7');
+		const pb4 = mkBar('[ ESCALATING TO ROOT PRIVILEGES ]', '#7aa2f7');
+		const sep2 = mkLine('─'.repeat(60), '#1a3a1a');
+		const granted = mkLine('★★★  ACCESS GRANTED  ★★★', '#00ff41', 'font-size:clamp(1rem,2.5vw,1.4rem);font-weight:bold;text-align:center;text-shadow:0 0 20px #00ff41,0 0 40px #00ff4180;letter-spacing:0.15em;');
+		const root = mkLine('root@dfanso.dev:~# whoami', '#9ece6a');
+		const rootResult = mkLine('root', '#c0caf5');
+		const lol1 = mkLine('root@dfanso.dev:~# cat /etc/secrets', '#9ece6a');
+		const lol2 = mkLine('cat: /etc/secrets: nice try 😄', '#f7768e');
+		const lol3 = mkLine('> jk — this is just a portfolio. but the animations are real 🔥', '#565f89', 'font-style:italic;');
+		const exitHint = mkLine('[ click anywhere or press ESC to exit ]', '#00ff4140', 'text-align:center;margin-top:12px;');
+
+		const tl = anime.timeline({ easing: 'easeOutQuad', autoplay: true });
+
+		// Phase 1: Connection
+		tl.add({ targets: l1, opacity: [0, 1], duration: 350 })
+		  .add({ targets: l2, opacity: [0, 1], duration: 350 }, '+=150')
+		  .add({ targets: l3, opacity: [0, 1], duration: 350 }, '+=100')
+		  .add({ targets: l4, opacity: [0, 1], duration: 350 }, '+=150')
+		  .add({ targets: sep1, opacity: [0, 0.6], duration: 200 }, '+=200');
+
+		// Phase 2: Progress bars
+		const barItems = [pb1, pb2, pb3, pb4];
+		barItems.forEach((pb, idx) => {
+			tl.add({ targets: pb.wrap, opacity: [0, 1], duration: 250 }, idx === 0 ? '+=300' : '+=50');
+			tl.add({
+				targets: pb.bar,
+				width: ['0%', '100%'],
+				duration: 1400,
+				easing: 'easeInOutCubic',
+				update(anim) { pb.pct.textContent = Math.round(anim.progress) + '%'; },
+			}, '+=80');
+		});
+
+		// Phase 3: Access Granted
+		tl.add({ targets: sep2, opacity: [0, 0.6], duration: 200 }, '+=200')
+		  .add({ targets: granted, opacity: [0, 1], scale: [0.75, 1], duration: 700, easing: 'easeOutElastic(1, 0.5)' }, '+=200')
+		  // Glitch flash on granted text
+		  .add({ targets: granted, translateX: [0, -4, 4, -2, 2, 0], color: ['#00ff41', '#ff0044', '#00ff41', '#0044ff', '#00ff41'], duration: 350, easing: 'linear' }, '+=300')
+		  .add({ targets: root, opacity: [0, 1], duration: 300 }, '+=200')
+		  .add({ targets: rootResult, opacity: [0, 1], duration: 250 }, '+=100')
+		  .add({ targets: lol1, opacity: [0, 1], duration: 300 }, '+=150')
+		  .add({ targets: lol2, opacity: [0, 1], duration: 300 }, '+=100')
+		  .add({ targets: lol3, opacity: [0, 1], duration: 400 }, '+=150')
+		  .add({ targets: exitHint, opacity: [0, 0.6], duration: 400 }, '+=300')
+		  // Particle burst on ACCESS GRANTED
+		  .add({
+			begin() {
+				const rect = granted.getBoundingClientRect();
+				const cx = rect.left + rect.width / 2;
+				const cy = rect.top + rect.height / 2;
+				for (let i = 0; i < 40; i++) {
+					const p = document.createElement('div');
+					const hue = Math.random() > 0.6 ? '#00ff41' : (Math.random() > 0.5 ? '#7aa2f7' : '#f7768e');
+					p.style.cssText = `position:fixed;width:${3 + Math.random() * 4}px;height:${3 + Math.random() * 4}px;background:${hue};border-radius:50%;box-shadow:0 0 6px ${hue};pointer-events:none;z-index:10000;left:${cx}px;top:${cy}px;`;
+					document.body.appendChild(p);
+					anime({
+						targets: p,
+						translateX: () => (Math.random() - 0.5) * 500,
+						translateY: () => (Math.random() - 0.5) * 400,
+						scale: [1, 0],
+						opacity: [1, 0],
+						duration: 900 + Math.random() * 600,
+						easing: 'easeOutQuad',
+						complete: () => p.remove(),
+					});
+				}
+			},
+			duration: 10,
+		}, `-=650`);
+
+		// Entry fade
+		anime({ targets: overlay, opacity: [0, 1], duration: 300, easing: 'easeOutQuad' });
+
+		const exit = () => {
+			anime({ targets: overlay, opacity: 0, duration: 400, easing: 'easeInQuad', complete: () => overlay.remove() });
+			overlay.removeEventListener('click', exit);
+			document.removeEventListener('keydown', onKey);
+		};
+		const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') exit(); };
+		overlay.addEventListener('click', exit);
+		document.addEventListener('keydown', onKey);
+	}
+
 	// Initialize terminal when the page loads
 	window.addEventListener('load', () => {
 		requestAnimationFrame(() => {
@@ -951,7 +1260,154 @@ Digital rain simulation...
 			setTimeout(() => body.classList.remove('booting'), 900);
 		});
 		new Terminal();
+		startAmbientAnimations();
 	});
+
+	// ─── Always-on Ambient Animations ────────────────────────────────────────
+	function startAmbientAnimations(): void {
+		startGlowPulse();
+		spawnFloatingParticles();
+		startTitleGlitch();
+		startEnterBurst();
+	}
+
+	// 1. Breathing neon glow on the terminal border
+	function startGlowPulse(): void {
+		const container = document.querySelector('.terminal-container') as HTMLElement;
+		if (!container) return;
+		anime({
+			targets: container,
+			boxShadow: [
+				'0 0 20px rgba(0,0,0,0.4), 0 0 60px rgba(122,162,247,0.08)',
+				'0 0 30px rgba(0,0,0,0.4), 0 0 90px rgba(122,162,247,0.28), 0 0 140px rgba(187,154,247,0.12)',
+				'0 0 20px rgba(0,0,0,0.4), 0 0 60px rgba(122,162,247,0.08)',
+			],
+			duration: 4000,
+			easing: 'easeInOutSine',
+			loop: true,
+		});
+	}
+
+	// 2. Floating code glyphs drifting behind the terminal
+	function spawnFloatingParticles(): void {
+		const bg = document.querySelector('.min-h-screen') as HTMLElement;
+		if (!bg) return;
+		bg.style.position = 'relative';
+		const GLYPHS = '01{}[]<>/アイウカキクコサシスタチツ#$%@!~';
+		const COLORS = ['#7aa2f720', '#bb9af720', '#9ece6a18', '#e0af6818', '#7dcfff15'];
+		const count = window.innerWidth < 640 ? 12 : 22;
+
+		for (let i = 0; i < count; i++) {
+			const el = document.createElement('div');
+			el.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+			const size = 10 + Math.random() * 14;
+			el.style.cssText = [
+				'position:absolute;pointer-events:none;user-select:none;',
+				`font-family:"JetBrains Mono",monospace;font-size:${size}px;`,
+				`color:${COLORS[Math.floor(Math.random() * COLORS.length)]};`,
+				`left:${Math.random() * 100}%;top:${Math.random() * 100}%;`,
+				'z-index:0;opacity:0;',
+			].join('');
+			bg.appendChild(el);
+
+			const delay = Math.random() * 6000;
+			const dur = 6000 + Math.random() * 8000;
+
+			// Periodically change the glyph character
+			setInterval(() => {
+				el.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+			}, dur);
+
+			anime({
+				targets: el,
+				opacity: [0, 1, 1, 0],
+				translateY: [0, -(60 + Math.random() * 80)],
+				translateX: [(Math.random() - 0.5) * 40],
+				rotate: [(Math.random() - 0.5) * 20],
+				duration: dur,
+				delay,
+				easing: 'easeInOutSine',
+				loop: true,
+				direction: 'normal',
+			});
+		}
+	}
+
+	// 3. Periodic random glitch on the terminal title text
+	function startTitleGlitch(): void {
+		const title = document.querySelector('.terminal-title') as HTMLElement;
+		if (!title) return;
+		const original = title.textContent || '';
+		const glitchChars = '!@#$%^&*<>?/|[]{}~`';
+
+		function doGlitch() {
+			const steps = 8;
+			let step = 0;
+			const iv = setInterval(() => {
+				let out = '';
+				for (let i = 0; i < original.length; i++) {
+					out += (Math.random() > 0.65 && original[i] !== ' ')
+						? glitchChars[Math.floor(Math.random() * glitchChars.length)]
+						: original[i];
+				}
+				title.textContent = out;
+				if (++step >= steps) {
+					clearInterval(iv);
+					title.textContent = original;
+				}
+			}, 50);
+
+			anime({
+				targets: title,
+				color: ['#c0caf5', '#f7768e', '#7aa2f7', '#c0caf5'],
+				translateX: [0, -3, 3, -1, 0],
+				duration: steps * 50,
+				easing: 'linear',
+			});
+
+			setTimeout(doGlitch, 9000 + Math.random() * 14000);
+		}
+
+		setTimeout(doGlitch, 5000 + Math.random() * 5000);
+	}
+
+	// 4. Tiny particle burst from cursor on every Enter keypress
+	function startEnterBurst(): void {
+		const inputLine = document.getElementById('input-line');
+		if (!inputLine) return;
+
+		document.addEventListener('keydown', (e: KeyboardEvent) => {
+			if (e.key !== 'Enter') return;
+			const cursor = inputLine.querySelector('.cursor') as HTMLElement;
+			if (!cursor) return;
+			const rect = cursor.getBoundingClientRect();
+			const cx = rect.left + rect.width / 2;
+			const cy = rect.top + rect.height / 2;
+
+			const COLORS = ['#7aa2f7', '#9ece6a', '#bb9af7', '#e0af68'];
+			for (let i = 0; i < 8; i++) {
+				const p = document.createElement('div');
+				const col = COLORS[Math.floor(Math.random() * COLORS.length)];
+				p.style.cssText = [
+					`position:fixed;width:3px;height:3px;border-radius:50%;`,
+					`background:${col};box-shadow:0 0 4px ${col};`,
+					`pointer-events:none;z-index:9998;`,
+					`left:${cx}px;top:${cy}px;`,
+				].join('');
+				document.body.appendChild(p);
+				anime({
+					targets: p,
+					translateX: () => (Math.random() - 0.5) * 80,
+					translateY: () => (Math.random() - 0.5) * 60,
+					scale: [1, 0],
+					opacity: [1, 0],
+					duration: 500 + Math.random() * 300,
+					easing: 'easeOutQuad',
+					complete: () => p.remove(),
+				});
+			}
+		});
+	}
 
 	// Add time update functionality
 	function updateTime() {
