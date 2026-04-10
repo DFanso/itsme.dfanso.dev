@@ -1248,7 +1248,7 @@ Digital rain simulation...
 				width: ['0%', '100%'],
 				duration: 1400,
 				easing: 'easeInOutCubic',
-				update(anim) { pb.pct.textContent = Math.round(anim.progress) + '%'; },
+				update(anim: anime.AnimeInstance) { pb.pct.textContent = Math.round(anim.progress) + '%'; },
 			}, '+=80');
 		});
 
