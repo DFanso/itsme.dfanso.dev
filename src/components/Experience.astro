@@ -4,6 +4,36 @@ const { class: className } = Astro.props;
 
 const companies = [
     {
+        company: "Fun Extreme Technology LLC",
+        totalPeriod: "March 2026 - Present",
+        icon: "lucide:gamepad-2",
+        roles: [
+            {
+                type: "SWE",
+                typeColor: "text-[#7aa2f7]",
+                title: "Senior Software Engineer",
+                period: "March 2026 - Present",
+                responsibilities: [
+                    "Developing and maintaining high-performance applications using .NET Core and Clean Architecture principles",
+                    "Integrating Azure DevOps pipelines for CI/CD and leveraging Azure Web Services for cloud deployments",
+                    "Applying architectural patterns including Mediator, CQRS, and Domain-Driven Design (DDD)",
+                    "Working with Entity Framework Core and PostgreSQL for robust, scalable data access layers",
+                    "Delivering innovative software solutions and game-related applications for a global audience",
+                ],
+                tech: [
+                    { name: ".NET Core", icon: "simple-icons:dotnet" },
+                    { name: "C#", icon: "simple-icons:csharp" },
+                    { name: "Azure DevOps", icon: "simple-icons:azuredevops" },
+                    { name: "Azure", icon: "mdi:microsoft-azure" },
+                    { name: "EF Core", icon: "simple-icons:dotnet" },
+                    { name: "PostgreSQL", icon: "simple-icons:postgresql" },
+                    { name: "Clean Arch", icon: "lucide:layers" },
+                    { name: "Mediator", icon: "lucide:share-2" },
+                ],
+            },
+        ],
+    },
+    {
         company: "Empite",
         totalPeriod: "July 2024 - Present · 1 yr 10 mos",
         icon: "lucide:building-2",
