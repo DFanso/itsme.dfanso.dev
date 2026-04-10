@@ -2,205 +2,248 @@
 import { Icon } from "astro-icon/components";
 const { class: className } = Astro.props;
 
-const experiences = [
+const companies = [
     {
-        type: "DEV",
-        typeColor: "text-[#e0af68]", // Yellow
-        file: "devops.md",
-        title: "DevOps Engineer @ Empite",
-        period: "August 2025 - Present",
-        responsibilities: [
-            "Implemented auto-scaling solutions, achieving a 20% cost reduction while maintaining high availability",
-            "Executed disaster recovery plans and led migrations to immutable infrastructure using Terraform",
-            "Conducted load testing using Artillery, improving infrastructure scalability by 70%",
-            "Collaborated with developers to optimize codebases, ensuring systems handled increased traffic",
-            "Enhanced CI/CD pipelines and containerized services, accelerating deployments",
-        ],
-        tech: [
-            { name: "AWS", icon: "simple-icons:amazonaws" },
-            { name: "Azure", icon: "mdi:microsoft-azure" },
-            { name: "Linux", icon: "simple-icons:linux" },
-            { name: "Terraform", icon: "simple-icons:terraform" },
-            { name: "Packer", icon: "simple-icons:packer" },
-            { name: "Go", icon: "simple-icons:go" },
-            { name: "K8s", icon: "simple-icons:kubernetes" },
-            { name: "Docker", icon: "simple-icons:docker" },
-            { name: "Artillery", icon: "lucide:crosshair" },
-            { name: "Rapid7", icon: "lucide:shield-check" },
+        company: "Empite",
+        totalPeriod: "July 2024 - Present · 1 yr 10 mos",
+        icon: "lucide:building-2",
+        roles: [
+            {
+                type: "DEV",
+                typeColor: "text-[#e0af68]",
+                title: "DevOps Engineer",
+                period: "August 2025 - Present",
+                responsibilities: [
+                    "Implemented auto-scaling solutions, achieving a 20% cost reduction while maintaining high availability",
+                    "Executed disaster recovery plans and led migrations to immutable infrastructure using Terraform",
+                    "Conducted load testing using Artillery, improving infrastructure scalability by 70%",
+                    "Collaborated with developers to optimize codebases, ensuring systems handled increased traffic",
+                    "Enhanced CI/CD pipelines and containerized services, accelerating deployments",
+                ],
+                tech: [
+                    { name: "AWS", icon: "simple-icons:amazonaws" },
+                    { name: "Azure", icon: "mdi:microsoft-azure" },
+                    { name: "Linux", icon: "simple-icons:linux" },
+                    { name: "Terraform", icon: "simple-icons:terraform" },
+                    { name: "Packer", icon: "simple-icons:packer" },
+                    { name: "Go", icon: "simple-icons:go" },
+                    { name: "K8s", icon: "simple-icons:kubernetes" },
+                    { name: "Docker", icon: "simple-icons:docker" },
+                    { name: "Artillery", icon: "lucide:crosshair" },
+                    { name: "Rapid7", icon: "lucide:shield-check" },
+                ],
+            },
+            {
+                type: "DEV",
+                typeColor: "text-[#e0af68]",
+                title: "Associate DevOps Engineer",
+                period: "November 2024 - July 2025",
+                responsibilities: [
+                    "Migrated legacy project to modern Docker/ECS, reducing costs by 3x and enhancing maintainability",
+                    "Built Azure IaC with Terraform, reducing provisioning time by 60% and standardizing deployments",
+                    "Recovered an abandoned project, designing the infrastructure charter and deploying to production",
+                    "Refactored legacy Terraform scripts to integrate with modern services for easier scaling",
+                    "Designed and executed artillery-based load testing and auto-scaling improvements",
+                ],
+                tech: [
+                    { name: "AWS", icon: "simple-icons:amazonaws" },
+                    { name: "Nest.js", icon: "simple-icons:nestjs" },
+                    { name: "Go", icon: "simple-icons:go" },
+                    { name: "Linux", icon: "simple-icons:linux" },
+                    { name: "TypeScript", icon: "simple-icons:typescript" },
+                    { name: "Azure DevOps", icon: "simple-icons:azuredevops" },
+                    { name: "Terraform", icon: "simple-icons:terraform" },
+                    { name: "Artillery", icon: "lucide:crosshair" },
+                ],
+            },
+            {
+                type: "INT",
+                typeColor: "text-[#9ece6a]",
+                title: "Software Engineer Intern",
+                period: "July 2024 - October 2024",
+                responsibilities: [
+                    "Developed NestJS microservices backends and integrated Next.js frontends",
+                    "Optimized code performance by refactoring core services, reducing latency",
+                    "Contributed to microservices-based architecture, enhancing modularity",
+                    "Assisted in CI/CD pipeline improvements and containerization of services",
+                ],
+                tech: [
+                    { name: "AWS", icon: "simple-icons:amazonaws" },
+                    { name: "React", icon: "simple-icons:react" },
+                    { name: "Nest.js", icon: "simple-icons:nestjs" },
+                    { name: "Node.js", icon: "simple-icons:nodedotjs" },
+                    { name: "Linux", icon: "simple-icons:linux" },
+                    { name: "Git", icon: "simple-icons:git" },
+                ],
+            },
         ],
     },
     {
-        type: "DEV",
-        typeColor: "text-[#e0af68]",
-        file: "associate.md",
-        title: "Associate DevOps Engineer @ Empite",
-        period: "November 2024 - July 2025",
-        responsibilities: [
-            "Migrated legacy project to modern Docker/ECS, reducing costs by 3x and enhancing maintainability",
-            "Built Azure IaC with Terraform, reducing provisioning time by 60% and standardizing deployments",
-            "Recovered an abandoned project, designing the infrastructure charter and deploying to production",
-            "Refactored legacy Terraform scripts to integrate with modern services for easier scaling",
-            "Designed and executed artillery-based load testing and auto-scaling improvements",
-        ],
-        tech: [
-            { name: "AWS", icon: "simple-icons:amazonaws" },
-            { name: "Nest.js", icon: "simple-icons:nestjs" },
-            { name: "Go", icon: "simple-icons:go" },
-            { name: "Linux", icon: "simple-icons:linux" },
-            { name: "TypeScript", icon: "simple-icons:typescript" },
-            { name: "Azure DevOps", icon: "simple-icons:azuredevops" },
-            { name: "Terraform", icon: "simple-icons:terraform" },
-            { name: "Artillery", icon: "lucide:crosshair" },
-        ],
-    },
-    {
-        type: "INT",
-        typeColor: "text-[#9ece6a]", // Green
-        file: "intern.md",
-        title: "Software Engineer Intern @ Empite",
-        period: "July 2024 - October 2024",
-        responsibilities: [
-            "Developed NestJS microservices backends and integrated Next.js frontends",
-            "Optimized code performance by refactoring core services, reducing latency",
-            "Contributed to microservices-based architecture, enhancing modularity",
-            "Assisted in CI/CD pipeline improvements and containerization of services",
-        ],
-        tech: [
-            { name: "AWS", icon: "simple-icons:amazonaws" },
-            { name: "React", icon: "simple-icons:react" },
-            { name: "Nest.js", icon: "simple-icons:nestjs" },
-            { name: "Node.js", icon: "simple-icons:nodedotjs" },
-            { name: "Linux", icon: "simple-icons:linux" },
-            { name: "Git", icon: "simple-icons:git" },
+        company: "CodeXeed",
+        totalPeriod: "June 2025 - Present · 11 mos",
+        icon: "lucide:code-2",
+        roles: [
+            {
+                type: "CTO",
+                typeColor: "text-[#f7768e]",
+                title: "Co-Founder & CTO",
+                period: "June 2025 - Present",
+                responsibilities: [
+                    "Defining the tech stack and architectural patterns for client projects, from discovery to deployment",
+                    "Driving development of enterprise-grade web applications using Next.js, NestJS, and PostgreSQL",
+                    "Implementing high-performance SEO-optimized structures and robust security measures",
+                    "Leading legacy system revamps, migrating Angular/PHP monoliths to Next.js microservices",
+                ],
+                tech: [
+                    { name: "Next.js", icon: "simple-icons:nextdotjs" },
+                    { name: "Nest.js", icon: "simple-icons:nestjs" },
+                    { name: "PostgreSQL", icon: "simple-icons:postgresql" },
+                    { name: "Docker", icon: "simple-icons:docker" },
+                    { name: "AWS", icon: "simple-icons:amazonaws" },
+                    { name: "Terraform", icon: "simple-icons:terraform" },
+                ],
+            },
         ],
     },
     {
-        type: "CTO",
-        typeColor: "text-[#f7768e]", // Red/Pink
-        file: "codexeed.md",
-        title: "Co-Founder & CTO @ CodeXeed",
-        period: "June 2025 - Present",
-        responsibilities: [
-            "Defining the tech stack and architectural patterns for client projects, from discovery to deployment",
-            "Driving development of enterprise-grade web applications using Next.js, NestJS, and PostgreSQL",
-            "Implementing high-performance SEO-optimized structures and robust security measures",
-            "Leading legacy system revamps, migrating Angular/PHP monoliths to Next.js microservices",
-        ],
-        tech: [
-            { name: "Next.js", icon: "simple-icons:nextdotjs" },
-            { name: "Nest.js", icon: "simple-icons:nestjs" },
-            { name: "PostgreSQL", icon: "simple-icons:postgresql" },
-            { name: "Docker", icon: "simple-icons:docker" },
-            { name: "AWS", icon: "simple-icons:amazonaws" },
-            { name: "Terraform", icon: "simple-icons:terraform" },
-        ],
-    },
-    {
-        type: "CTO",
-        typeColor: "text-[#f7768e]", // Red/Pink
-        file: "klexd.md",
-        title: "Co-Founder & CTO @ KlexD",
-        period: "October 2024 - Present",
-        responsibilities: [
-            "Architecting intelligent systems and smart assistants using Python, OpenAI, and LangChain",
-            "Steering development of mobile and web platforms using React Native and Next.js",
-            "Building robust REST/GraphQL API pipelines and ETL processes to connect business tools",
-            "Establishing high-quality code culture through QA testing, Docker, and CI/CD pipelines",
-        ],
-        tech: [
-            { name: "Python", icon: "simple-icons:python" },
-            { name: "OpenAI", icon: "simple-icons:openai" },
-            { name: "LangChain", icon: "simple-icons:langchain" },
-            { name: "React Native", icon: "simple-icons:react" },
-            { name: "Next.js", icon: "simple-icons:nextdotjs" },
-            { name: "Docker", icon: "simple-icons:docker" },
+        company: "KlexD",
+        totalPeriod: "October 2024 - Present · 1 yr 7 mos",
+        icon: "lucide:cpu",
+        roles: [
+            {
+                type: "CTO",
+                typeColor: "text-[#f7768e]",
+                title: "Co-Founder & CTO",
+                period: "October 2024 - Present",
+                responsibilities: [
+                    "Architecting intelligent systems and smart assistants using Python, OpenAI, and LangChain",
+                    "Steering development of mobile and web platforms using React Native and Next.js",
+                    "Building robust REST/GraphQL API pipelines and ETL processes to connect business tools",
+                    "Establishing high-quality code culture through QA testing, Docker, and CI/CD pipelines",
+                ],
+                tech: [
+                    { name: "Python", icon: "simple-icons:python" },
+                    { name: "OpenAI", icon: "simple-icons:openai" },
+                    { name: "LangChain", icon: "simple-icons:langchain" },
+                    { name: "React Native", icon: "simple-icons:react" },
+                    { name: "Next.js", icon: "simple-icons:nextdotjs" },
+                    { name: "Docker", icon: "simple-icons:docker" },
+                ],
+            },
         ],
     },
     {
-        type: "FRL",
-        typeColor: "text-[#bb9af7]", // Purple
-        file: "freelance.md",
-        title: "Software Engineer @ Fiverr",
-        period: "May 2023 - May 2025",
-        responsibilities: [
-            "Delivering custom web and mobile solutions for diverse client requirements",
-            "Implementing secure, scalable full-stack architectures with Go and Node.js",
-            "Managing end-to-end project lifecycle from requirements to deployment",
-        ],
-        tech: [
-            { name: "AWS", icon: "simple-icons:amazonaws" },
-            { name: "Next.js", icon: "simple-icons:nextdotjs" },
-            { name: "Nest.js", icon: "simple-icons:nestjs" },
-            { name: "Go", icon: "simple-icons:go" },
-            { name: "Linux", icon: "simple-icons:linux" },
-            { name: "Prisma", icon: "simple-icons:prisma" },
-            { name: "Tailwind", icon: "simple-icons:tailwindcss" },
-            { name: "Firebase", icon: "simple-icons:firebase" },
-        ],
-    },
-    {
-        type: "INT",
-        typeColor: "text-[#9ece6a]", // Green
-        file: "melstasoft.md",
-        title: "Software Engineer Intern @ Melstasoft",
-        period: "June 2022 - August 2022",
-        responsibilities: [
-            "Developed and maintained enterprise applications using ASP.NET and the .NET framework",
-            "Worked with MSSQL databases, writing queries and managing data models",
-            "Collaborated with senior engineers to deliver production-ready features",
-        ],
-        tech: [
-            { name: ".NET", icon: "simple-icons:dotnet" },
-            { name: "ASP.NET", icon: "simple-icons:dotnet" },
-            { name: "MSSQL", icon: "simple-icons:microsoftsqlserver" },
-            { name: "C#", icon: "simple-icons:csharp" },
-            { name: "Git", icon: "simple-icons:git" },
-        ],
-    },
-    {
-        type: "VOL",
-        typeColor: "text-[#73daca]", // Teal
-        file: "foss.md",
-        title: "Digital Marketing Lead @ FOSS Community NSBM",
-        period: "February 2022 - March 2023",
-        responsibilities: [
-            "Led the digital marketing team, managing campaigns and community outreach",
-            "Coordinated with council members to align marketing with community events",
-        ],
-        tech: [
-            { name: "Social Media", icon: "lucide:share-2" },
-            { name: "Design", icon: "lucide:palette" },
+        company: "Fiverr",
+        totalPeriod: "January 2020 - May 2025 · 5 yrs 5 mos",
+        icon: "simple-icons:fiverr",
+        roles: [
+            {
+                type: "FRL",
+                typeColor: "text-[#bb9af7]",
+                title: "Software Engineer",
+                period: "May 2023 - May 2025",
+                responsibilities: [
+                    "Delivering custom web and mobile solutions for diverse client requirements",
+                    "Implementing secure, scalable full-stack architectures with Go and Node.js",
+                    "Managing end-to-end project lifecycle from requirements to deployment",
+                ],
+                tech: [
+                    { name: "AWS", icon: "simple-icons:amazonaws" },
+                    { name: "Next.js", icon: "simple-icons:nextdotjs" },
+                    { name: "Nest.js", icon: "simple-icons:nestjs" },
+                    { name: "Go", icon: "simple-icons:go" },
+                    { name: "Linux", icon: "simple-icons:linux" },
+                    { name: "Prisma", icon: "simple-icons:prisma" },
+                    { name: "Tailwind", icon: "simple-icons:tailwindcss" },
+                    { name: "Firebase", icon: "simple-icons:firebase" },
+                ],
+            },
+            {
+                type: "VID",
+                typeColor: "text-[#ff9e64]",
+                title: "Video Editor",
+                period: "January 2020 - May 2021",
+                responsibilities: [
+                    "Produced and edited professional video content for international clients",
+                    "Managed end-to-end video production workflow from raw footage to final delivery",
+                ],
+                tech: [
+                    { name: "Premiere Pro", icon: "simple-icons:adobepremierepro" },
+                    { name: "After Effects", icon: "simple-icons:adobeaftereffects" },
+                ],
+            },
         ],
     },
     {
-        type: "VOL",
-        typeColor: "text-[#73daca]", // Teal
-        file: "foss-council.md",
-        title: "Council Member @ FOSS Community NSBM",
-        period: "June 2021 - March 2023",
-        responsibilities: [
-            "Served as an active council member, driving open-source initiatives and community growth",
-            "Organized and participated in FOSS events, workshops, and hackathons",
-            "Volunteered for community activities from June 2020, progressing through council roles",
-        ],
-        tech: [
-            { name: "Open Source", icon: "simple-icons:opensourceinitiative" },
-            { name: "Linux", icon: "simple-icons:linux" },
+        company: "Melstasoft",
+        totalPeriod: "June 2022 - August 2022 · 3 mos",
+        icon: "lucide:building",
+        roles: [
+            {
+                type: "INT",
+                typeColor: "text-[#9ece6a]",
+                title: "Software Engineer Intern",
+                period: "June 2022 - August 2022",
+                responsibilities: [
+                    "Developed and maintained enterprise applications using ASP.NET and the .NET framework",
+                    "Worked with MSSQL databases, writing queries and managing data models",
+                    "Collaborated with senior engineers to deliver production-ready features",
+                ],
+                tech: [
+                    { name: ".NET", icon: "simple-icons:dotnet" },
+                    { name: "ASP.NET", icon: "simple-icons:dotnet" },
+                    { name: "MSSQL", icon: "simple-icons:microsoftsqlserver" },
+                    { name: "C#", icon: "simple-icons:csharp" },
+                    { name: "Git", icon: "simple-icons:git" },
+                ],
+            },
         ],
     },
     {
-        type: "VID",
-        typeColor: "text-[#ff9e64]", // Orange
-        file: "video.md",
-        title: "Video Editor @ Fiverr",
-        period: "January 2020 - May 2021",
-        responsibilities: [
-            "Produced and edited professional video content for international clients on Fiverr",
-            "Managed end-to-end video production workflow from raw footage to final delivery",
-        ],
-        tech: [
-            { name: "Premiere Pro", icon: "simple-icons:adobepremierepro" },
-            { name: "After Effects", icon: "simple-icons:adobeaftereffects" },
+        company: "FOSS Community - NSBM",
+        totalPeriod: "June 2020 - March 2023 · 2 yrs 10 mos",
+        icon: "simple-icons:opensourceinitiative",
+        roles: [
+            {
+                type: "VOL",
+                typeColor: "text-[#73daca]",
+                title: "Digital Marketing Team Lead",
+                period: "February 2022 - March 2023",
+                responsibilities: [
+                    "Led the digital marketing team, managing campaigns and community outreach",
+                    "Coordinated with council members to align marketing with community events",
+                ],
+                tech: [
+                    { name: "Social Media", icon: "lucide:share-2" },
+                    { name: "Design", icon: "lucide:palette" },
+                ],
+            },
+            {
+                type: "VOL",
+                typeColor: "text-[#73daca]",
+                title: "Council Member",
+                period: "June 2021 - March 2023",
+                responsibilities: [
+                    "Served as an active council member, driving open-source initiatives and community growth",
+                    "Organized and participated in FOSS events, workshops, and hackathons",
+                ],
+                tech: [
+                    { name: "Open Source", icon: "simple-icons:opensourceinitiative" },
+                    { name: "Linux", icon: "simple-icons:linux" },
+                ],
+            },
+            {
+                type: "VOL",
+                typeColor: "text-[#73daca]",
+                title: "Volunteer",
+                period: "June 2020 - June 2021",
+                responsibilities: [
+                    "Volunteered in community activities, supporting FOSS events and initiatives",
+                ],
+                tech: [
+                    { name: "Open Source", icon: "simple-icons:opensourceinitiative" },
+                ],
+            },
         ],
     },
 ];
@@ -211,37 +254,56 @@ const experiences = [
         <div class="text-[#bb9af7] font-bold mb-2">Experience History</div>
         <div class="space-y-6">
             {
-                experiences.map((exp) => (
-                    <div class="experience-entry">
-                        <div class="flex items-center gap-2 text-[#7aa2f7]">
-                            <span class="text-[#565f89]">└─▶</span>
-                            <span class={exp.typeColor}>{exp.type}</span>
-                            <span class="text-[#565f89]">in</span>
-                            <span class="text-[#9ece6a]">{exp.title}</span>
+                companies.map((company, companyIndex) => (
+                    <div class="company-group">
+                        {/* Company header */}
+                        <div class="flex items-center gap-2">
+                            <span class="text-[#565f89]">
+                                {companyIndex === companies.length - 1 ? "└─▶" : "├─▶"}
+                            </span>
+                            <Icon name={company.icon} class="w-4 h-4 text-[#7aa2f7]" />
+                            <span class="text-[#7aa2f7] font-bold">{company.company}</span>
+                            <span class="text-[#565f89] text-xs">·</span>
+                            <span class="text-[#565f89] text-xs">{company.totalPeriod}</span>
                         </div>
-                        <div class="ml-6 mt-1 text-[#565f89] text-xs">
-                            {exp.period}
-                        </div>
-                        <div class="ml-6 mt-2 space-y-1">
-                            {exp.responsibilities.map((resp) => (
-                                <div class="flex items-start gap-2">
-                                    <span class="text-[#565f89]">│</span>
-                                    <span class="text-[#c0caf5]">{resp}</span>
+
+                        {/* Roles under this company */}
+                        <div class="ml-6 mt-2 space-y-4 border-l border-[#565f89]/30 pl-4">
+                            {company.roles.map((role, roleIndex) => (
+                                <div class="role-entry">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-[#565f89]">
+                                            {roleIndex === company.roles.length - 1 ? "└─" : "├─"}
+                                        </span>
+                                        <span class={role.typeColor + " text-xs font-mono"}>[{role.type}]</span>
+                                        <span class="text-[#9ece6a] font-semibold">{role.title}</span>
+                                    </div>
+                                    <div class="ml-6 mt-0.5 text-[#565f89] text-xs">
+                                        {role.period}
+                                    </div>
+                                    <div class="ml-6 mt-2 space-y-1">
+                                        {role.responsibilities.map((resp) => (
+                                            <div class="flex items-start gap-2">
+                                                <span class="text-[#565f89] mt-0.5">│</span>
+                                                <span class="text-[#c0caf5] text-sm">{resp}</span>
+                                            </div>
+                                        ))}
+                                        <div class="flex flex-wrap gap-2 mt-2 pl-3 border-l border-[#565f89]/20">
+                                            {role.tech.map((t) => (
+                                                <div class="flex items-center gap-1 bg-[#1a1b26] border border-[#565f89]/40 rounded px-1.5 py-0.5">
+                                                    <Icon
+                                                        name={t.icon}
+                                                        class="w-3 h-3 text-[#7aa2f7]"
+                                                    />
+                                                    <span class="text-[#9ece6a] text-[10px]">
+                                                        {t.name}
+                                                    </span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
                             ))}
-                            <div class="flex flex-wrap gap-3 mt-3 pl-4 border-l border-[#565f89]/30">
-                                {exp.tech.map((t) => (
-                                    <div class="flex items-center gap-1 bg-[#1a1b26] border border-[#565f89]/40 rounded px-1.5 py-0.5">
-                                        <Icon
-                                            name={t.icon}
-                                            class="w-3 h-3 text-[#7aa2f7]"
-                                        />
-                                        <span class="text-[#9ece6a] text-[10px]">
-                                            {t.name}
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
                         </div>
                     </div>
                 ))
@@ -249,4 +311,3 @@ const experiences = [
         </div>
     </div>
 </section>
-
