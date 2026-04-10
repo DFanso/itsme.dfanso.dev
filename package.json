@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build && node scripts/copy-sitemaps.mjs",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate:cv": "tsx scripts/generate-pdf.tsx"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.2",
@@ -25,6 +26,10 @@
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
   "devDependencies": {
-    "@types/animejs": "^3.1.13"
+    "@react-pdf/renderer": "^4.4.0",
+    "@types/animejs": "^3.1.13",
+    "@types/react": "^19.2.14",
+    "react": "^19.2.5",
+    "tsx": "^4.21.0"
   }
 }
