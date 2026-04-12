@@ -1302,15 +1302,29 @@ Digital rain simulation...
 		document.addEventListener('keydown', onKey);
 	}
 
-	// Initialize terminal when the page loads
-	window.addEventListener('load', () => {
+	// Initialize terminal when the page loads.
+	// In Vite production builds, module scripts are deferred — `window.load`
+	// may already have fired by the time this code runs, so we must handle
+	// both cases to avoid the terminal staying invisible (stuck in `booting`).
+	function bootUp() {
+		// Double rAF ensures the browser has painted the `booting` state
+		// (opacity:0) at least once before we swap to `booted`.
 		requestAnimationFrame(() => {
-			body.classList.add('booted');
-			setTimeout(() => body.classList.remove('booting'), 900);
+			requestAnimationFrame(() => {
+				body.classList.add('booted');
+				setTimeout(() => body.classList.remove('booting'), 900);
+			});
 		});
 		new Terminal();
 		startAmbientAnimations();
-	});
+	}
+
+	if (document.readyState === 'complete') {
+		// Page already loaded (common in production with deferred modules)
+		bootUp();
+	} else {
+		window.addEventListener('load', bootUp, { once: true });
+	}
 
 	// ─── Always-on Ambient Animations ────────────────────────────────────────
 	function startAmbientAnimations(): void {
