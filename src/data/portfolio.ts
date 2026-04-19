@@ -12,7 +12,7 @@ export const profile = {
     githubHandle: "github.com/dfanso",
     portfolio: "https://itsme.dfanso.dev/",
     portfolioHandle: "itsme.dfanso.dev",
-    summary: "DevOps Engineer at Empite, holding a first-class honours degree from the University of Plymouth. Experienced across DevOps pipelines, backend development, cloud infrastructure, and AI-driven automation. Co-Founder & CTO of CodeXeed and KlexD, building scalable cloud-native applications and intelligent systems for global clients.",
+    summary: "Senior Software Engineer at Fun Extreme Technology & DevOps Engineer at Empite, holding a First-Class Honours degree from the University of Plymouth. Experienced across DevOps pipelines, backend development, cloud infrastructure, and AI-driven automation. Co-Founder & CTO of CodeXeed and KlexD, building scalable cloud-native applications and intelligent systems for global clients.",
 };
 
 export interface Role {
