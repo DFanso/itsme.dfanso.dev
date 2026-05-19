@@ -29,7 +29,7 @@ const profileImageURL = new URL(profileImage.src, Astro.site);
 	<head>
 		<Analytics />
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		
 		<!-- Google Site Verification -->
 		<meta name="google-site-verification" content="google34f30110b42c1453" />
@@ -174,6 +174,13 @@ const profileImageURL = new URL(profileImage.src, Astro.site);
 		const overlay  = document.getElementById('crt-overlay') as HTMLElement;
 		const rolling  = overlay?.querySelector('.crt-rolling') as HTMLElement;
 
+		// Skip CRT effects when the user prefers reduced motion.
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+			poweron?.remove();
+			overlay?.remove();
+			return;
+		}
+
 		// ── CRT Power-On ─────────────────────────────────────────────────────
 		// 1. Tiny horizontal line bursts in
 		// 2. Expands to fill screen
@@ -246,7 +253,7 @@ const profileImageURL = new URL(profileImage.src, Astro.site);
 		--accent: #bb9af7;
 		--error: #f7768e;
 		--warning: #e0af68;
-		--muted: #565f89;
+		--muted: #a9b1d6;
 	}
 
 	body {
@@ -425,6 +432,14 @@ const profileImageURL = new URL(profileImage.src, Astro.site);
 			rgba(255, 255, 255, 0.018) 60%,
 			transparent 100%
 		);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		body::before,
+		body::after,
+		.crt-scanlines {
+			animation: none !important;
+		}
 	}
 
 	/* CRT power-on element */

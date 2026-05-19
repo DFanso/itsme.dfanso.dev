@@ -228,64 +228,64 @@ const hasData = graphqlData || restData;
                         {hasFullData && (
                             <>
                                 <div class="stat-item">
-                                    <div class="flex items-center gap-1 text-[#565f89]">
+                                    <div class="flex items-center gap-1 text-[#a9b1d6]">
                                         <span>│</span>
                                         <Icon name="lucide:git-commit" class="w-3.5 h-3.5 text-[#9ece6a]" />
                                     </div>
                                     <div class="text-[#c0caf5] text-lg font-bold">{stats.commits.toLocaleString()}</div>
-                                    <div class="text-[#565f89] text-xs">Commits</div>
+                                    <div class="text-[#a9b1d6] text-xs">Commits</div>
                                 </div>
                                 <div class="stat-item">
-                                    <div class="flex items-center gap-1 text-[#565f89]">
+                                    <div class="flex items-center gap-1 text-[#a9b1d6]">
                                         <span>│</span>
                                         <Icon name="lucide:git-pull-request" class="w-3.5 h-3.5 text-[#bb9af7]" />
                                     </div>
                                     <div class="text-[#c0caf5] text-lg font-bold">{stats.prs.toLocaleString()}</div>
-                                    <div class="text-[#565f89] text-xs">Pull Requests</div>
+                                    <div class="text-[#a9b1d6] text-xs">Pull Requests</div>
                                 </div>
                                 <div class="stat-item">
-                                    <div class="flex items-center gap-1 text-[#565f89]">
+                                    <div class="flex items-center gap-1 text-[#a9b1d6]">
                                         <span>│</span>
                                         <Icon name="lucide:circle-dot" class="w-3.5 h-3.5 text-[#f7768e]" />
                                     </div>
                                     <div class="text-[#c0caf5] text-lg font-bold">{stats.issues.toLocaleString()}</div>
-                                    <div class="text-[#565f89] text-xs">Issues</div>
+                                    <div class="text-[#a9b1d6] text-xs">Issues</div>
                                 </div>
                             </>
                         )}
                         <div class="stat-item">
-                            <div class="flex items-center gap-1 text-[#565f89]">
+                            <div class="flex items-center gap-1 text-[#a9b1d6]">
                                 <span>│</span>
                                 <Icon name="lucide:star" class="w-3.5 h-3.5 text-[#e0af68]" />
                             </div>
                             <div class="text-[#c0caf5] text-lg font-bold">{stats.stars.toLocaleString()}</div>
-                            <div class="text-[#565f89] text-xs">Total Stars</div>
+                            <div class="text-[#a9b1d6] text-xs">Total Stars</div>
                         </div>
                         {!hasFullData && (
                             <>
                                 <div class="stat-item">
-                                    <div class="flex items-center gap-1 text-[#565f89]">
+                                    <div class="flex items-center gap-1 text-[#a9b1d6]">
                                         <span>│</span>
                                         <Icon name="lucide:git-fork" class="w-3.5 h-3.5 text-[#7dcfff]" />
                                     </div>
                                     <div class="text-[#c0caf5] text-lg font-bold">{stats.forks.toLocaleString()}</div>
-                                    <div class="text-[#565f89] text-xs">Total Forks</div>
+                                    <div class="text-[#a9b1d6] text-xs">Total Forks</div>
                                 </div>
                                 <div class="stat-item">
-                                    <div class="flex items-center gap-1 text-[#565f89]">
+                                    <div class="flex items-center gap-1 text-[#a9b1d6]">
                                         <span>│</span>
                                         <Icon name="lucide:book" class="w-3.5 h-3.5 text-[#7aa2f7]" />
                                     </div>
                                     <div class="text-[#c0caf5] text-lg font-bold">{stats.repos}</div>
-                                    <div class="text-[#565f89] text-xs">Repositories</div>
+                                    <div class="text-[#a9b1d6] text-xs">Repositories</div>
                                 </div>
                                 <div class="stat-item">
-                                    <div class="flex items-center gap-1 text-[#565f89]">
+                                    <div class="flex items-center gap-1 text-[#a9b1d6]">
                                         <span>│</span>
                                         <Icon name="lucide:users" class="w-3.5 h-3.5 text-[#bb9af7]" />
                                     </div>
                                     <div class="text-[#c0caf5] text-lg font-bold">{stats.followers}</div>
-                                    <div class="text-[#565f89] text-xs">Followers</div>
+                                    <div class="text-[#a9b1d6] text-xs">Followers</div>
                                 </div>
                             </>
                         )}
@@ -296,7 +296,7 @@ const hasData = graphqlData || restData;
                 {hasFullData && recentWeeks.length > 0 && (
                     <div class="contribution-graph">
                         <div class="text-[#7aa2f7] mb-2 flex items-center gap-2">
-                            <span class="text-[#565f89]">├─▶</span>
+                            <span class="text-[#a9b1d6]">├─▶</span>
                             <span class="text-[#e0af68]">cat</span>
                             <span>contributions.heatmap</span>
                         </div>
@@ -314,7 +314,7 @@ const hasData = graphqlData || restData;
                                     </div>
                                 ))}
                             </div>
-                            <div class="flex items-center gap-2 mt-2 text-xs text-[#565f89]">
+                            <div class="flex items-center gap-2 mt-2 text-xs text-[#a9b1d6]">
                                 <span>Less</span>
                                 <div class="flex gap-[3px]">
                                     <div class="w-[10px] h-[10px] rounded-sm bg-[#1a1b26] border border-[#7aa2f7]/20"></div>
@@ -333,7 +333,7 @@ const hasData = graphqlData || restData;
                 <!-- Top Languages -->
                 <div class="languages">
                     <div class="text-[#7aa2f7] mb-2 flex items-center gap-2">
-                        <span class="text-[#565f89]">├─▶</span>
+                        <span class="text-[#a9b1d6]">├─▶</span>
                         <span class="text-[#e0af68]">cat</span>
                         <span>languages.stats</span>
                     </div>
@@ -352,7 +352,7 @@ const hasData = graphqlData || restData;
                                 <div class="flex items-center gap-1">
                                     <span class="w-2.5 h-2.5 rounded-full" style={`background-color: ${lang.color};`}></span>
                                     <span class="text-[#c0caf5]">{lang.name}</span>
-                                    <span class="text-[#565f89]">{lang.percentage}%</span>
+                                    <span class="text-[#a9b1d6]">{lang.percentage}%</span>
                                 </div>
                             ))}
                         </div>
@@ -363,7 +363,7 @@ const hasData = graphqlData || restData;
                 {topRepos.length > 0 && (
                     <div class="top-repos">
                         <div class="text-[#7aa2f7] mb-2 flex items-center gap-2">
-                            <span class="text-[#565f89]">└─▶</span>
+                            <span class="text-[#a9b1d6]">└─▶</span>
                             <span class="text-[#e0af68]">ls</span>
                             <span>{hasFullData && pinnedRepos.length > 0 ? 'pinned-repos/' : 'top-repos/'}</span>
                         </div>
@@ -380,7 +380,7 @@ const hasData = graphqlData || restData;
                                         <span class="text-[#7aa2f7] font-medium truncate">{repo.name}</span>
                                     </div>
                                     {repo.description && (
-                                        <p class="text-[#565f89] text-xs mb-2 line-clamp-2">{repo.description}</p>
+                                        <p class="text-[#a9b1d6] text-xs mb-2 line-clamp-2">{repo.description}</p>
                                     )}
                                     <div class="flex items-center gap-3 text-xs">
                                         {(hasFullData ? repo.primaryLanguage : repo.language) && (
@@ -409,7 +409,7 @@ const hasData = graphqlData || restData;
             </div>
         ) : (
             <div class="text-[#f7768e]">
-                <span class="text-[#565f89]">└─▶</span> Unable to fetch GitHub data. API may be rate limited.
+                <span class="text-[#a9b1d6]">└─▶</span> Unable to fetch GitHub data. API may be rate limited.
             </div>
         )}
     </div>

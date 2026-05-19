@@ -142,10 +142,10 @@ const projects = await Promise.all(
             {projects.map((project, index) => (
                 <div class="project-entry">
                     <div class="flex items-center gap-2 flex-wrap">
-                        <span class="text-[#565f89]">{index === projects.length - 1 ? '└─▶' : '├─▶'}</span>
+                        <span class="text-[#a9b1d6]">{index === projects.length - 1 ? '└─▶' : '├─▶'}</span>
                         <span class="text-[#e0af68]">cat</span>
                         <a href={project.url} target="_blank" rel="noopener noreferrer" class="text-[#7aa2f7] hover:underline">projects/{project.name}/</a>
-                        <span class="text-[#565f89]">type:</span>
+                        <span class="text-[#a9b1d6]">type:</span>
                         <span class="text-[#f7768e]">{project.type}</span>
                         {project.stats && (
                             <div class="flex items-center gap-3 ml-2">
@@ -169,7 +169,7 @@ const projects = await Promise.all(
                         <div class="mt-2 flex flex-wrap gap-3">
                             {project.tech.map(tech => (
                                 <div class="flex items-center gap-1">
-                                    <span class="text-[#565f89]">│</span>
+                                    <span class="text-[#a9b1d6]">│</span>
                                     <span class="text-[#7aa2f7]">
                                         <Icon name={tech.icon} class="w-4 h-4" />
                                     </span>

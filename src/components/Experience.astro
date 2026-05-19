@@ -288,39 +288,39 @@ const companies = [
                     <div class="company-group">
                         {/* Company header */}
                         <div class="flex items-center gap-2">
-                            <span class="text-[#565f89]">
+                            <span class="text-[#a9b1d6]">
                                 {companyIndex === companies.length - 1 ? "└─▶" : "├─▶"}
                             </span>
                             <Icon name={company.icon} class="w-4 h-4 text-[#7aa2f7]" />
                             <span class="text-[#7aa2f7] font-bold">{company.company}</span>
-                            <span class="text-[#565f89] text-xs">·</span>
-                            <span class="text-[#565f89] text-xs">{company.totalPeriod}</span>
+                            <span class="text-[#a9b1d6] text-xs">·</span>
+                            <span class="text-[#a9b1d6] text-xs">{company.totalPeriod}</span>
                         </div>
 
                         {/* Roles under this company */}
-                        <div class="ml-6 mt-2 space-y-4 border-l border-[#565f89]/30 pl-4">
+                        <div class="ml-6 mt-2 space-y-4 border-l border-[#a9b1d6]/30 pl-4">
                             {company.roles.map((role, roleIndex) => (
                                 <div class="role-entry">
                                     <div class="flex items-center gap-2">
-                                        <span class="text-[#565f89]">
+                                        <span class="text-[#a9b1d6]">
                                             {roleIndex === company.roles.length - 1 ? "└─" : "├─"}
                                         </span>
                                         <span class={role.typeColor + " text-xs font-mono"}>[{role.type}]</span>
                                         <span class="text-[#9ece6a] font-semibold">{role.title}</span>
                                     </div>
-                                    <div class="ml-6 mt-0.5 text-[#565f89] text-xs">
+                                    <div class="ml-6 mt-0.5 text-[#a9b1d6] text-xs">
                                         {role.period}
                                     </div>
                                     <div class="ml-6 mt-2 space-y-1">
                                         {role.responsibilities.map((resp) => (
                                             <div class="flex items-start gap-2">
-                                                <span class="text-[#565f89] mt-0.5">│</span>
+                                                <span class="text-[#a9b1d6] mt-0.5">│</span>
                                                 <span class="text-[#c0caf5] text-sm">{resp}</span>
                                             </div>
                                         ))}
-                                        <div class="flex flex-wrap gap-2 mt-2 pl-3 border-l border-[#565f89]/20">
+                                        <div class="flex flex-wrap gap-2 mt-2 pl-3 border-l border-[#a9b1d6]/20">
                                             {role.tech.map((t) => (
-                                                <div class="flex items-center gap-1 bg-[#1a1b26] border border-[#565f89]/40 rounded px-1.5 py-0.5">
+                                                <div class="flex items-center gap-1 bg-[#1a1b26] border border-[#a9b1d6]/40 rounded px-1.5 py-0.5">
                                                     <Icon
                                                         name={t.icon}
                                                         class="w-3 h-3 text-[#7aa2f7]"

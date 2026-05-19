@@ -27,19 +27,19 @@ const certifications = [
             {certifications.map(cert => (
                 <div class="cert-entry">
                     <div class="flex items-center gap-2 text-[#7aa2f7]">
-                        <span class="text-[#565f89]">└─▶</span>
+                        <span class="text-[#a9b1d6]">└─▶</span>
                         <span class="text-[#e0af68]">{cert.name}</span>
                     </div>
                     <div class="ml-6 mt-1 flex items-center gap-2 text-xs">
                         <span class="text-[#9ece6a]">{cert.issuer}</span>
                         {cert.id && (
                             <>
-                                <span class="text-[#565f89]">|</span>
-                                <span class="text-[#565f89]">{cert.id}</span>
+                                <span class="text-[#a9b1d6]">|</span>
+                                <span class="text-[#a9b1d6]">{cert.id}</span>
                             </>
                         )}
                     </div>
-                    <div class="ml-6 mt-1 text-[#565f89] text-xs">
+                    <div class="ml-6 mt-1 text-[#a9b1d6] text-xs">
                         {cert.date} {cert.expiry ? `• ${cert.expiry}` : ''}
                     </div>
                 </div>

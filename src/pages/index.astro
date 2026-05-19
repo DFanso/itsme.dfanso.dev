@@ -25,23 +25,23 @@ export const prerender = true;
 					<button id="btn-maximize" class="terminal-button bg-[#9ece6a] hover:bg-[#78ac3e] transition-colors" aria-label="Maximize"></button>
 				</div>
 				<div class="terminal-title absolute left-1/2 -translate-x-1/2 text-[#c0caf5] text-xs font-medium opacity-80">guest@dfanso.dev:~</div>
-				<div class="terminal-time text-[#565f89] text-xs font-mono" id="header-time">--:--</div>
+				<div class="terminal-time text-[#a9b1d6] text-xs font-mono" id="header-time">--:--</div>
 			</div>
 
 			<!-- Terminal Content -->
-			<div id="terminal" class="terminal-content-area flex-1 relative" onclick="document.getElementById('terminal-input').focus()">
-				<div id="output-container">
+			<div id="terminal" class="terminal-content-area flex-1 relative" role="region" aria-label="Interactive terminal portfolio">
+				<div id="output-container" role="log" aria-live="polite" aria-atomic="false">
 					<!-- Welcome message -->
 					<div class="command-block">
 						<div class="command-prompt">
 							<span class="text-[#9ece6a]">❯</span> 
 							<span class="text-[#7aa2f7]">dfanso</span>
 							<span class="hidden sm:inline">
-								<span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> 
-								<span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> 
-								<span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span>
+								<span class="text-[#a9b1d6]">@</span><span class="text-[#bb9af7]">terminal</span> 
+								<span class="text-[#a9b1d6]">in</span> <span class="text-[#e0af68]">~/portfolio</span> 
+								<span class="text-[#a9b1d6]">on</span> <span class="text-[#f7768e]">main</span>
 							</span>
-							<span class="sm:hidden text-[#565f89]">:~</span>
+							<span class="sm:hidden text-[#a9b1d6]">:~</span>
 						</div>
 						<div class="command-output"><Welcome /></div>
 					</div>
@@ -52,11 +52,11 @@ export const prerender = true;
 							<span class="text-[#9ece6a]">❯</span> 
 							<span class="text-[#7aa2f7]">dfanso</span>
 							<span class="hidden sm:inline">
-								<span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> 
-								<span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> 
-								<span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span>
+								<span class="text-[#a9b1d6]">@</span><span class="text-[#bb9af7]">terminal</span> 
+								<span class="text-[#a9b1d6]">in</span> <span class="text-[#e0af68]">~/portfolio</span> 
+								<span class="text-[#a9b1d6]">on</span> <span class="text-[#f7768e]">main</span>
 							</span>
-							<span class="sm:hidden text-[#565f89]">:~</span>
+							<span class="sm:hidden text-[#a9b1d6]">:~</span>
 						</div>
 						<div class="command-output"><Header /></div>
 					</div>
@@ -65,16 +65,8 @@ export const prerender = true;
 				<!-- Command Input -->
 				<div class="command-block" id="input-line">
 					<div class="command-prompt">
-						<span class="text-[#9ece6a]">❯</span> 
-						<span class="text-[#7aa2f7]">dfanso</span>
-						<span class="hidden sm:inline">
-							<span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> 
-							<span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> 
-							<span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span>
-						</span>
-						<span class="sm:hidden text-[#565f89]">:~</span>
-						<span class="command-text"></span><span class="cursor"></span>
-						<input type="text" id="terminal-input" class="opacity-0 absolute top-0 left-0 h-full w-full cursor-text" autocomplete="off" spellcheck="false" />
+						<span class="prompt-prefix"><span class="text-[#9ece6a]">❯</span> <span class="text-[#7aa2f7]">dfanso</span><span class="hidden sm:inline"> <span class="text-[#a9b1d6]">@</span><span class="text-[#bb9af7]">terminal</span> <span class="text-[#a9b1d6]">in</span> <span class="text-[#e0af68]">~/portfolio</span> <span class="text-[#a9b1d6]">on</span> <span class="text-[#f7768e]">main</span></span><span class="sm:hidden text-[#a9b1d6]">:~</span> </span><span class="command-text"></span><span class="cursor"></span>
+						<input type="text" id="terminal-input" class="opacity-0 absolute top-0 left-0 h-full w-full cursor-text" autocomplete="off" spellcheck="false" aria-label="Terminal command input. Type a command like help, about, projects, or contact, then press Enter." />
 					</div>
 				</div>
 			</div>
@@ -85,7 +77,7 @@ export const prerender = true;
 			</div>
 
 			<!-- Hidden Components -->
-			<div id="components" class="hidden">
+			<div id="components" class="hidden" aria-hidden="true">
 				<div id="welcome"><Welcome /></div>
 				<div id="whoami"><Header /></div>
 				<div id="about"><About /></div>
@@ -100,64 +92,64 @@ export const prerender = true;
 					<div class="command-output">
 						<div class="text-[#bb9af7] font-bold mb-2 ls-header">Directory listing of ~/portfolio</div>
 						<div class="space-y-1">
-							<div class="ls-entry flex items-center gap-2">
-								<span class="text-[#565f89] hidden sm:inline">drwxr-xr-x</span>
+							<button type="button" data-command-trigger="about" class="ls-entry flex items-center gap-2 w-full text-left">
+								<span class="text-[#a9b1d6] hidden sm:inline">drwxr-xr-x</span>
 								<span class="ls-name text-[#7aa2f7]">about/</span>
-								<span class="text-[#565f89] ml-auto text-xs sm:text-sm">professional summary</span>
-							</div>
-							<div class="ls-entry flex items-center gap-2">
-								<span class="text-[#565f89] hidden sm:inline">drwxr-xr-x</span>
+								<span class="text-[#a9b1d6] ml-auto text-xs sm:text-sm">professional summary</span>
+							</button>
+							<button type="button" data-command-trigger="projects" class="ls-entry flex items-center gap-2 w-full text-left">
+								<span class="text-[#a9b1d6] hidden sm:inline">drwxr-xr-x</span>
 								<span class="ls-name text-[#7aa2f7]">projects/</span>
-								<span class="text-[#565f89] ml-auto text-xs sm:text-sm">featured work</span>
-							</div>
-							<div class="ls-entry flex items-center gap-2">
-								<span class="text-[#565f89] hidden sm:inline">drwxr-xr-x</span>
+								<span class="text-[#a9b1d6] ml-auto text-xs sm:text-sm">featured work</span>
+							</button>
+							<button type="button" data-command-trigger="skills" class="ls-entry flex items-center gap-2 w-full text-left">
+								<span class="text-[#a9b1d6] hidden sm:inline">drwxr-xr-x</span>
 								<span class="ls-name text-[#7aa2f7]">skills/</span>
-								<span class="text-[#565f89] ml-auto text-xs sm:text-sm">technical expertise</span>
-							</div>
-							<div class="ls-entry flex items-center gap-2">
-								<span class="text-[#565f89] hidden sm:inline">drwxr-xr-x</span>
+								<span class="text-[#a9b1d6] ml-auto text-xs sm:text-sm">technical expertise</span>
+							</button>
+							<button type="button" data-command-trigger="experience" class="ls-entry flex items-center gap-2 w-full text-left">
+								<span class="text-[#a9b1d6] hidden sm:inline">drwxr-xr-x</span>
 								<span class="ls-name text-[#7aa2f7]">experience/</span>
-								<span class="text-[#565f89] ml-auto text-xs sm:text-sm">work history</span>
-							</div>
-							<div class="ls-entry flex items-center gap-2">
-								<span class="text-[#565f89] hidden sm:inline">drwxr-xr-x</span>
+								<span class="text-[#a9b1d6] ml-auto text-xs sm:text-sm">work history</span>
+							</button>
+							<button type="button" data-command-trigger="education" class="ls-entry flex items-center gap-2 w-full text-left">
+								<span class="text-[#a9b1d6] hidden sm:inline">drwxr-xr-x</span>
 								<span class="ls-name text-[#7aa2f7]">education/</span>
-								<span class="text-[#565f89] ml-auto text-xs sm:text-sm">academic background</span>
-							</div>
-							<div class="ls-entry flex items-center gap-2">
-								<span class="text-[#565f89] hidden sm:inline">drwxr-xr-x</span>
+								<span class="text-[#a9b1d6] ml-auto text-xs sm:text-sm">academic background</span>
+							</button>
+							<button type="button" data-command-trigger="certifications" class="ls-entry flex items-center gap-2 w-full text-left">
+								<span class="text-[#a9b1d6] hidden sm:inline">drwxr-xr-x</span>
 								<span class="ls-name text-[#7aa2f7]">certifications/</span>
-								<span class="text-[#565f89] ml-auto text-xs sm:text-sm">licenses & certs</span>
-							</div>
-							<div class="ls-entry flex items-center gap-2">
-							<span class="text-[#565f89] hidden sm:inline">drwxr-xr-x</span>
-							<span class="ls-name text-[#7aa2f7]">contact/</span>
-							<span class="text-[#565f89] ml-auto text-xs sm:text-sm">social links</span>
-						</div>
-						<div class="ls-entry flex items-center gap-2">
-							<span class="text-[#565f89] hidden sm:inline">drwxr-xr-x</span>
-							<span class="ls-name text-[#7aa2f7]">github/</span>
-							<span class="text-[#565f89] ml-auto text-xs sm:text-sm">stats & contributions</span>
-						</div>
-							<div class="ls-entry flex items-center gap-2">
-								<span class="text-[#565f89] hidden sm:inline">-rw-r--r--</span>
+								<span class="text-[#a9b1d6] ml-auto text-xs sm:text-sm">licenses & certs</span>
+							</button>
+							<button type="button" data-command-trigger="contact" class="ls-entry flex items-center gap-2 w-full text-left">
+								<span class="text-[#a9b1d6] hidden sm:inline">drwxr-xr-x</span>
+								<span class="ls-name text-[#7aa2f7]">contact/</span>
+								<span class="text-[#a9b1d6] ml-auto text-xs sm:text-sm">social links</span>
+							</button>
+							<button type="button" data-command-trigger="github" class="ls-entry flex items-center gap-2 w-full text-left">
+								<span class="text-[#a9b1d6] hidden sm:inline">drwxr-xr-x</span>
+								<span class="ls-name text-[#7aa2f7]">github/</span>
+								<span class="text-[#a9b1d6] ml-auto text-xs sm:text-sm">stats & contributions</span>
+							</button>
+							<button type="button" data-command-trigger="welcome" class="ls-entry flex items-center gap-2 w-full text-left">
+								<span class="text-[#a9b1d6] hidden sm:inline">-rw-r--r--</span>
 								<span class="ls-name text-[#e0af68]">welcome.txt</span>
-								<span class="text-[#565f89] ml-auto text-xs sm:text-sm">welcome message</span>
-							</div>
-							<div class="ls-entry flex items-center gap-2">
-								<span class="text-[#565f89] hidden sm:inline">-rw-r--r--</span>
+								<span class="text-[#a9b1d6] ml-auto text-xs sm:text-sm">welcome message</span>
+							</button>
+							<button type="button" data-command-trigger="whoami" class="ls-entry flex items-center gap-2 w-full text-left">
+								<span class="text-[#a9b1d6] hidden sm:inline">-rw-r--r--</span>
 								<span class="ls-name text-[#e0af68]">whoami.txt</span>
-								<span class="text-[#565f89] ml-auto text-xs sm:text-sm">profile info</span>
-							</div>
-							<div class="ls-entry flex items-center gap-2">
-								<span class="text-[#565f89] hidden sm:inline">-rw-r--r--</span>
+								<span class="text-[#a9b1d6] ml-auto text-xs sm:text-sm">profile info</span>
+							</button>
+							<button type="button" data-command-trigger="resume" class="ls-entry flex items-center gap-2 w-full text-left">
+								<span class="text-[#a9b1d6] hidden sm:inline">-rw-r--r--</span>
 								<span class="ls-name text-[#e0af68]">resume.pdf</span>
-								<span class="text-[#565f89] ml-auto text-xs sm:text-sm">curriculum vitae</span>
-							</div>
+								<span class="text-[#a9b1d6] ml-auto text-xs sm:text-sm">curriculum vitae</span>
+							</button>
 						</div>
-						<div class="text-[#565f89] text-xs mt-4 ls-footer">
-							Use 'cd' to navigate or type the command directly (e.g., 'about', 'projects')
+						<div class="text-[#a9b1d6] text-xs mt-4 ls-footer">
+							Tap an entry or type the command (e.g., 'about', 'projects')
 						</div>
 					</div>
 				</div>
@@ -209,7 +201,7 @@ export const prerender = true;
 				<div id="weather">
 					<div class="command-output">
 						<div class="text-[#7aa2f7]">Weather information is not available in the terminal.</div>
-						<div class="text-[#565f89]">Try looking outside your window! 🌤️</div>
+						<div class="text-[#a9b1d6]">Try looking outside your window! 🌤️</div>
 					</div>
 				</div>
 				<div id="matrix">
@@ -228,27 +220,27 @@ Digital rain simulation...
 						<div class="space-y-1 font-mono">
 							<div class="ping-line">
 								<span class="text-[#7aa2f7]">64 bytes from dfanso.dev</span>
-								<span class="text-[#565f89]">: icmp_seq=1 ttl=64 time=</span>
+								<span class="text-[#a9b1d6]">: icmp_seq=1 ttl=64 time=</span>
 								<span class="text-[#9ece6a]">0.045 ms</span>
 							</div>
 							<div class="ping-line">
 								<span class="text-[#7aa2f7]">64 bytes from dfanso.dev</span>
-								<span class="text-[#565f89]">: icmp_seq=2 ttl=64 time=</span>
+								<span class="text-[#a9b1d6]">: icmp_seq=2 ttl=64 time=</span>
 								<span class="text-[#9ece6a]">0.038 ms</span>
 							</div>
 							<div class="ping-line">
 								<span class="text-[#7aa2f7]">64 bytes from dfanso.dev</span>
-								<span class="text-[#565f89]">: icmp_seq=3 ttl=64 time=</span>
+								<span class="text-[#a9b1d6]">: icmp_seq=3 ttl=64 time=</span>
 								<span class="text-[#9ece6a]">0.042 ms</span>
 							</div>
 							<div class="ping-line">
 								<span class="text-[#7aa2f7]">64 bytes from dfanso.dev</span>
-								<span class="text-[#565f89]">: icmp_seq=4 ttl=64 time=</span>
+								<span class="text-[#a9b1d6]">: icmp_seq=4 ttl=64 time=</span>
 								<span class="text-[#9ece6a]">0.039 ms</span>
 							</div>
 						</div>
 						<div class="mt-4 text-[#c0caf5]">
-							<span class="text-[#565f89]">---</span> dfanso.dev ping statistics <span class="text-[#565f89]">---</span><br>
+							<span class="text-[#a9b1d6]">---</span> dfanso.dev ping statistics <span class="text-[#a9b1d6]">---</span><br>
 							4 packets transmitted, 4 received, 0% packet loss, time 3ms<br>
 							rtt min/avg/max = 0.038/0.041/0.045 ms
 						</div>
@@ -260,89 +252,34 @@ Digital rain simulation...
 						<div class="mb-4">
 							<p class="text-[#7aa2f7] mb-2">USAGE:</p>
 							<p class="text-[#c0caf5] ml-4">command [arguments]</p>
+							<p class="text-[#a9b1d6] ml-4 text-xs mt-1">Tip: tap any command below to run it.</p>
 						</div>
 						<div class="mb-4">
 							<p class="text-[#7aa2f7] mb-2">AVAILABLE COMMANDS:</p>
 							<ul class="command-help-list">
-								<li>
-									<div class="command-name">ls</div>
-									<div class="command-desc">List available sections and commands</div>
-								</li>
-								<li>
-									<div class="command-name">welcome</div>
-									<div class="command-desc">Display welcome message and ASCII art</div>
-								</li>
-								<li>
-									<div class="command-name">whoami</div>
-									<div class="command-desc">Show detailed profile information</div>
-								</li>
-								<li>
-									<div class="command-name">about</div>
-									<div class="command-desc">View my professional summary</div>
-								</li>
-								<li>
-									<div class="command-name">projects</div>
-									<div class="command-desc">Browse my featured projects</div>
-								</li>
-								<li>
-									<div class="command-name">skills</div>
-									<div class="command-desc">List technical skills and expertise</div>
-								</li>
-								<li>
-									<div class="command-name">experience</div>
-									<div class="command-desc">View work history and roles</div>
-								</li>
-								<li>
-									<div class="command-name">education</div>
-									<div class="command-desc">View academic background</div>
-								</li>
-								<li>
-									<div class="command-name">certifications</div>
-									<div class="command-desc">View professional certificates</div>
-								</li>
-								<li>
-									<div class="command-name">contact</div>
-									<div class="command-desc">Get my contact information</div>
-								</li>
-								<li>
-									<div class="command-name">clear</div>
-									<div class="command-desc">Clear terminal screen</div>
-								</li>
-								<li>
-									<div class="command-name">help</div>
-									<div class="command-desc">Show this help message</div>
-								</li>
-								<li>
-									<div class="command-name">neofetch</div>
-									<div class="command-desc">Display system information</div>
-								</li>
-								<li>
-									<div class="command-name">time</div>
-									<div class="command-desc">Show current time</div>
-								</li>
-								<li>
-									<div class="command-name">weather</div>
-									<div class="command-desc">Check the weather (sort of)</div>
-								</li>
-								<li>
-									<div class="command-name">matrix</div>
-									<div class="command-desc">Full-screen matrix rain simulation</div>
-								</li>
-								<li>
-									<div class="command-name">hack</div>
-									<div class="command-desc">Initiate a totally real hacking sequence 😈</div>
-								</li>
-								<li>
-									<div class="command-name">ping</div>
-									<div class="command-desc">Test connection to dfanso.dev</div>
-								</li>
-								<li>
-									<div class="command-name">github</div>
-									<div class="command-desc">Show GitHub stats and contributions</div>
-								</li>
+								<li><button type="button" data-command-trigger="ls" class="command-name">ls</button><div class="command-desc">List available sections and commands</div></li>
+								<li><button type="button" data-command-trigger="welcome" class="command-name">welcome</button><div class="command-desc">Display welcome message and ASCII art</div></li>
+								<li><button type="button" data-command-trigger="whoami" class="command-name">whoami</button><div class="command-desc">Show detailed profile information</div></li>
+								<li><button type="button" data-command-trigger="about" class="command-name">about</button><div class="command-desc">View my professional summary</div></li>
+								<li><button type="button" data-command-trigger="projects" class="command-name">projects</button><div class="command-desc">Browse my featured projects</div></li>
+								<li><button type="button" data-command-trigger="skills" class="command-name">skills</button><div class="command-desc">List technical skills and expertise</div></li>
+								<li><button type="button" data-command-trigger="experience" class="command-name">experience</button><div class="command-desc">View work history and roles</div></li>
+								<li><button type="button" data-command-trigger="education" class="command-name">education</button><div class="command-desc">View academic background</div></li>
+								<li><button type="button" data-command-trigger="certifications" class="command-name">certifications</button><div class="command-desc">View professional certificates</div></li>
+								<li><button type="button" data-command-trigger="contact" class="command-name">contact</button><div class="command-desc">Get my contact information</div></li>
+								<li><button type="button" data-command-trigger="resume" class="command-name">resume</button><div class="command-desc">Open my resume PDF in a new tab</div></li>
+								<li><button type="button" data-command-trigger="github" class="command-name">github</button><div class="command-desc">Show GitHub stats and contributions</div></li>
+								<li><button type="button" data-command-trigger="clear" class="command-name">clear</button><div class="command-desc">Clear terminal screen</div></li>
+								<li><button type="button" data-command-trigger="help" class="command-name">help</button><div class="command-desc">Show this help message</div></li>
+								<li><button type="button" data-command-trigger="neofetch" class="command-name">neofetch</button><div class="command-desc">Display system information</div></li>
+								<li><button type="button" data-command-trigger="time" class="command-name">time</button><div class="command-desc">Show current time</div></li>
+								<li><button type="button" data-command-trigger="weather" class="command-name">weather</button><div class="command-desc">Check the weather (sort of)</div></li>
+								<li><button type="button" data-command-trigger="matrix" class="command-name">matrix</button><div class="command-desc">Full-screen matrix rain simulation</div></li>
+								<li><button type="button" data-command-trigger="hack" class="command-name">hack</button><div class="command-desc">Initiate a totally real hacking sequence 😈</div></li>
+								<li><button type="button" data-command-trigger="ping" class="command-name">ping</button><div class="command-desc">Test connection to dfanso.dev</div></li>
 							</ul>
 						</div>
-						<div class="text-[#565f89] text-xs mt-6">
+						<div class="text-[#a9b1d6] text-xs mt-6">
 							<p>Use arrow keys ↑↓ to navigate command history</p>
 							<p>Press Ctrl+L or type 'clear' to clear screen</p>
 						</div>
@@ -353,7 +290,7 @@ Digital rain simulation...
 	<!-- Shutdown Screen -->
 	<div id="shutdown-screen" class="fixed inset-0 z-50 hidden bg-[#16161e] flex-col items-center justify-center text-center p-4">
 		<div class="text-[#f7768e] font-bold text-xl mb-4">System Halted</div>
-		<div class="text-[#565f89] mb-8">It is now safe to turn off your computer.</div>
+		<div class="text-[#a9b1d6] mb-8">It is now safe to turn off your computer.</div>
 		<button id="btn-reboot" class="px-6 py-2 border border-[#7aa2f7] text-[#7aa2f7] hover:bg-[#7aa2f7]/10 rounded transition-colors font-mono">
 			REBOOT SYSTEM
 		</button>
@@ -368,6 +305,9 @@ Digital rain simulation...
 	body.classList.add('booting');
 
 	class Terminal {
+		static readonly DEFAULT_PROMPT_HTML = `<span class="text-[#9ece6a]">❯</span> <span class="text-[#7aa2f7]">dfanso</span><span class="hidden sm:inline"> <span class="text-[#a9b1d6]">@</span><span class="text-[#bb9af7]">terminal</span> <span class="text-[#a9b1d6]">in</span> <span class="text-[#e0af68]">~/portfolio</span> <span class="text-[#a9b1d6]">on</span> <span class="text-[#f7768e]">main</span></span><span class="sm:hidden text-[#a9b1d6]">:~</span> `;
+		static readonly PROJECTS_PROMPT_HTML = `<span class="text-[#9ece6a]">❯</span> <span class="text-[#c0caf5]">Would you like to see more projects?</span> <span class="text-[#a9b1d6]">(y/n)</span> `;
+
 		private terminal: HTMLElement;
 		private outputContainer: HTMLElement;
 		private inputLine: HTMLElement;
@@ -416,6 +356,32 @@ Digital rain simulation...
 			this.attachGlobalIdleListeners();
 			this.resetIdleTimer();
 			this.initializeWindowControls();
+			this.initializeCommandTriggers();
+		}
+
+		private initializeCommandTriggers(): void {
+			this.terminal.addEventListener('click', (e) => {
+				const trigger = (e.target as HTMLElement).closest('[data-command-trigger]') as HTMLElement | null;
+				if (!trigger) return;
+				e.preventDefault();
+				e.stopPropagation();
+				const cmd = trigger.dataset.commandTrigger?.trim();
+				if (!cmd) return;
+				this.runCommand(cmd);
+			});
+		}
+
+		private runCommand(command: string): void {
+			this.currentInput = command;
+			this.inputField.value = command;
+			this.updateInputLine();
+			this.suggestionsContainer?.classList.add('hidden');
+			this.handleEnter();
+		}
+
+		private setPromptPrefix(html: string): void {
+			const prefix = this.inputLine.querySelector('.prompt-prefix') as HTMLElement | null;
+			if (prefix) prefix.innerHTML = html;
 		}
 
 		private initializeWindowControls(): void {
@@ -444,36 +410,35 @@ Digital rain simulation...
 				if (inputLine) {
 					inputLine.innerHTML = `
 						<div class="command-prompt">
-							<span class="text-[#9ece6a]">❯</span> 
-							<span class="text-[#7aa2f7]">dfanso</span>
-							<span class="hidden sm:inline">
-								<span class="text-[#565f89]">@</span><span class="text-[#bb9af7]">terminal</span> 
-								<span class="text-[#565f89]">in</span> <span class="text-[#e0af68]">~/portfolio</span> 
-								<span class="text-[#565f89]">on</span> <span class="text-[#f7768e]">main</span>
-							</span>
-							<span class="sm:hidden text-[#565f89]">:~</span>
-							<span class="command-text"></span><span class="cursor"></span>
-							<input type="text" id="terminal-input" class="opacity-0 absolute top-0 left-0 h-full w-full cursor-text" autocomplete="off" spellcheck="false" />
+							<span class="prompt-prefix">${Terminal.DEFAULT_PROMPT_HTML}</span><span class="command-text"></span><span class="cursor"></span>
+							<input type="text" id="terminal-input" class="opacity-0 absolute top-0 left-0 h-full w-full cursor-text" autocomplete="off" spellcheck="false" aria-label="Terminal command input. Type a command like help, about, projects, or contact, then press Enter." />
 						</div>
 					`;
 					// Re-attach input listener to new input element
 					this.inputField = document.getElementById('terminal-input') as HTMLInputElement;
 					this.inputLine = document.getElementById('input-line') as HTMLElement;
-					this.initializeTerminal(); 
+					this.initializeTerminal();
 				}
 				this.executeCommand('welcome', document.createElement('div'));
 				setTimeout(() => this.executeCommand('whoami', document.createElement('div')), 500);
 			});
 
-			// Maximize Logic
+			// Maximize Logic — single state flag instead of toggling six classes,
+			// so re-clicking always lands in a clean maximized/restored state.
+			let isMaximized = false;
+			const maximizedClasses = ['max-w-full', 'w-full', 'h-full', 'rounded-none', 'm-0'] as const;
 			btnMaximize?.addEventListener('click', () => {
-				container?.classList.toggle('max-w-6xl');
-				container?.classList.toggle('w-full');
-				container?.classList.toggle('h-full');
-				container?.classList.toggle('max-w-full');
-				container?.classList.toggle('rounded-none');
-				container?.classList.toggle('m-0');
+				if (!container) return;
+				isMaximized = !isMaximized;
+				if (isMaximized) {
+					maximizedClasses.forEach(c => container.classList.add(c));
+					btnMaximize.setAttribute('aria-pressed', 'true');
+				} else {
+					maximizedClasses.forEach(c => container.classList.remove(c));
+					btnMaximize.setAttribute('aria-pressed', 'false');
+				}
 			});
+			btnMaximize?.setAttribute('aria-pressed', 'false');
 			
 			// Minimize Logic (Just a visual feedback for now)
 			btnMinimize?.addEventListener('click', () => {
@@ -537,14 +502,26 @@ Digital rain simulation...
 			});
 		}
 
+		private isTouchDevice(): boolean {
+			return window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+		}
+
 		private initializeTerminal(): void {
 			// Focus input on click anywhere in terminal
 			this.terminal.addEventListener('click', (e) => {
 				const target = e.target as HTMLElement;
-				if (!target.closest('.suggestions-container') && !target.closest('a')) {
-					this.suggestionsContainer?.classList.add('hidden');
-					this.inputField.focus();
+				// Don't refocus when clicking a clickable command/link/suggestion
+				if (target.closest('.suggestions-container') || target.closest('a') || target.closest('[data-command-trigger]')) {
+					return;
 				}
+				this.suggestionsContainer?.classList.add('hidden');
+				// On touch devices only focus (and pop the keyboard) when the user
+				// taps the input row itself — not the whole terminal area.
+				if (this.isTouchDevice() && !target.closest('#input-line')) {
+					this.resetIdleTimer();
+					return;
+				}
+				this.inputField.focus();
 				this.resetIdleTimer();
 			});
 
@@ -588,8 +565,11 @@ Digital rain simulation...
 				}
 			});
 			
-			// Initial focus
-			this.inputField.focus();
+			// Initial focus — skip on touch devices so the soft keyboard
+			// doesn't pop open uninvited on page load.
+			if (!this.isTouchDevice()) {
+				this.inputField.focus();
+			}
 		}
 
 		private attachGlobalIdleListeners(): void {
@@ -749,7 +729,7 @@ Digital rain simulation...
 			if (cmd === 'resume') {
 				this.renderOutputHTML(outputDiv, `<div class="command-output">
 					<p class="text-[#c0caf5] mb-2">Opening resume...</p>
-					<p class="text-[#565f89] text-xs">(If it doesn't open, <a href="/resume.pdf" target="_blank" class="text-[#7aa2f7] underline">click here</a>)</p>
+					<p class="text-[#a9b1d6] text-xs">(If it doesn't open, <a href="/resume.pdf" target="_blank" class="text-[#7aa2f7] underline">click here</a>)</p>
 				</div>`);
 				window.open('/resume.pdf', '_blank');
 				return;
@@ -780,18 +760,19 @@ Digital rain simulation...
 				if (response === 'y' || response === 'yes') {
 					this.renderOutputHTML(outputDiv, `<div class="text-[#9ece6a] command-output">
 						<p class="mb-2">🔗 Check out more of my projects:</p>
-						<a href="https://github.com/dfanso" target="_blank" class="text-[#7aa2f7] hover:text-[#9ece6a] transition-colors">
-							<span class="text-[#565f89]">└─▶</span> Visit my GitHub Profile
+						<a href="https://github.com/dfanso" target="_blank" rel="noopener noreferrer" class="text-[#7aa2f7] hover:text-[#9ece6a] transition-colors">
+							<span class="text-[#a9b1d6]">└─▶</span> Visit my GitHub Profile
 						</a>
 					</div>`);
 				} else if (response === 'n' || response === 'no') {
-					this.renderOutputHTML(outputDiv, '<div class="text-[#9ece6a] command-output"><span class="text-[#565f89]">└─▶</span> Alright! Feel free to explore other commands using `help`.</div>');
+					this.renderOutputHTML(outputDiv, '<div class="text-[#9ece6a] command-output"><span class="text-[#a9b1d6]">└─▶</span> Alright! Feel free to explore other commands using `help`.</div>');
 				} else {
-					this.renderOutputHTML(outputDiv, '<div class="text-[#f7768e] command-output"><span class="text-[#565f89]">└─▶</span> Please answer with y/n.</div>');
-					this.awaitingProjectResponse = true;
+					this.renderOutputHTML(outputDiv, '<div class="text-[#f7768e] command-output"><span class="text-[#a9b1d6]">└─▶</span> Please answer with y or n.</div>');
+					// Keep the y/n prompt so the next input continues the interaction.
 					return;
 				}
 				this.awaitingProjectResponse = false;
+				this.setPromptPrefix(Terminal.DEFAULT_PROMPT_HTML);
 				return;
 			}
 
@@ -845,13 +826,13 @@ Digital rain simulation...
 			}
 
 			if (cmd === 'matrix') {
-				this.renderOutputHTML(outputDiv, `<div class="text-[#9ece6a]">Launching matrix simulation... <span class="text-[#565f89] text-xs">(press ESC or click anywhere to exit)</span></div>`);
+				this.renderOutputHTML(outputDiv, `<div class="text-[#9ece6a]">Launching matrix simulation... <span class="text-[#a9b1d6] text-xs">(press ESC or click anywhere to exit)</span></div>`);
 				setTimeout(() => launchMatrixAnimation(), 300);
 				return;
 			}
 
 			if (cmd === 'hack') {
-				this.renderOutputHTML(outputDiv, `<div class="text-[#f7768e]">Initiating hack sequence... <span class="text-[#565f89] text-xs">(stand by)</span></div>`);
+				this.renderOutputHTML(outputDiv, `<div class="text-[#f7768e]">Initiating hack sequence... <span class="text-[#a9b1d6] text-xs">(stand by)</span></div>`);
 				setTimeout(() => launchHackSequence(), 300);
 				return;
 			}
@@ -861,21 +842,15 @@ Digital rain simulation...
 
 			if (component) {
 				this.renderOutputHTML(outputDiv, component.innerHTML);
-				
-				// Add interactive project prompt if it's the projects command
+
+				// Switch the *input prompt* to ask the y/n question inline,
+				// so the user's answer renders on the same line as the question.
 				if (command === 'projects') {
-					const promptDiv = document.createElement('div');
-					promptDiv.className = 'mt-4 text-[#9ece6a] command-prompt';
-					promptDiv.innerHTML = '<span class="text-[#9ece6a]">❯</span> Would you like to see more projects? (y/n)';
-					outputDiv.appendChild(promptDiv);
-					this.applySyntaxHighlight(promptDiv as HTMLElement);
-					this.animateOutput(promptDiv as HTMLElement);
-					
-					// Set a flag to handle the next input differently
 					this.awaitingProjectResponse = true;
+					this.setPromptPrefix(Terminal.PROJECTS_PROMPT_HTML);
 				}
 			} else {
-				this.renderOutputHTML(outputDiv, `<div class="text-[#f7768e] command-output"><span class="text-[#565f89]">└─▶</span> Command not found: ${command}</div>`);
+				this.renderOutputHTML(outputDiv, `<div class="text-[#f7768e] command-output"><span class="text-[#a9b1d6]">└─▶</span> Command not found: ${command}</div>`);
 			}
 		}
 
@@ -972,9 +947,12 @@ Digital rain simulation...
 		}
 
 		private animateOutput(root: HTMLElement): void {
+			// Respect reduced motion: render output immediately, no typewriter.
+			if (prefersReducedMotion) return;
+
 			const textContent = root.textContent || '';
 			const elements = root.children.length ? Array.from(root.children) : [root];
-			
+
 			// For very short content, use character-by-character typing
 			if (textContent.length < 100 && elements.length === 1) {
 				this.typeCharByChar(root);
@@ -1214,7 +1192,7 @@ Digital rain simulation...
 		// Build elements
 		const l1 = mkLine('> Establishing encrypted tunnel to itsme.dfanso.dev...');
 		const l2 = mkLine('> Resolved IP: 76.76.21.21 | ASN: Vercel Inc.', '#7aa2f7');
-		const l3 = mkLine('> RTT: 0.4ms  |  Packet loss: 0%  |  TTL: 64', '#565f89');
+		const l3 = mkLine('> RTT: 0.4ms  |  Packet loss: 0%  |  TTL: 64', '#a9b1d6');
 		const l4 = mkLine('> TLS 1.3 handshake complete. Session key established. ✓', '#9ece6a');
 		const sep1 = mkLine('─'.repeat(60), '#1a3a1a');
 		const pb1 = mkBar('[ BYPASSING CLOUDFLARE WAF ]', '#f7768e');
@@ -1227,7 +1205,7 @@ Digital rain simulation...
 		const rootResult = mkLine('root', '#c0caf5');
 		const lol1 = mkLine('root@dfanso.dev:~# cat /etc/secrets', '#9ece6a');
 		const lol2 = mkLine('cat: /etc/secrets: nice try 😄', '#f7768e');
-		const lol3 = mkLine('> jk — this is just a portfolio. but the animations are real 🔥', '#565f89', 'font-style:italic;');
+		const lol3 = mkLine('> jk — this is just a portfolio. but the animations are real 🔥', '#a9b1d6', 'font-style:italic;');
 		const exitHint = mkLine('[ click anywhere or press ESC to exit ]', '#00ff4140', 'text-align:center;margin-top:12px;');
 
 		const tl = anime.timeline({ easing: 'easeOutQuad', autoplay: true });
@@ -1326,8 +1304,11 @@ Digital rain simulation...
 		window.addEventListener('load', bootUp, { once: true });
 	}
 
+	const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 	// ─── Always-on Ambient Animations ────────────────────────────────────────
 	function startAmbientAnimations(): void {
+		if (prefersReducedMotion) return;
 		startGlowPulse();
 		spawnFloatingParticles();
 		startTitleGlitch();
@@ -1678,7 +1659,7 @@ Digital rain simulation...
 	/* Update help command styling */
 	#help .command-list ul li::before {
 		content: "└─▶";
-		@apply text-[#565f89] mr-2;
+		@apply text-[#a9b1d6] mr-2;
 	}
 
 	.terminal-footer {
@@ -1689,6 +1670,14 @@ Digital rain simulation...
 	/* Window Controls */
 	.terminal-button {
 		@apply w-3 h-3 rounded-full border border-black/10 relative flex items-center justify-center;
+		/* Expand the actual hit target via an invisible ::after, without
+		   resizing the visible dot. Meets WCAG 2.5.5 ≥24px tap target. */
+	}
+
+	.terminal-button::after {
+		content: '';
+		position: absolute;
+		inset: -8px;
 	}
 
 	.terminal-button::before {
@@ -1698,6 +1687,12 @@ Digital rain simulation...
 
 	.terminal-buttons:hover .terminal-button::before {
 		@apply opacity-100;
+	}
+
+	.terminal-button:focus-visible,
+	#btn-reboot:focus-visible {
+		outline: 2px solid var(--primary);
+		outline-offset: 3px;
 	}
 
 	/* Mobile-specific styles */
@@ -1827,20 +1822,56 @@ Digital rain simulation...
 	/* ── ls directory listing ──────────────────────────────────────────────── */
 	.ls-entry {
 		border-radius: 3px;
-		padding: 1px 6px;
+		padding: 4px 6px;
 		margin: 0 -6px;
 		transition: background 0.15s ease, transform 0.15s ease;
-		cursor: default;
+		cursor: pointer;
+		background: transparent;
+		border: none;
+		font: inherit;
+		color: inherit;
+		min-height: 32px;
 	}
 
-	.ls-entry:hover {
+	.ls-entry:hover,
+	.ls-entry:focus-visible {
 		background: rgba(122, 162, 247, 0.08);
 		transform: translateX(4px);
 	}
 
-	.ls-entry:hover .ls-name {
+	.ls-entry:focus-visible {
+		outline: 2px solid var(--primary);
+		outline-offset: 2px;
+	}
+
+	.ls-entry:hover .ls-name,
+	.ls-entry:focus-visible .ls-name {
 		text-shadow: 0 0 10px currentColor;
 		transition: text-shadow 0.15s ease;
+	}
+
+	/* Help command names — clickable */
+	button.command-name {
+		background: transparent;
+		border: none;
+		padding: 4px 6px;
+		margin: -4px -6px;
+		font: inherit;
+		text-align: left;
+		cursor: pointer;
+		border-radius: 3px;
+		transition: background 0.15s ease, text-shadow 0.15s ease;
+	}
+
+	button.command-name:hover,
+	button.command-name:focus-visible {
+		background: rgba(122, 162, 247, 0.08);
+		text-shadow: 0 0 10px currentColor;
+	}
+
+	button.command-name:focus-visible {
+		outline: 2px solid var(--primary);
+		outline-offset: 2px;
 	}
 
 	/* Copy/Paste Styles */
@@ -1965,14 +1996,23 @@ Digital rain simulation...
 		}
 
 		.cursor::after,
-		body.terminal-idle .cursor::after {
+		body.terminal-idle .cursor::after,
+		.matrix-animation pre,
+		.ping-animation .ping-line,
+		.ls-entry,
+		.typing-line {
 			animation: none !important;
-			opacity: 1;
+			transition: none !important;
+			opacity: 1 !important;
 		}
 
 		#terminal::before,
 		#terminal::after {
 			transition: none;
+		}
+
+		.ls-entry:hover {
+			transform: none !important;
 		}
 	}
 
