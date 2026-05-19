@@ -1,8 +1,8 @@
 {
   "framework": "astro",
-  "buildCommand": "yarn build",
+  "buildCommand": "NODE_OPTIONS=--no-deprecation yarn build",
   "devCommand": "yarn dev",
-  "installCommand": "yarn install --frozen-lockfile",
+  "installCommand": "NODE_OPTIONS=--no-deprecation yarn install --frozen-lockfile",
   "outputDirectory": "dist",
   "cleanUrls": true,
   "github": {
