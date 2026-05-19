@@ -18,7 +18,7 @@ export default defineConfig({
     icon(),
   ],
   output: 'server',
-  adapter: vercel({ 
+  adapter: vercel({
     webAnalytics: { enabled: true }
   }),
   site: 'https://itsme.dfanso.dev'
