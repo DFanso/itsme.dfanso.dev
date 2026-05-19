@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/copy-sitemaps.mjs",
+    "build": "tsx scripts/generate-pdf.tsx && astro build && node scripts/copy-sitemaps.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "generate:cv": "tsx scripts/generate-pdf.tsx"
