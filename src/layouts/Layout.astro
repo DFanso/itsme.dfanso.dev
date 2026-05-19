@@ -169,7 +169,11 @@ const profileImageURL = new URL(profileImage.src, Astro.site);
 <script>
 	import anime from 'animejs/lib/anime.es.js';
 
-	document.addEventListener('DOMContentLoaded', () => {
+	// Vite gives module scripts a `defer` attribute in production builds, so
+	// they execute *after* DOMContentLoaded has already fired. Listening for
+	// the event would silently no-op on Vercel — run immediately if the DOM
+	// is already past 'loading'.
+	function initCrtEffects() {
 		const poweron  = document.getElementById('crt-poweron') as HTMLElement;
 		const overlay  = document.getElementById('crt-overlay') as HTMLElement;
 		const rolling  = overlay?.querySelector('.crt-rolling') as HTMLElement;
@@ -239,7 +243,13 @@ const profileImageURL = new URL(profileImage.src, Astro.site);
 			});
 		}
 		setTimeout(flicker, 5000);
-	});
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initCrtEffects, { once: true });
+	} else {
+		initCrtEffects();
+	}
 </script>
 	</body>
 </html>
