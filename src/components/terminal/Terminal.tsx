@@ -1,8 +1,11 @@
 import type React from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, memo, useEffect, useRef, useState } from 'react'
 import { useTerminal } from '../../lib/useTerminal'
 import { useIdleTimer } from '../../lib/useIdleTimer'
+import { useOutputReveal } from '../../lib/useOutputReveal'
 import { findCommand, type Execution } from '../../lib/commands'
+import { highlightSegments } from '../../lib/syntax-highlight'
+import type { Block } from '../../lib/terminal-reducer'
 import { Prompt } from './Prompt'
 import { TitleBar } from './TitleBar'
 import { InputLine } from './InputLine'
@@ -15,10 +18,33 @@ import { CopyButton } from './CopyButton'
 // window-control / click-to-focus / auto-scroll behavior
 // (index.astro:421-736).
 
+// Renders a plain string as syntax-highlighted spans (index.astro:388-396
+// patterns, applied by `highlightSegments`) instead of the old site's
+// innerHTML-based DOM mutation. Unmatched runs render as plain text (no
+// wrapping span) via a keyed Fragment.
+function Highlighted({ text }: { text: string }) {
+  return (
+    <>
+      {highlightSegments(text).map((segment, index) =>
+        segment.className ? (
+          <span key={index} className={segment.className}>
+            {segment.text}
+          </span>
+        ) : (
+          <Fragment key={index}>{segment.text}</Fragment>
+        ),
+      )}
+    </>
+  )
+}
+
 // Block output switches on `Execution.kind` (never `CommandDef.kind`, see
 // Task 5's forward note): `component` looks up the registered command's
 // `Output`; `text` and `action` both render `execution.text` (a colored
-// list of lines) when present, and nothing otherwise.
+// list of lines) when present, and nothing otherwise. `component` outputs
+// (Ls, Whoami, etc.) are hand-built JSX with their own styling, so — unlike
+// the old site, which highlighted every rendered text node indiscriminately
+// — syntax highlighting here only applies to the plain-string `text.lines`.
 function BlockOutput({ execution }: { execution: Execution }) {
   if (execution.kind === 'component') {
     const Output = findCommand(execution.componentName ?? '')?.Output
@@ -29,7 +55,9 @@ function BlockOutput({ execution }: { execution: Execution }) {
     return (
       <div className={execution.text.color}>
         {execution.text.lines.map((line, index) => (
-          <div key={index}>{line}</div>
+          <div key={index}>
+            <Highlighted text={line} />
+          </div>
         ))}
       </div>
     )
@@ -37,6 +65,37 @@ function BlockOutput({ execution }: { execution: Execution }) {
 
   return null
 }
+
+// One echoed command + its output. Memoized (compared by block id, which is
+// stable and never reused for a different block — see `terminal-reducer`)
+// so that once a block mounts it never re-renders, no matter how many times
+// the parent `Terminal` re-renders while the user keeps working (typing,
+// history navigation, etc.). That's required for `useOutputReveal`'s
+// mount-only DOM reveal (char-by-char typing, `.typing-line` stagger, the
+// `ls` anime sequence) to actually run once and never be re-triggered or
+// clobbered by React reconciling this subtree again.
+const CommandBlock = memo(
+  function CommandBlock({ block }: { block: Block }) {
+    const outputRef = useRef<HTMLDivElement>(null)
+    useOutputReveal(outputRef)
+
+    return (
+      <div className="command-block">
+        <Prompt>
+          {!block.seeded && (
+            <span className="command-text">
+              <Highlighted text={block.command} />
+            </span>
+          )}
+        </Prompt>
+        <div className="command-output" ref={outputRef}>
+          <BlockOutput execution={block.execution} />
+        </div>
+      </div>
+    )
+  },
+  (prev, next) => prev.block.id === next.block.id,
+)
 
 export function Terminal() {
   const { state, dispatch, submit, shutdown, reboot, toggleMaximize } = useTerminal()
@@ -128,14 +187,7 @@ export function Terminal() {
         >
           <div id="output-container" aria-live="polite">
             {state.blocks.map((block) => (
-              <div className="command-block" key={block.id}>
-                <Prompt>
-                  {!block.seeded && <span className="command-text">{block.command}</span>}
-                </Prompt>
-                <div className="command-output">
-                  <BlockOutput execution={block.execution} />
-                </div>
-              </div>
+              <CommandBlock block={block} key={block.id} />
             ))}
           </div>
 
