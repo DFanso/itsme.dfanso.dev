@@ -23,6 +23,12 @@ export default defineConfig({
           crawlLinks: true,
           failOnError: true,
         },
+        // `/resume` isn't reachable via crawlLinks: the only in-app
+        // reference to a "resume" is the terminal's `resume` command, which
+        // opens the static `/resume.pdf` in `public/`, not this route (see
+        // src/lib/useTerminal.ts). List it explicitly so it still gets
+        // prerendered to `resume/index.html`.
+        pages: [{ path: '/resume' }],
       }),
     viteReact(),
     !isVitest && nitro(),
