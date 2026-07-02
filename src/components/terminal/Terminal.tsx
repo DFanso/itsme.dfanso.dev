@@ -1,8 +1,9 @@
 import type React from 'react'
-import { Fragment, memo, useEffect, useRef, useState } from 'react'
+import { Fragment, lazy, memo, Suspense, useEffect, useRef, useState } from 'react'
 import { useTerminal } from '../../lib/useTerminal'
 import { useIdleTimer } from '../../lib/useIdleTimer'
 import { useOutputReveal } from '../../lib/useOutputReveal'
+import { useBootSequence } from '../../lib/useBootSequence'
 import { findCommand, type Execution } from '../../lib/commands'
 import { highlightSegments } from '../../lib/syntax-highlight'
 import type { Block } from '../../lib/terminal-reducer'
@@ -11,6 +12,14 @@ import { TitleBar } from './TitleBar'
 import { InputLine } from './InputLine'
 import { ShutdownScreen } from './ShutdownScreen'
 import { CopyButton } from './CopyButton'
+
+// Lazy-loaded (code-split) easter-egg overlays — only fetched when the user
+// actually types `matrix` or `hack`. Must be declared at module scope (not
+// inside the component) so `lazy()` isn't re-invoked on every render.
+const MatrixOverlay = lazy(() =>
+  import('../effects/MatrixOverlay').then((m) => ({ default: m.MatrixOverlay })),
+)
+const HackOverlay = lazy(() => import('../effects/HackOverlay').then((m) => ({ default: m.HackOverlay })))
 
 // Composes the terminal shell: TitleBar + echoed command blocks + the live
 // InputLine + footer + ShutdownScreen. Ported from
@@ -98,8 +107,9 @@ const CommandBlock = memo(
 )
 
 export function Terminal() {
-  const { state, dispatch, submit, shutdown, reboot, toggleMaximize } = useTerminal()
+  const { state, overlayVisible, dispatch, submit, closeOverlay, shutdown, reboot, toggleMaximize } = useTerminal()
   useIdleTimer()
+  useBootSequence()
 
   const contentRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -211,6 +221,17 @@ export function Terminal() {
 
       <ShutdownScreen visible={state.shutdown} onReboot={handleReboot} />
       <CopyButton containerRef={contentRef} />
+
+      {overlayVisible && state.overlay === 'matrix' && (
+        <Suspense fallback={null}>
+          <MatrixOverlay onExit={closeOverlay} />
+        </Suspense>
+      )}
+      {overlayVisible && state.overlay === 'hack' && (
+        <Suspense fallback={null}>
+          <HackOverlay onExit={closeOverlay} />
+        </Suspense>
+      )}
     </>
   )
 }
