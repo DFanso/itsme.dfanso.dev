@@ -25,6 +25,7 @@ import { Projects } from '../components/outputs/Projects'
 import { Ls } from '../components/outputs/Ls'
 import { Help } from '../components/outputs/Help'
 import { Neofetch } from '../components/outputs/Neofetch'
+import { GitHubStats } from '../components/outputs/GitHubStats'
 
 export interface CommandDef {
   name: string
@@ -174,7 +175,7 @@ export const COMMANDS: CommandDef[] = [
     description: 'Show GitHub stats and contributions',
     lsEntry: { name: 'github/', perms: 'drwxr-xr-x', note: 'stats & contributions' },
     kind: 'output',
-    Output: Placeholder,
+    Output: GitHubStats,
   },
   // Hidden/easter-egg commands: not part of the help list, but still valid
   // input handled by executeLine (index.astro:749-775) and offered for

@@ -1,5 +1,11 @@
+import { useEffect, useState } from 'react'
 import type { ComponentType } from 'react'
+import type { ProjectRepoStats } from '../../lib/github-fetch'
+import { getProjectStats } from '../../lib/github-server-fn'
 import LucideBrainIcon from '~icons/lucide/brain'
+import LucideEyeIcon from '~icons/lucide/eye'
+import LucideGitForkIcon from '~icons/lucide/git-fork'
+import LucideStarIcon from '~icons/lucide/star'
 import AmazonawsIcon from '~icons/simple-icons/amazonaws'
 import ArgoIcon from '~icons/simple-icons/argo'
 import DatadogIcon from '~icons/simple-icons/datadog'
@@ -31,13 +37,14 @@ import TerraformIcon from '~icons/simple-icons/terraform'
  *
  * The Astro source also called the GitHub REST API at build time
  * (`getGitHubStats`) to annotate each project with live star/fork/watcher
- * counts rendered next to its heading. That's SSG-time data fetching with
- * no equivalent wired up yet in this port (the dedicated `github` command/
- * GitHubStats.astro port is Task 10's scope, not this one), so the
- * per-project stats block is intentionally omitted here rather than ported
- * with fake or stale numbers — `projectsData` below carries every field
- * `getGitHubStats` augmented (id, name, url, github, description, tech)
- * except the derived `stats` object.
+ * counts rendered next to its heading (Projects.astro:150-165). Ported here
+ * as a client-side fetch on mount via the `getProjectStats` server function
+ * (`fetchProjectStats` in `github-fetch.ts`, wrapped in `github-server-fn.ts`)
+ * instead — stats arrive live per visit rather than frozen at build time.
+ * `getProjectStats` is imported normally, same as in `GitHubStats.tsx` (see
+ * that file's doc comment for why a static import here is safe under
+ * Vitest). A repo whose stats fetch fails just renders without the stats
+ * row, matching Projects.astro's graceful per-project `stats: null` behavior.
  *
  * The trailing "Would you like to see more projects?" prompt line is
  * folded into this component (it's appended by the terminal only for the
@@ -178,47 +185,86 @@ const projectsData = [
 ]
 
 export function Projects() {
+  const [stats, setStats] = useState<Record<string, ProjectRepoStats | null>>({})
+
+  useEffect(() => {
+    const repos = projectsData
+      .map((project) => project.github)
+      .filter((github): github is string => github !== null)
+    let cancelled = false
+    getProjectStats({ data: repos })
+      .then((result) => {
+        if (!cancelled) setStats(result)
+      })
+      .catch(() => {
+        // Graceful degradation matches Projects.astro: a failed fetch just
+        // means no stats rows render (stats stays empty), not an error state.
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
   return (
     <section>
       <div className="text-[#bb9af7] font-bold mb-2">Featured Projects</div>
       <div className="space-y-6">
-        {projectsData.map((project, index) => (
-          <div className="project-entry" key={project.name}>
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[#565f89]">
-                {index === projectsData.length - 1 ? '└─▶' : '├─▶'}
-              </span>
-              <span className="text-[#e0af68]">cat</span>
-              <a
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#7aa2f7] hover:underline"
-              >
-                projects/{project.name}/
-              </a>
-              <span className="text-[#565f89]">type:</span>
-              <span className="text-[#f7768e]">{project.type}</span>
-            </div>
-            <div className="ml-6 mt-2">
-              <div className="text-[#c0caf5]">{project.description}</div>
-              <div className="mt-2 flex flex-wrap gap-3">
-                {project.tech.map((tech) => {
-                  const TechIcon = ICONS[tech.icon]
-                  return (
-                    <div className="flex items-center gap-1" key={tech.name}>
-                      <span className="text-[#565f89]">│</span>
-                      <span className="text-[#7aa2f7]">
-                        <TechIcon className="w-4 h-4" />
-                      </span>
-                      <span className="text-[#9ece6a] text-sm">{tech.name}</span>
-                    </div>
-                  )
-                })}
+        {projectsData.map((project, index) => {
+          const projectStats = project.github ? stats[project.github] : null
+          return (
+            <div className="project-entry" key={project.name}>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-[#565f89]">
+                  {index === projectsData.length - 1 ? '└─▶' : '├─▶'}
+                </span>
+                <span className="text-[#e0af68]">cat</span>
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#7aa2f7] hover:underline"
+                >
+                  projects/{project.name}/
+                </a>
+                <span className="text-[#565f89]">type:</span>
+                <span className="text-[#f7768e]">{project.type}</span>
+                {projectStats && (
+                  <div className="flex items-center gap-3 ml-2">
+                    <span className="flex items-center gap-1 text-[#e0af68]">
+                      <LucideStarIcon className="w-3.5 h-3.5" />
+                      <span className="text-sm">{projectStats.stars}</span>
+                    </span>
+                    <span className="flex items-center gap-1 text-[#7dcfff]">
+                      <LucideGitForkIcon className="w-3.5 h-3.5" />
+                      <span className="text-sm">{projectStats.forks}</span>
+                    </span>
+                    <span className="flex items-center gap-1 text-[#bb9af7]">
+                      <LucideEyeIcon className="w-3.5 h-3.5" />
+                      <span className="text-sm">{projectStats.watchers}</span>
+                    </span>
+                  </div>
+                )}
+              </div>
+              <div className="ml-6 mt-2">
+                <div className="text-[#c0caf5]">{project.description}</div>
+                <div className="mt-2 flex flex-wrap gap-3">
+                  {project.tech.map((tech) => {
+                    const TechIcon = ICONS[tech.icon]
+                    return (
+                      <div className="flex items-center gap-1" key={tech.name}>
+                        <span className="text-[#565f89]">│</span>
+                        <span className="text-[#7aa2f7]">
+                          <TechIcon className="w-4 h-4" />
+                        </span>
+                        <span className="text-[#9ece6a] text-sm">{tech.name}</span>
+                      </div>
+                    )
+                  })}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
       <div className="mt-4 text-[#9ece6a] command-prompt">
         <span className="text-[#9ece6a]">❯</span> Would you like to see more projects? (y/n)
