@@ -37,9 +37,22 @@ import anime from 'animejs/lib/anime.es.js'
  * Runs on mount only: the effect has an empty dependency array, and `ref`
  * (from `useRef`) is stable for the lifetime of the owning component
  * anyway.
+ *
+ * `options.disabled` skips the reveal entirely (seeded/initial blocks,
+ * which should render statically — old-site parity: initial page-load
+ * blocks were static, only newly-submitted commands animated). The hook
+ * itself must still be called unconditionally on every render (Rules of
+ * Hooks), so the early-return lives inside the effect rather than around
+ * the `useEffect` call.
  */
-export function useOutputReveal(ref: RefObject<HTMLElement | null>): void {
+export function useOutputReveal(
+  ref: RefObject<HTMLElement | null>,
+  options?: { disabled?: boolean },
+): void {
+  const disabled = options?.disabled ?? false
+
   useEffect(() => {
+    if (disabled) return
     const root = ref.current
     if (!root) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
@@ -106,6 +119,7 @@ export function useOutputReveal(ref: RefObject<HTMLElement | null>): void {
       const textOnly = el.textContent ?? ''
       el.innerHTML = ''
 
+      let done = false
       let charIndex = 0
       const typeSpeed = 15
       const typeNextChar = () => {
@@ -114,19 +128,25 @@ export function useOutputReveal(ref: RefObject<HTMLElement | null>): void {
           charIndex++
           timers.push(window.setTimeout(typeNextChar, typeSpeed + Math.random() * 10))
         } else {
+          done = true
           el.innerHTML = originalHTML
         }
       }
       typeNextChar()
-    } else {
-      elements.forEach((el, index) => {
-        el.classList.add('typing-line')
-        el.style.animationDelay = `${index * 40}ms`
-      })
+
+      return () => {
+        timers.forEach((timer) => window.clearTimeout(timer))
+        if (!done) el.innerHTML = originalHTML
+      }
     }
+
+    elements.forEach((el, index) => {
+      el.classList.add('typing-line')
+      el.style.animationDelay = `${index * 40}ms`
+    })
 
     return () => {
       timers.forEach((timer) => window.clearTimeout(timer))
     }
-  }, [ref])
+  }, [ref, disabled])
 }

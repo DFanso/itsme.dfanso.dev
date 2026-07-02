@@ -77,7 +77,7 @@ function BlockOutput({ execution }: { execution: Execution }) {
 const CommandBlock = memo(
   function CommandBlock({ block }: { block: Block }) {
     const outputRef = useRef<HTMLDivElement>(null)
-    useOutputReveal(outputRef)
+    useOutputReveal(outputRef, { disabled: !!block.seeded })
 
     return (
       <div className="command-block">
