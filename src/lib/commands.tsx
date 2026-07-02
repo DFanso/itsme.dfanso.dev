@@ -5,8 +5,7 @@
  * (help list: lines 257-348; ls entries: lines 99-162; dispatch logic:
  * lines 739-880) as pure, testable data + a pure `executeLine` function.
  *
- * `Output` components are wired up in Tasks 8-10; until then every
- * `kind: 'output'` command points at a shared `Placeholder`.
+ * `Output` components are wired up in Tasks 8-10.
  */
 import type { ComponentType } from 'react'
 import { suggestClosest } from './input-helpers'
@@ -45,10 +44,12 @@ export interface CommandDef {
    * `resume.pdf`) despite being `hidden` from `help`.
    */
   hidden?: boolean
+  /**
+   * Output manages its own async state after mount; DOM-mutating reveal
+   * animations must be skipped.
+   */
+  async?: boolean
 }
-
-/** Temporary stand-in for the section components not yet ported (Tasks 9-10). */
-const Placeholder: ComponentType = () => <div>…</div>
 
 export const COMMANDS: CommandDef[] = [
   // Canonical order matches the AVAILABLE COMMANDS list in
@@ -145,6 +146,7 @@ export const COMMANDS: CommandDef[] = [
     description: 'Show current time',
     kind: 'output',
     Output: TimeOutput,
+    async: true,
   },
   {
     name: 'weather',
@@ -176,6 +178,7 @@ export const COMMANDS: CommandDef[] = [
     lsEntry: { name: 'github/', perms: 'drwxr-xr-x', note: 'stats & contributions' },
     kind: 'output',
     Output: GitHubStats,
+    async: true,
   },
   // Hidden/easter-egg commands: not part of the help list, but still valid
   // input handled by executeLine (index.astro:749-775) and offered for
