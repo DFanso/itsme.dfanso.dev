@@ -16,6 +16,8 @@
     "@iconify-json/lucide": "^1.2.115",
     "@iconify-json/mdi": "^1.2.3",
     "@iconify-json/simple-icons": "^1.2.88",
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-jsx": "^8.1.0",
     "@tanstack/react-router": "^1.170.17",
     "@tanstack/react-start": "^1.168.27",
     "@vercel/analytics": "^2.0.1",

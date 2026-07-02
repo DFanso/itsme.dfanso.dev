@@ -10,6 +10,15 @@
  */
 import type { ComponentType } from 'react'
 import { suggestClosest } from './input-helpers'
+import { Welcome } from '../components/outputs/Welcome'
+import { Whoami } from '../components/outputs/Whoami'
+import { About } from '../components/outputs/About'
+import { Contact } from '../components/outputs/Contact'
+import { Education } from '../components/outputs/Education'
+import { Certifications } from '../components/outputs/Certifications'
+import { TimeOutput } from '../components/outputs/TimeOutput'
+import { Weather } from '../components/outputs/Weather'
+import { Ping } from '../components/outputs/Ping'
 
 export interface CommandDef {
   name: string
@@ -20,7 +29,7 @@ export interface CommandDef {
   action?: 'clear' | 'matrix' | 'hack' | 'open-resume'
 }
 
-/** Temporary stand-in for the real section components (Tasks 8-10). */
+/** Temporary stand-in for the section components not yet ported (Tasks 9-10). */
 const Placeholder: ComponentType = () => <div>…</div>
 
 export const COMMANDS: CommandDef[] = [
@@ -37,21 +46,21 @@ export const COMMANDS: CommandDef[] = [
     description: 'Display welcome message and ASCII art',
     lsEntry: { name: 'welcome.txt', perms: '-rw-r--r--', note: 'welcome message' },
     kind: 'output',
-    Output: Placeholder,
+    Output: Welcome,
   },
   {
     name: 'whoami',
     description: 'Show detailed profile information',
     lsEntry: { name: 'whoami.txt', perms: '-rw-r--r--', note: 'profile info' },
     kind: 'output',
-    Output: Placeholder,
+    Output: Whoami,
   },
   {
     name: 'about',
     description: 'View my professional summary',
     lsEntry: { name: 'about/', perms: 'drwxr-xr-x', note: 'professional summary' },
     kind: 'output',
-    Output: Placeholder,
+    Output: About,
   },
   {
     name: 'projects',
@@ -79,21 +88,21 @@ export const COMMANDS: CommandDef[] = [
     description: 'View academic background',
     lsEntry: { name: 'education/', perms: 'drwxr-xr-x', note: 'academic background' },
     kind: 'output',
-    Output: Placeholder,
+    Output: Education,
   },
   {
     name: 'certifications',
     description: 'View professional certificates',
     lsEntry: { name: 'certifications/', perms: 'drwxr-xr-x', note: 'licenses & certs' },
     kind: 'output',
-    Output: Placeholder,
+    Output: Certifications,
   },
   {
     name: 'contact',
     description: 'Get my contact information',
     lsEntry: { name: 'contact/', perms: 'drwxr-xr-x', note: 'social links' },
     kind: 'output',
-    Output: Placeholder,
+    Output: Contact,
   },
   {
     name: 'clear',
@@ -117,13 +126,13 @@ export const COMMANDS: CommandDef[] = [
     name: 'time',
     description: 'Show current time',
     kind: 'output',
-    Output: Placeholder,
+    Output: TimeOutput,
   },
   {
     name: 'weather',
     description: 'Check the weather (sort of)',
     kind: 'output',
-    Output: Placeholder,
+    Output: Weather,
   },
   {
     name: 'matrix',
@@ -141,7 +150,7 @@ export const COMMANDS: CommandDef[] = [
     name: 'ping',
     description: 'Test connection to dfanso.dev',
     kind: 'output',
-    Output: Placeholder,
+    Output: Ping,
   },
   {
     name: 'github',

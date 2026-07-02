@@ -784,4 +784,150 @@ body.no-js #terminal::after {
   @apply bg-[#7aa2f7]/20 rounded-full hover:bg-[#7aa2f7]/30 transition-colors;
 }
 
+/* ─── Ported from src-astro/components/Welcome.astro (<style>) ───────────── */
+
+.welcome-container {
+  @apply font-mono;
+}
+
+.ascii-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.ascii-art {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: clamp(6px, 1.5vw, 14px);
+  line-height: 1.1;
+  white-space: pre;
+  color: #7aa2f7;
+  text-shadow: 0 0 10px rgba(122, 162, 247, 0.5);
+  animation: ascii-pulse 3s ease-in-out infinite alternate;
+}
+
+.ascii-glow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, rgba(122, 162, 247, 0.1), rgba(187, 154, 247, 0.1));
+  filter: blur(20px);
+  z-index: -1;
+  animation: glow-pulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes ascii-pulse {
+  0% {
+    text-shadow: 0 0 10px rgba(122, 162, 247, 0.5);
+  }
+  100% {
+    text-shadow: 0 0 20px rgba(122, 162, 247, 0.8), 0 0 40px rgba(187, 154, 247, 0.3);
+  }
+}
+
+@keyframes glow-pulse {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+.welcome-text {
+  color: #c0caf5;
+  @apply text-sm;
+}
+
+.greeting {
+  color: #9ece6a;
+  @apply text-lg font-bold;
+}
+
+.tagline {
+  color: #bb9af7;
+  @apply text-sm italic;
+}
+
+.version {
+  color: #565f89;
+}
+
+.hint {
+  color: #565f89;
+  @apply text-xs;
+}
+
+.command {
+  color: #9ece6a;
+  @apply font-bold;
+  background: rgba(154, 206, 106, 0.1);
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+}
+
+/* Typewriter effect for greeting - only applied via JS on first visit */
+.typewriter {
+  overflow: hidden;
+  border-right: 2px solid #9ece6a;
+  white-space: nowrap;
+  animation:
+    typing 1.5s steps(25, end) forwards,
+    blink-caret 0.75s step-end 3,
+    hide-caret 0s 2.5s forwards;
+  width: 0;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #9ece6a;
+  }
+}
+
+@keyframes hide-caret {
+  to {
+    border-color: transparent;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .ascii-art {
+    font-size: 5px;
+  }
+  .typewriter {
+    white-space: normal;
+    border-right: none;
+    /* Renamed from the Astro source's own `fade-in` keyframe: Astro scopes
+       component <style> blocks per-file, but this file is a single global
+       stylesheet, and `fade-in` is already used (with different keyframe
+       values) by the ping-animation styles above — reusing the name here
+       would silently redefine that keyframe for the whole page. */
+    animation: welcome-fade-in 0.5s ease forwards;
+    width: auto;
+  }
+}
+
+@keyframes welcome-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 } /* end @layer base */
