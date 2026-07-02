@@ -1,6 +1,7 @@
 {
-  "buildCommand": "yarn build",
-  "installCommand": "yarn install",
+  "buildCommand": "NODE_OPTIONS=--no-deprecation yarn build",
+  "devCommand": "yarn dev",
+  "installCommand": "NODE_OPTIONS=--no-deprecation yarn install --frozen-lockfile",
   "cleanUrls": true,
   "github": { "silent": true },
   "headers": [

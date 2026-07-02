@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build": "tsx scripts/generate-pdf.tsx && vite build",
     "start": "node .output/server/index.mjs",
     "test": "vitest",
     "generate:cv": "tsx scripts/generate-pdf.tsx"
@@ -15,7 +15,6 @@
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "animejs": "3.2.2",
-    "jspdf": "^3.0.2",
     "nitro": "^3.0.260610-beta",
     "react": "^19",
     "react-dom": "^19",
