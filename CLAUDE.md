@@ -2,63 +2,47 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Stack
+
+TanStack Start (file-based routing + SSR) on React 19, built with Vite and served by Nitro. Tailwind v4 (`@tailwindcss/vite`, no config file — theme lives in `src/styles/app.css`'s `:root`/`@layer base`). Icons via `unplugin-icons` (`~icons/collection/name` imports, resolved by Vite — not usable outside the Vite pipeline, e.g. in standalone `tsx` scripts). Package manager is Yarn (`packageManager` field pins it).
+
+There is no Astro in this repo anymore — it was migrated to TanStack Start; the old `src-astro/` sources were deleted after the migration merged. Historical Astro-era commit diffs are still useful context (`git log`), but nothing under `src/` maps 1:1 to a `.astro` file today.
+
 ## Commands
 
-Yarn is the package manager (`packageManager` field pins it). Use `yarn`, not `npm`, when adding/installing deps so `yarn.lock` stays authoritative.
-
-- `yarn dev` — Astro dev server at `localhost:4321`.
-- `yarn build` — `astro build` followed by `node scripts/copy-sitemaps.mjs` (the second step is required; see "Sitemap copy step" below).
-- `yarn preview` — preview the production build.
-- `yarn generate:cv` — regenerate `public/resume.pdf` from `src/data/portfolio.ts` via `@react-pdf/renderer` (no browser/Chromium needed). Run this whenever portfolio data changes if you want the downloadable PDF to match the site.
-- `yarn astro …` — direct access to the Astro CLI.
-
-There is no test suite, linter, or formatter wired up. `tsconfig.json` extends `astro/tsconfigs/strict`, so type errors surface via `astro check` / editor / `astro build`.
+- `yarn dev` — Vite dev server.
+- `yarn build` — chains `tsx scripts/generate-pdf.tsx` (regenerates `public/resume.pdf` from `src/data/portfolio.ts` via `@react-pdf/renderer`, no browser needed) then `vite build` (client + SSR + Nitro build, plus prerendering `/` and `/resume`). `public/resume.pdf` is gitignored/generated — always produced fresh at build time, never committed.
+- `yarn start` — serves the built app from `.output/server/index.mjs` (run `yarn build` first).
+- `yarn test` / `yarn test run` — Vitest. Default environment is `node` (see `vite.config.ts`'s `test.environment`); tests that need a DOM opt in per-file with a `// @vitest-environment jsdom` pragma at the top (see `src/components/outputs/__tests__/async-outputs.test.tsx`). Only files under `src/**/__tests__/**/*.test.{ts,tsx}` are picked up.
+- `npx tsc --noEmit` — typecheck. One pre-existing error is expected: `scripts/generate-pdf.tsx` references a bare `process` (no `@types/node`; `github-server-fn.ts` sidesteps the same gap with a local `declare const process`).
 
 ## Architecture
 
-### Single source of truth: `src/data/portfolio.ts`
+### Command registry: `src/lib/commands.tsx` + `terminal-reducer.ts` + `Terminal.tsx`
 
-All résumé content — `profile`, `companies[].roles[]`, `education`, `certifications`, `skillGroups` — lives in this file. It is imported by **both**:
+The terminal is not one big imperative script (as it was under Astro) — it's data-driven:
 
-1. The Astro components under `src/components/` that render the site (`Experience`, `Education`, `Skills`, `Certifications`, `Contact`, etc.).
-2. `scripts/generate-pdf.tsx`, which produces `public/resume.pdf`.
+- `src/lib/commands.tsx` exports `COMMANDS: CommandDef[]`, the single source of truth for every command's name, description, optional `ls` listing entry, and either an `Output` component (`kind: 'output'`, e.g. `about` → `<About />`) or an `action` (`kind: 'action'`, e.g. `clear`, `matrix`, `open-resume`). `Help.tsx` and `Ls.tsx` both derive their rendered rows from this registry instead of hand-duplicating a list. `executeLine()` is a pure function: raw input in, an `Execution` out — no DOM, fully unit-testable (see `src/lib/__tests__/commands.test.tsx`).
+- `src/lib/terminal-reducer.ts` is a pure `useReducer` reducer wrapping `executeLine`, turning submitted lines into `Block`s appended to `TerminalState.blocks`. `src/lib/useTerminal.ts` layers the side effects the reducer intentionally excludes (`window.open` for `resume`, the matrix/hack overlay's theatrical reveal delay).
+- `src/components/terminal/Terminal.tsx` renders `TitleBar` + one `CommandBlock` per `state.blocks` entry + the live `InputLine`. Each `Output` component (`src/components/outputs/*.tsx`) is registered in `commands.tsx` and looked up by name — adding a command means adding a `COMMANDS` entry, and if it renders something, an `Output` component.
+- Tappable `ls`/`help` entries (`data-command-trigger="<name>"` buttons) run their command via one delegated `onClick` on `#terminal` in `Terminal.tsx`, which calls `submit(cmd)` — no separate context or event bus.
 
-When editing résumé content, edit `portfolio.ts` only — do not duplicate strings into components or the PDF script. After substantive changes, run `yarn generate:cv` so the downloadable PDF stays in sync.
+### Server functions: `src/lib/github-server-fn.ts`
 
-### The terminal page: `src/pages/index.astro`
+`createServerFn` wrappers (TanStack Start) around the pure fetch logic in `github-fetch.ts`, called normally from client components (`GitHubStats.tsx`, `Projects.tsx`) — the framework swaps the handler body for an RPC call at the client boundary. Reads `GITHUB_TOKEN` from `process.env`, server-side only; treat it as optional (falls back to a reduced public REST fetch, see `hasFullData`). Not named `*.server.ts` — that suffix is reserved by TanStack Start's import-protection plugin for modules that must never be imported by client code, which is the opposite of what a `createServerFn` wrapper needs.
 
-This is one large file (~1500 lines) holding the entire interactive terminal. Structure:
+### File routes: `src/routes/`
 
-- The Astro frontmatter sets `export const prerender = true` so this page is static even though the Vercel adapter is configured for `output: 'server'`.
-- The template pre-renders every section (`Welcome`, `Header`, `About`, `Projects`, `Skills`, `Experience`, `Education`, `Certifications`, `Contact`, `GitHubStats`, plus an `ls` block) into a hidden `<div id="components">`. The visible terminal starts empty apart from the welcome + whoami output.
-- A client-side `Terminal` TypeScript class (inside the `<script>` block) owns command execution, command history (↑/↓), Tab completion, idle detection, window controls (close/minimize/maximize), and clipboard. When the user types e.g. `about`, it clones `#about`'s innerHTML into a new output block — there is no client-side fetch or routing for sections.
-- Special commands (`clear`, `resume`, `sudo`, `rm`, `vi/vim/nano`, `matrix`, `hack`, `ping`, `neofetch`, `time`, `weather`) are handled inline in `executeCommand`. To add a new command: add it to `availableCommands` (used for Tab completion) and add a branch in `executeCommand`. If it should map 1:1 to a component, also add a corresponding `<div id="…">` to the hidden components block.
+`__root.tsx` (document shell, `<head>` meta/OG/JSON-LD, `CrtOverlay`), `index.tsx` (renders `Terminal`), `resume.tsx` (a separate print-styled HTML résumé, scoped CSS vars under `.resume-page` so it doesn't inherit the terminal's dark theme). `src/routeTree.gen.ts` is generated by the TanStack Router Vite plugin — don't hand-edit it.
 
-### Other routes
+### Shared data: `src/data/portfolio.ts`
 
-- `src/pages/resume.astro` — a print-styled HTML résumé that pulls from `portfolio.ts`. Separate code path from the React-PDF generator; both consume the same data.
-- `src/pages/[...any].astro` — catch-all 404 (sets `Astro.response.status = 404`). Astro's catch-all route, not a wildcard handler.
-- `src/layouts/Layout.astro` — shared `<head>` (SEO/OG/Twitter meta, manifest, fonts, Vercel Analytics + Speed Insights).
-
-### GitHub stats (`src/components/GitHubStats.astro`)
-
-Fetched **at build time** (component runs server-side during prerender), not in the browser. Two paths:
-
-1. If `GITHUB_TOKEN` is present in env, it calls the GitHub **GraphQL** API for contribution calendar, commits/PRs/issues counts, pinned items, and language stats.
-2. If not, it falls back to the public **REST** API for a reduced set (user info + top repos by stars).
-
-A `hasData` / `hasFullData` flag drives which UI is rendered. Treat `GITHUB_TOKEN` as optional but recommended; do not introduce a hard dependency on it.
-
-### Sitemap copy step
-
-`@astrojs/sitemap` writes `sitemap-*.xml` into `dist/client/` during build, but the Vercel adapter serves static files from `.vercel/output/static/`. `scripts/copy-sitemaps.mjs` bridges that gap and runs automatically as part of `yarn build`. If you change the build pipeline, make sure this step still runs after `astro build`.
+Résumé content (`profile`, `companies[].roles[]`, `education`, `certifications`, `skillGroups`) consumed by both `Experience.tsx` and `scripts/generate-pdf.tsx`, so the site and the downloadable PDF stay in sync. Edit content here, not in the component or the PDF script.
 
 ### Styling
 
-- Tailwind v3 via `@astrojs/tailwind` (no `@apply` heavy custom CSS — most styling is inline `class="..."`).
-- Color palette is Tokyo Night, used via Tailwind arbitrary values (`text-[#7aa2f7]`, `bg-[#1a1b26]`, etc.). Stay consistent with these hex values rather than introducing new accent colors.
-- Some animation uses `animejs` v3 (already a dep) for staggered line reveals.
+`src/styles/app.css`, Tailwind v4 wrapped in `@layer base` (so arbitrary-value utility classes like `text-[#1a1b26]` still win the cascade). Tokyo Night palette via CSS vars (`--primary`, `--muted`, etc.) and matching Tailwind arbitrary hex values — stay consistent with existing hex values rather than introducing new accent colors. `--muted` is `#a9b1d6` (bumped from `#565f89` for WCAG AA contrast); `resume.tsx` scopes its own lighter-weight `--muted` under `.resume-page`, independent of the terminal theme.
 
 ## Deployment
 
-Deploys to Vercel via `@astrojs/vercel` (`output: 'server'` + Vercel adapter). `vercel.json` sets long-cache headers for static assets and security headers (X-Frame-Options DENY, nosniff, XSS-Protection). The `site` URL is `https://itsme.dfanso.dev` — used by Astro for canonical URLs and the sitemap.
+Deploys to Vercel; `vercel.json` sets the build/install commands and cache/security headers (no Vercel-specific Nitro preset is configured — the build uses Nitro's default `node-server` preset). Canonical/OG URLs are computed per-route in `__root.tsx`'s `head()` from `SITE_URL = 'https://itsme.dfanso.dev/'`.
