@@ -21,7 +21,7 @@ export function CrtOverlay() {
     if (reduced) {
       // Reduced motion: skip the power-on flash and the flicker/rolling
       // scanline loops entirely; just hide the power-on element.
-      poweron?.remove()
+      if (poweron) poweron.style.display = 'none'
     } else {
       // ── CRT Power-On (Layout.astro:181-201) ──────────────────────────────
       // 1. Tiny horizontal line bursts in
@@ -47,7 +47,9 @@ export function CrtOverlay() {
           opacity: [1, 0],
           duration: 480,
           easing: 'easeInQuad',
-          complete: () => poweron?.remove(),
+          complete: () => {
+            if (poweron) poweron.style.display = 'none'
+          },
         })
 
       // ── Rolling Scanline (Layout.astro:205-216) ──────────────────────────
