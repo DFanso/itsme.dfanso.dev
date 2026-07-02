@@ -22,6 +22,15 @@ export interface Block {
   execution: Execution
   /** True for the initial/reboot-seeded blocks, which render a bare prompt (no typed command echoed). */
   seeded?: boolean
+  /**
+   * True when `awaitingProjectResponse` was already true *before* this line
+   * was submitted — i.e. this block is the typed y/n answer to the
+   * `projects` follow-up. Lets the scrollback echo the question the answer
+   * was responding to (`❯ Would you like to see more projects? (y/n) y`),
+   * mirroring the old site cloning the live prompt DOM into history instead
+   * of losing the question once `awaitingProjectResponse` flips back false.
+   */
+  wasAwaitingProjectResponse?: boolean
 }
 
 export interface TerminalState {
@@ -56,13 +65,23 @@ export const initialState: TerminalState = {
   nextId: 2,
 }
 
-function appendBlock(state: TerminalState, command: string, execution: Execution): TerminalState {
+function appendBlock(
+  state: TerminalState,
+  command: string,
+  execution: Execution,
+  wasAwaitingProjectResponse?: boolean,
+): TerminalState {
   const block: Block = { id: state.nextId, command, execution }
+  if (wasAwaitingProjectResponse) block.wasAwaitingProjectResponse = true
   return { ...state, blocks: [...state.blocks, block], nextId: state.nextId + 1 }
 }
 
 function submit(state: TerminalState, raw: string, rand?: number): TerminalState {
   const trimmed = raw.trim()
+  // Snapshot *before* executing the line — `executeLine`/the state update
+  // below may flip `awaitingProjectResponse` back to false, so this is the
+  // only place that still knows whether `raw` was answering the y/n prompt.
+  const wasAwaitingProjectResponse = state.awaitingProjectResponse
   const execution = executeLine(raw, { awaitingProjectResponse: state.awaitingProjectResponse, rand })
 
   let next: TerminalState = {
@@ -77,7 +96,7 @@ function submit(state: TerminalState, raw: string, rand?: number): TerminalState
     return { ...next, blocks: [] }
   }
 
-  next = appendBlock(next, trimmed, execution)
+  next = appendBlock(next, trimmed, execution, wasAwaitingProjectResponse)
 
   if (execution.action === 'matrix' || execution.action === 'hack') {
     next = { ...next, overlay: execution.action }

@@ -11,9 +11,14 @@ import type { ReactNode } from 'react'
 // y/n answer to the `projects` command's follow-up, the *live* input line's
 // prompt swaps from the normal `dfanso@terminal in ~/portfolio on main` to
 // the question itself, so the typed answer renders inline right after
-// "(y/n)" instead of next to an unrelated prompt. Only `InputLine` passes
-// this prop — `CommandBlock`'s echoed/historical prompts always render the
-// default, matching the old site only ever swapping `#input-line`'s prefix.
+// "(y/n)" instead of next to an unrelated prompt. `InputLine` passes this
+// prop live, while awaiting the answer. `CommandBlock` also passes it, but
+// from the *historical* `block.wasAwaitingProjectResponse` snapshot
+// (terminal-reducer.ts) — so the scrollback entry for the typed y/n answer
+// still shows the question it replied to, instead of losing it once
+// `awaitingProjectResponse` flips back false. This mirrors the old site
+// cloning the live prompt DOM into history rather than re-deriving it from
+// stale state.
 interface PromptProps {
   children?: ReactNode
   awaitingProjectResponse?: boolean

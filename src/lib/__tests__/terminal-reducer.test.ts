@@ -27,6 +27,15 @@ describe('terminalReducer', () => {
     s = terminalReducer(s, { type: 'submit', raw: 'y' })
     expect(s.awaitingProjectResponse).toBe(false)
   })
+  it('marks only the y/n answer block with wasAwaitingProjectResponse, for scrollback echo', () => {
+    let s = terminalReducer(initialState, { type: 'submit', raw: 'projects' })
+    s = terminalReducer(s, { type: 'submit', raw: 'y' })
+    const projectsBlock = s.blocks.find((b) => b.command === 'projects')
+    const yBlock = s.blocks.at(-1)!
+    expect(yBlock.command).toBe('y')
+    expect(yBlock.wasAwaitingProjectResponse).toBe(true)
+    expect(projectsBlock?.wasAwaitingProjectResponse).toBeUndefined()
+  })
   it('matrix sets overlay; overlay-closed clears it', () => {
     let s = terminalReducer(initialState, { type: 'submit', raw: 'matrix' })
     expect(s.overlay).toBe('matrix')

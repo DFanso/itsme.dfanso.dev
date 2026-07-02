@@ -119,7 +119,10 @@ const CommandBlock = memo(
 
     return (
       <div className="command-block">
-        <Prompt>
+        {/* `wasAwaitingProjectResponse` (set by the reducer at submit time)
+            replays the y/n question this block's echoed command answered,
+            so scrollback reads "❯ Would you like to see more projects? (y/n) y". */}
+        <Prompt awaitingProjectResponse={block.wasAwaitingProjectResponse}>
           {!block.seeded && (
             <span className="command-text">
               <Highlighted text={block.command} />
@@ -142,6 +145,12 @@ export function Terminal() {
 
   const contentRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  // `handleTerminalClick`'s data-command-trigger branch calls `submit`
+  // directly, bypassing `InputLine`'s own `submitValue()` (which clears its
+  // local `value` after a normal Enter-submit). `InputLine` registers its
+  // reset function here so the trigger branch can clear any stale typed
+  // text the same way.
+  const inputResetRef = useRef<(() => void) | null>(null)
   const [suggestionsVisible, setSuggestionsVisible] = useState(false)
   const [closing, setClosing] = useState(false)
   const [minimizing, setMinimizing] = useState(false)
@@ -211,7 +220,12 @@ export function Terminal() {
     if (trigger) {
       const cmd = trigger.dataset.commandTrigger
       setSuggestionsVisible(false)
-      if (cmd) submit(cmd)
+      if (cmd) {
+        submit(cmd)
+        // This bypasses InputLine's own submitValue() reset, so clear any
+        // stale typed text left in the input via the registered callback.
+        inputResetRef.current?.()
+      }
       return
     }
 
@@ -271,6 +285,7 @@ export function Terminal() {
             suggestionsVisible={suggestionsVisible}
             setSuggestionsVisible={setSuggestionsVisible}
             awaitingProjectResponse={state.awaitingProjectResponse}
+            resetRef={inputResetRef}
           />
         </div>
 

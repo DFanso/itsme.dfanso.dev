@@ -31,6 +31,14 @@ interface InputLineProps {
   setSuggestionsVisible: (visible: boolean) => void
   /** Swaps this line's prompt to the projects y/n question — see Prompt.tsx. */
   awaitingProjectResponse: boolean
+  /**
+   * `Terminal`'s data-command-trigger click handler dispatches `submit`
+   * directly, outside this component's own Enter-key path (`submitValue`
+   * below), so it has no way to clear the locally-owned `value` state that
+   * path leaves behind. Registering a reset callback here lets that handler
+   * clear stale typed text without lifting `value` out of `InputLine`.
+   */
+  resetRef: React.RefObject<(() => void) | null>
 }
 
 export function InputLine({
@@ -42,6 +50,7 @@ export function InputLine({
   suggestionsVisible,
   setSuggestionsVisible,
   awaitingProjectResponse,
+  resetRef,
 }: InputLineProps) {
   const [value, setValue] = useState('')
   const [historyIndex, setHistoryIndex] = useState(history.length)
@@ -49,6 +58,17 @@ export function InputLine({
   const [suggestionStyle, setSuggestionStyle] = useState<React.CSSProperties | undefined>(undefined)
 
   const items = suggestionsVisible ? getSuggestions(value, COMMAND_NAMES) : []
+
+  // Register the reset callback for Terminal's data-command-trigger click
+  // handler (see the `resetRef` prop doc above). `setValue` is a stable
+  // state-setter identity, so this only needs to run once per mount.
+  useEffect(() => {
+    resetRef.current = () => setValue('')
+    return () => {
+      resetRef.current = null
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // Reset history navigation whenever a non-empty command actually lands in
   // history (see comment above on why empty submits leave this untouched).
