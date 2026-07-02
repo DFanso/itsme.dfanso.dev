@@ -30,17 +30,17 @@ export function Education() {
         {education.map((edu) => (
           <div className="education-entry" key={edu.degree}>
             <div className="flex items-center gap-2 text-[#7aa2f7]">
-              <span className="text-[#565f89]">└─▶</span>
+              <span className="text-[#a9b1d6]">└─▶</span>
               <span className="text-[#e0af68]">{edu.degree}</span>
             </div>
             <div className="ml-6 mt-1 flex flex-wrap gap-x-4 text-xs">
               <span className="text-[#9ece6a]">{edu.institution}</span>
-              <span className="text-[#565f89]">|</span>
+              <span className="text-[#a9b1d6]">|</span>
               <span className="text-[#c0caf5]">{edu.location}</span>
-              <span className="text-[#565f89]">|</span>
+              <span className="text-[#a9b1d6]">|</span>
               <span className="text-[#f7768e]">{edu.grade}</span>
             </div>
-            <div className="ml-6 mt-1 text-[#565f89] text-xs">{edu.period}</div>
+            <div className="ml-6 mt-1 text-[#a9b1d6] text-xs">{edu.period}</div>
           </div>
         ))}
       </div>

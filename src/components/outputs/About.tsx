@@ -12,7 +12,7 @@ export function About() {
   return (
     <section>
       <div className="text-[#bb9af7] font-bold mb-2">Professional Summary</div>
-      <div className="ml-4 border-l-2 border-[#565f89] pl-4 text-sm space-y-4">
+      <div className="ml-4 border-l-2 border-[#a9b1d6] pl-4 text-sm space-y-4">
         <p className="leading-relaxed text-[#c0caf5]">
           <span className="text-[#7aa2f7] font-bold">Senior Software Engineer</span> at{' '}
           <span className="text-[#7aa2f7]">Fun Extreme Technology</span> &{' '}
@@ -32,7 +32,7 @@ export function About() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
           <div>
-            <div className="text-[#565f89] text-xs mb-1">FOCUS</div>
+            <div className="text-[#a9b1d6] text-xs mb-1">FOCUS</div>
             <div className="flex flex-wrap gap-2">
               <span className="bg-[#1a1b26] border border-[#7aa2f7]/30 text-[#7aa2f7] px-2 py-1 rounded text-xs">
                 DevOps Pipelines
@@ -49,7 +49,7 @@ export function About() {
             </div>
           </div>
           <div>
-            <div className="text-[#565f89] text-xs mb-1">LOCATION</div>
+            <div className="text-[#a9b1d6] text-xs mb-1">LOCATION</div>
             <div className="text-[#c0caf5] flex items-center gap-2">
               <span className="text-[#f7768e]">📍</span> Sri Lanka (Open to Remote)
             </div>

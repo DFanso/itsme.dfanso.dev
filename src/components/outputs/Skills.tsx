@@ -258,7 +258,7 @@ export function Skills() {
         {skillCategories.map((category, index) => (
           <div className="skill-category" key={category.name}>
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-[#565f89]">
+              <span className="text-[#a9b1d6]">
                 {index === skillCategories.length - 1 ? '└─▶' : '├─▶'}
               </span>
               <span className="text-[#e0af68]">ls</span>
@@ -269,7 +269,7 @@ export function Skills() {
                 const SkillIcon = ICONS[skill.icon]
                 return (
                   <div className="flex items-center gap-1" key={skill.name}>
-                    <span className="text-[#565f89]">│</span>
+                    <span className="text-[#a9b1d6]">│</span>
                     <span className="text-[#7aa2f7]">
                       <SkillIcon className="w-4 h-4" />
                     </span>

@@ -302,7 +302,7 @@ export function HackOverlay({ onExit }: HackOverlayProps) {
         <div ref={l2Ref} style={{ color: '#7aa2f7', opacity: 0, margin: '3px 0', fontSize: 'clamp(0.65rem,1.8vw,0.85rem)' }}>
           {'> Resolved IP: 76.76.21.21 | ASN: Vercel Inc.'}
         </div>
-        <div ref={l3Ref} style={{ color: '#565f89', opacity: 0, margin: '3px 0', fontSize: 'clamp(0.65rem,1.8vw,0.85rem)' }}>
+        <div ref={l3Ref} style={{ color: '#a9b1d6', opacity: 0, margin: '3px 0', fontSize: 'clamp(0.65rem,1.8vw,0.85rem)' }}>
           {'> RTT: 0.4ms  |  Packet loss: 0%  |  TTL: 64'}
         </div>
         <div ref={l4Ref} style={{ color: '#9ece6a', opacity: 0, margin: '3px 0', fontSize: 'clamp(0.65rem,1.8vw,0.85rem)' }}>
@@ -362,7 +362,7 @@ export function HackOverlay({ onExit }: HackOverlayProps) {
         <div
           ref={lol3Ref}
           style={{
-            color: '#565f89',
+            color: '#a9b1d6',
             opacity: 0,
             margin: '3px 0',
             fontSize: 'clamp(0.65rem,1.8vw,0.85rem)',

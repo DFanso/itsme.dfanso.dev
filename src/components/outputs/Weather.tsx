@@ -7,7 +7,7 @@ export function Weather() {
   return (
     <>
       <div className="text-[#7aa2f7]">Weather information is not available in the terminal.</div>
-      <div className="text-[#565f89]">Try looking outside your window! 🌤️</div>
+      <div className="text-[#a9b1d6]">Try looking outside your window! 🌤️</div>
     </>
   )
 }

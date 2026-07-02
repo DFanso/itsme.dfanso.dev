@@ -17,7 +17,7 @@ export function ShutdownScreen({ visible, onReboot }: ShutdownScreenProps) {
       }`}
     >
       <div className="text-[#f7768e] font-bold text-xl mb-4">System Halted</div>
-      <div className="text-[#565f89] mb-8">It is now safe to turn off your computer.</div>
+      <div className="text-[#a9b1d6] mb-8">It is now safe to turn off your computer.</div>
       <button
         type="button"
         id="btn-reboot"

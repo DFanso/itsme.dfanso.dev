@@ -21,7 +21,7 @@
   --accent: #bb9af7;
   --error: #f7768e;
   --warning: #e0af68;
-  --muted: #565f89;
+  --muted: #a9b1d6;
 }
 
 body {
@@ -414,7 +414,7 @@ body.terminal-idle .cursor::after {
 /* Update help command styling */
 #help .command-list ul li::before {
   content: '└─▶';
-  @apply text-[#565f89] mr-2;
+  @apply text-[#a9b1d6] mr-2;
 }
 
 .terminal-footer {
@@ -427,6 +427,15 @@ body.terminal-idle .cursor::after {
   @apply w-3 h-3 rounded-full border border-black/10 relative flex items-center justify-center;
 }
 
+/* Expand the actual hit target via an invisible ::after, without resizing
+   the visible dot. Meets WCAG 2.5.5 ≥24px tap target. (accessibility pass,
+   commit 3d056be) */
+.terminal-button::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+}
+
 .terminal-button::before {
   content: '';
   @apply opacity-0 transition-opacity duration-200 text-[8px] font-bold text-black/50;
@@ -434,6 +443,12 @@ body.terminal-idle .cursor::after {
 
 .terminal-buttons:hover .terminal-button::before {
   @apply opacity-100;
+}
+
+.terminal-button:focus-visible,
+#btn-reboot:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
 }
 
 /* Mobile-specific styles */
@@ -495,11 +510,6 @@ body.terminal-idle .cursor::after {
 /* Remove fancy background effects */
 .terminal-container {
   background-image: none !important;
-}
-
-/* Adjust text colors for more terminal-like appearance */
-.text-[#c0caf5] {
-  @apply opacity-90;
 }
 
 .welcome-text {
@@ -574,22 +584,61 @@ body.terminal-idle .cursor::after {
 }
 
 /* ── ls directory listing ──────────────────────────────────────────────── */
+/* accessibility pass (commit 3d056be): entries are real <button>s now (see
+   Ls.tsx), so this resets button chrome and adds a focus-visible ring plus
+   a ≥32px min-height tap target alongside .terminal-button's ≥24px one. */
 .ls-entry {
   border-radius: 3px;
-  padding: 1px 6px;
+  padding: 4px 6px;
   margin: 0 -6px;
   transition: background 0.15s ease, transform 0.15s ease;
-  cursor: default;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  font: inherit;
+  color: inherit;
+  min-height: 32px;
 }
 
-.ls-entry:hover {
+.ls-entry:hover,
+.ls-entry:focus-visible {
   background: rgba(122, 162, 247, 0.08);
   transform: translateX(4px);
 }
 
-.ls-entry:hover .ls-name {
+.ls-entry:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.ls-entry:hover .ls-name,
+.ls-entry:focus-visible .ls-name {
   text-shadow: 0 0 10px currentColor;
   transition: text-shadow 0.15s ease;
+}
+
+/* Help command names — clickable (accessibility pass, commit 3d056be) */
+button.command-name {
+  background: transparent;
+  border: none;
+  padding: 4px 6px;
+  margin: -4px -6px;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background 0.15s ease, text-shadow 0.15s ease;
+}
+
+button.command-name:hover,
+button.command-name:focus-visible {
+  background: rgba(122, 162, 247, 0.08);
+  text-shadow: 0 0 10px currentColor;
+}
+
+button.command-name:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 /* Copy/Paste Styles */
@@ -725,14 +774,23 @@ body.no-js #terminal::after {
   }
 
   .cursor::after,
-  body.terminal-idle .cursor::after {
+  body.terminal-idle .cursor::after,
+  .matrix-animation pre,
+  .ping-animation .ping-line,
+  .ls-entry,
+  .typing-line {
     animation: none !important;
-    opacity: 1;
+    transition: none !important;
+    opacity: 1 !important;
   }
 
   #terminal::before,
   #terminal::after {
     transition: none;
+  }
+
+  .ls-entry:hover {
+    transform: none !important;
   }
 }
 
@@ -842,11 +900,11 @@ body.no-js #terminal::after {
 }
 
 .version {
-  color: #565f89;
+  color: #a9b1d6;
 }
 
 .hint {
-  color: #565f89;
+  color: #a9b1d6;
   @apply text-xs;
 }
 

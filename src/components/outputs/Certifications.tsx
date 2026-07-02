@@ -38,19 +38,19 @@ export function Certifications() {
         {certifications.map((cert) => (
           <div className="cert-entry" key={cert.name}>
             <div className="flex items-center gap-2 text-[#7aa2f7]">
-              <span className="text-[#565f89]">└─▶</span>
+              <span className="text-[#a9b1d6]">└─▶</span>
               <span className="text-[#e0af68]">{cert.name}</span>
             </div>
             <div className="ml-6 mt-1 flex items-center gap-2 text-xs">
               <span className="text-[#9ece6a]">{cert.issuer}</span>
               {cert.id && (
                 <>
-                  <span className="text-[#565f89]">|</span>
-                  <span className="text-[#565f89]">{cert.id}</span>
+                  <span className="text-[#a9b1d6]">|</span>
+                  <span className="text-[#a9b1d6]">{cert.id}</span>
                 </>
               )}
             </div>
-            <div className="ml-6 mt-1 text-[#565f89] text-xs">
+            <div className="ml-6 mt-1 text-[#a9b1d6] text-xs">
               {cert.date} {cert.expiry ? `• ${cert.expiry}` : ''}
             </div>
           </div>

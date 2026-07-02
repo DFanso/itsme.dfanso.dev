@@ -37,7 +37,7 @@ export const Route = createRootRoute({
     return {
       meta: [
         { charSet: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
 
         // Google Site Verification
         { name: 'google-site-verification', content: 'google34f30110b42c1453' },

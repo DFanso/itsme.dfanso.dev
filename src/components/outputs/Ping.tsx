@@ -20,28 +20,28 @@ export function Ping() {
       <div className="space-y-1 font-mono">
         <div className="ping-line">
           <span className="text-[#7aa2f7]">64 bytes from dfanso.dev</span>{' '}
-          <span className="text-[#565f89]">: icmp_seq=1 ttl=64 time=</span>{' '}
+          <span className="text-[#a9b1d6]">: icmp_seq=1 ttl=64 time=</span>{' '}
           <span className="text-[#9ece6a]">0.045 ms</span>
         </div>
         <div className="ping-line">
           <span className="text-[#7aa2f7]">64 bytes from dfanso.dev</span>{' '}
-          <span className="text-[#565f89]">: icmp_seq=2 ttl=64 time=</span>{' '}
+          <span className="text-[#a9b1d6]">: icmp_seq=2 ttl=64 time=</span>{' '}
           <span className="text-[#9ece6a]">0.038 ms</span>
         </div>
         <div className="ping-line">
           <span className="text-[#7aa2f7]">64 bytes from dfanso.dev</span>{' '}
-          <span className="text-[#565f89]">: icmp_seq=3 ttl=64 time=</span>{' '}
+          <span className="text-[#a9b1d6]">: icmp_seq=3 ttl=64 time=</span>{' '}
           <span className="text-[#9ece6a]">0.042 ms</span>
         </div>
         <div className="ping-line">
           <span className="text-[#7aa2f7]">64 bytes from dfanso.dev</span>{' '}
-          <span className="text-[#565f89]">: icmp_seq=4 ttl=64 time=</span>{' '}
+          <span className="text-[#a9b1d6]">: icmp_seq=4 ttl=64 time=</span>{' '}
           <span className="text-[#9ece6a]">0.039 ms</span>
         </div>
       </div>
       <div className="mt-4 text-[#c0caf5]">
-        <span className="text-[#565f89]">---</span> dfanso.dev ping statistics{' '}
-        <span className="text-[#565f89]">---</span>
+        <span className="text-[#a9b1d6]">---</span> dfanso.dev ping statistics{' '}
+        <span className="text-[#a9b1d6]">---</span>
         <br />
         4 packets transmitted, 4 received, 0% packet loss, time 3ms
         <br />

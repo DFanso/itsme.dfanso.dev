@@ -62,10 +62,10 @@ export function GitHubStats() {
   return (
     <section>
       <div className="text-[#bb9af7] font-bold mb-4">GitHub Statistics</div>
-      {status.kind === 'loading' && <div className="text-[#565f89]">Fetching GitHub stats...</div>}
+      {status.kind === 'loading' && <div className="text-[#a9b1d6]">Fetching GitHub stats...</div>}
       {status.kind === 'error' && (
         <div className="text-[#f7768e]">
-          <span className="text-[#565f89]">└─▶</span> Unable to fetch GitHub data. API may be rate
+          <span className="text-[#a9b1d6]">└─▶</span> Unable to fetch GitHub data. API may be rate
           limited.
         </div>
       )}
@@ -91,64 +91,64 @@ function GitHubStatsBody({ data }: { data: GitHubStatsData }) {
           {hasFullData && (
             <>
               <div className="stat-item">
-                <div className="flex items-center gap-1 text-[#565f89]">
+                <div className="flex items-center gap-1 text-[#a9b1d6]">
                   <span>│</span>
                   <LucideGitCommitIcon className="w-3.5 h-3.5 text-[#9ece6a]" />
                 </div>
                 <div className="text-[#c0caf5] text-lg font-bold">{stats.commits.toLocaleString()}</div>
-                <div className="text-[#565f89] text-xs">Commits</div>
+                <div className="text-[#a9b1d6] text-xs">Commits</div>
               </div>
               <div className="stat-item">
-                <div className="flex items-center gap-1 text-[#565f89]">
+                <div className="flex items-center gap-1 text-[#a9b1d6]">
                   <span>│</span>
                   <LucideGitPullRequestIcon className="w-3.5 h-3.5 text-[#bb9af7]" />
                 </div>
                 <div className="text-[#c0caf5] text-lg font-bold">{stats.prs.toLocaleString()}</div>
-                <div className="text-[#565f89] text-xs">Pull Requests</div>
+                <div className="text-[#a9b1d6] text-xs">Pull Requests</div>
               </div>
               <div className="stat-item">
-                <div className="flex items-center gap-1 text-[#565f89]">
+                <div className="flex items-center gap-1 text-[#a9b1d6]">
                   <span>│</span>
                   <LucideCircleDotIcon className="w-3.5 h-3.5 text-[#f7768e]" />
                 </div>
                 <div className="text-[#c0caf5] text-lg font-bold">{stats.issues.toLocaleString()}</div>
-                <div className="text-[#565f89] text-xs">Issues</div>
+                <div className="text-[#a9b1d6] text-xs">Issues</div>
               </div>
             </>
           )}
           <div className="stat-item">
-            <div className="flex items-center gap-1 text-[#565f89]">
+            <div className="flex items-center gap-1 text-[#a9b1d6]">
               <span>│</span>
               <LucideStarIcon className="w-3.5 h-3.5 text-[#e0af68]" />
             </div>
             <div className="text-[#c0caf5] text-lg font-bold">{stats.stars.toLocaleString()}</div>
-            <div className="text-[#565f89] text-xs">Total Stars</div>
+            <div className="text-[#a9b1d6] text-xs">Total Stars</div>
           </div>
           {!hasFullData && (
             <>
               <div className="stat-item">
-                <div className="flex items-center gap-1 text-[#565f89]">
+                <div className="flex items-center gap-1 text-[#a9b1d6]">
                   <span>│</span>
                   <LucideGitForkIcon className="w-3.5 h-3.5 text-[#7dcfff]" />
                 </div>
                 <div className="text-[#c0caf5] text-lg font-bold">{stats.forks.toLocaleString()}</div>
-                <div className="text-[#565f89] text-xs">Total Forks</div>
+                <div className="text-[#a9b1d6] text-xs">Total Forks</div>
               </div>
               <div className="stat-item">
-                <div className="flex items-center gap-1 text-[#565f89]">
+                <div className="flex items-center gap-1 text-[#a9b1d6]">
                   <span>│</span>
                   <LucideBookIcon className="w-3.5 h-3.5 text-[#7aa2f7]" />
                 </div>
                 <div className="text-[#c0caf5] text-lg font-bold">{stats.repos}</div>
-                <div className="text-[#565f89] text-xs">Repositories</div>
+                <div className="text-[#a9b1d6] text-xs">Repositories</div>
               </div>
               <div className="stat-item">
-                <div className="flex items-center gap-1 text-[#565f89]">
+                <div className="flex items-center gap-1 text-[#a9b1d6]">
                   <span>│</span>
                   <LucideUsersIcon className="w-3.5 h-3.5 text-[#bb9af7]" />
                 </div>
                 <div className="text-[#c0caf5] text-lg font-bold">{stats.followers}</div>
-                <div className="text-[#565f89] text-xs">Followers</div>
+                <div className="text-[#a9b1d6] text-xs">Followers</div>
               </div>
             </>
           )}
@@ -159,7 +159,7 @@ function GitHubStatsBody({ data }: { data: GitHubStatsData }) {
       {hasFullData && weeks.length > 0 && (
         <div className="contribution-graph">
           <div className="text-[#7aa2f7] mb-2 flex items-center gap-2">
-            <span className="text-[#565f89]">├─▶</span>
+            <span className="text-[#a9b1d6]">├─▶</span>
             <span className="text-[#e0af68]">cat</span>
             <span>contributions.heatmap</span>
           </div>
@@ -178,7 +178,7 @@ function GitHubStatsBody({ data }: { data: GitHubStatsData }) {
                 </div>
               ))}
             </div>
-            <div className="flex items-center gap-2 mt-2 text-xs text-[#565f89]">
+            <div className="flex items-center gap-2 mt-2 text-xs text-[#a9b1d6]">
               <span>Less</span>
               <div className="flex gap-[3px]">
                 <div className="w-[10px] h-[10px] rounded-sm bg-[#1a1b26] border border-[#7aa2f7]/20" />
@@ -197,7 +197,7 @@ function GitHubStatsBody({ data }: { data: GitHubStatsData }) {
       {/* Top Languages */}
       <div className="languages">
         <div className="text-[#7aa2f7] mb-2 flex items-center gap-2">
-          <span className="text-[#565f89]">├─▶</span>
+          <span className="text-[#a9b1d6]">├─▶</span>
           <span className="text-[#e0af68]">cat</span>
           <span>languages.stats</span>
         </div>
@@ -217,7 +217,7 @@ function GitHubStatsBody({ data }: { data: GitHubStatsData }) {
               <div className="flex items-center gap-1" key={lang.name}>
                 <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: lang.color }} />
                 <span className="text-[#c0caf5]">{lang.name}</span>
-                <span className="text-[#565f89]">{lang.percentage}%</span>
+                <span className="text-[#a9b1d6]">{lang.percentage}%</span>
               </div>
             ))}
           </div>
@@ -228,7 +228,7 @@ function GitHubStatsBody({ data }: { data: GitHubStatsData }) {
       {topRepos.length > 0 && (
         <div className="top-repos">
           <div className="text-[#7aa2f7] mb-2 flex items-center gap-2">
-            <span className="text-[#565f89]">└─▶</span>
+            <span className="text-[#a9b1d6]">└─▶</span>
             <span className="text-[#e0af68]">ls</span>
             <span>{isPinned ? 'pinned-repos/' : 'top-repos/'}</span>
           </div>
@@ -246,7 +246,7 @@ function GitHubStatsBody({ data }: { data: GitHubStatsData }) {
                   <span className="text-[#7aa2f7] font-medium truncate">{repo.name}</span>
                 </div>
                 {repo.description && (
-                  <p className="text-[#565f89] text-xs mb-2 line-clamp-2">{repo.description}</p>
+                  <p className="text-[#a9b1d6] text-xs mb-2 line-clamp-2">{repo.description}</p>
                 )}
                 <div className="flex items-center gap-3 text-xs">
                   {repo.language && (

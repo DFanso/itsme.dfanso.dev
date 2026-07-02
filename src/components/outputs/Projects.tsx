@@ -46,9 +46,18 @@ import TerraformIcon from '~icons/simple-icons/terraform'
  * Vitest). A repo whose stats fetch fails just renders without the stats
  * row, matching Projects.astro's graceful per-project `stats: null` behavior.
  *
- * The trailing "Would you like to see more projects?" prompt line is
- * folded into this component (it's appended by the terminal only for the
- * `projects` command, per src-astro/pages/index.astro:866-876).
+ * The old site appended a static "Would you like to see more projects?"
+ * prompt line to this command's *output* (src-astro/pages/index.astro:
+ * 866-876) — but that echoed text was disconnected from the live input
+ * line below it, where the user's y/n answer actually appeared next to an
+ * unrelated `dfanso@terminal` prompt. The accessibility pass (commit
+ * 3d056be) fixed that by dropping the static echo entirely and instead
+ * swapping the *input line's own prompt* to the question while
+ * `awaitingProjectResponse` is true (see `Prompt.tsx`), so the typed answer
+ * renders inline right after "(y/n)". This component therefore renders only
+ * the project list — no trailing prompt line — and `commands.tsx`/
+ * `terminal-reducer.ts` drive `awaitingProjectResponse` the same way they
+ * already did before this port.
  */
 const ICONS: Record<string, ComponentType<{ className?: string }>> = {
   'lucide:brain': LucideBrainIcon,
@@ -214,7 +223,7 @@ export function Projects() {
           return (
             <div className="project-entry" key={project.name}>
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-[#565f89]">
+                <span className="text-[#a9b1d6]">
                   {index === projectsData.length - 1 ? '└─▶' : '├─▶'}
                 </span>
                 <span className="text-[#e0af68]">cat</span>
@@ -226,7 +235,7 @@ export function Projects() {
                 >
                   projects/{project.name}/
                 </a>
-                <span className="text-[#565f89]">type:</span>
+                <span className="text-[#a9b1d6]">type:</span>
                 <span className="text-[#f7768e]">{project.type}</span>
                 {projectStats && (
                   <div className="flex items-center gap-3 ml-2">
@@ -252,7 +261,7 @@ export function Projects() {
                     const TechIcon = ICONS[tech.icon]
                     return (
                       <div className="flex items-center gap-1" key={tech.name}>
-                        <span className="text-[#565f89]">│</span>
+                        <span className="text-[#a9b1d6]">│</span>
                         <span className="text-[#7aa2f7]">
                           <TechIcon className="w-4 h-4" />
                         </span>
@@ -265,9 +274,6 @@ export function Projects() {
             </div>
           )
         })}
-      </div>
-      <div className="mt-4 text-[#9ece6a] command-prompt">
-        <span className="text-[#9ece6a]">❯</span> Would you like to see more projects? (y/n)
       </div>
     </section>
   )

@@ -8,11 +8,16 @@ import profileImage from '../../assets/profile.webp'
  * (astro:assets' <Image> uses the imported `profileImage` instead). The
  * astro:assets `<Image>` (build-time optimized, `quality="max"`) becomes a
  * plain `<img>` pointing at the same Vite-imported asset.
+ *
+ * The empty leading `<pre>` and the `cursor` class on the `<h1>` (a blinking
+ * caret that made no sense sitting after a static name) were dead markup
+ * left over from an earlier iteration of the header; both were dropped, and
+ * the stray leading space before "DevOps Engineer..." trimmed, by the
+ * accessibility pass (commit 3d056be).
  */
 export function Whoami() {
   return (
     <header className="flex items-start gap-4">
-      <pre className="text-[#7aa2f7] text-xs leading-4 mt-2"></pre>
       <div className="space-y-3">
         <img
           src={profileImage}
@@ -23,8 +28,8 @@ export function Whoami() {
           loading="eager"
         />
         <div>
-          <h1 className="text-lg sm:text-xl font-bold text-[#7aa2f7] cursor">Leo Felcianas</h1>
-          <p className="text-[#a9b1d6] text-xs sm:text-sm"> DevOps Engineer & Software Engineer</p>
+          <h1 className="text-lg sm:text-xl font-bold text-[#7aa2f7]">Leo Felcianas</h1>
+          <p className="text-[#a9b1d6] text-xs sm:text-sm">DevOps Engineer & Software Engineer</p>
         </div>
       </div>
     </header>

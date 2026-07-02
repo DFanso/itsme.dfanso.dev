@@ -336,7 +336,7 @@ export function executeLine(
     }
     return {
       kind: 'text',
-      text: { color: 'text-[#f7768e]', lines: ['└─▶ Please answer with y/n.'] },
+      text: { color: 'text-[#f7768e]', lines: ['└─▶ Please answer with y or n.'] },
       awaitProjectResponse: true,
     }
   }

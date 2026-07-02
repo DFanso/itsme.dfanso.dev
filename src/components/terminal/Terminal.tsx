@@ -21,6 +21,16 @@ const MatrixOverlay = lazy(() =>
 )
 const HackOverlay = lazy(() => import('../effects/HackOverlay').then((m) => ({ default: m.HackOverlay })))
 
+// Ported from the old site's `isTouchDevice` (index.astro:976-978,
+// accessibility pass commit 3d056be) — used to skip auto-focusing the
+// (invisible) input on touch devices, which would otherwise pop the soft
+// keyboard open the instant the page loads or the user taps anywhere in the
+// terminal. `typeof window === 'undefined'` guards SSR, where there's no
+// pointer to query and no keyboard to avoid popping anyway.
+function isTouchDevice(): boolean {
+  return typeof window !== 'undefined' && window.matchMedia('(hover: none) and (pointer: coarse)').matches
+}
+
 // Composes the terminal shell: TitleBar + echoed command blocks + the live
 // InputLine + footer + ShutdownScreen. Ported from
 // src-astro/pages/index.astro:17-361 (markup) and the `Terminal` class'
@@ -136,8 +146,11 @@ export function Terminal() {
   const [closing, setClosing] = useState(false)
   const [minimizing, setMinimizing] = useState(false)
 
-  // Initial focus (index.astro:591-592).
+  // Initial focus (index.astro:591-592) — skipped on touch devices so the
+  // soft keyboard doesn't pop open uninvited on page load (accessibility
+  // pass, commit 3d056be).
   useEffect(() => {
+    if (isTouchDevice()) return
     inputRef.current?.focus()
   }, [])
 
@@ -179,12 +192,34 @@ export function Terminal() {
 
   // Click anywhere in the terminal (not a link, not a suggestion) focuses
   // the input and dismisses the suggestions box (index.astro:542-549).
+  //
+  // Extended by the accessibility pass (commit 3d056be) with two behaviors,
+  // merged into this single delegated handler rather than the old site's two
+  // separate listeners (`initializeCommandTriggers` + `initializeTerminal`,
+  // index.astro:892-999) since React only needs one `onClick` on `#terminal`:
+  //  - `[data-command-trigger]` (the tappable `ls`/`help` entries rendered by
+  //    Ls.tsx/Help.tsx) runs that command instead of focusing the input —
+  //    this is the "cleanest minimal approach" the task called for: no new
+  //    context/event-bus, just the same click-delegation the terminal
+  //    container already had, extended with one more `closest()` check.
+  //  - On touch devices, only focus (and pop the soft keyboard) when the tap
+  //    landed on the input row itself, not anywhere else in the terminal.
   function handleTerminalClick(e: React.MouseEvent<HTMLDivElement>) {
     const target = e.target as HTMLElement
-    if (!target.closest('.suggestions-container') && !target.closest('a')) {
+
+    const trigger = target.closest('[data-command-trigger]') as HTMLElement | null
+    if (trigger) {
+      const cmd = trigger.dataset.commandTrigger
       setSuggestionsVisible(false)
-      inputRef.current?.focus()
+      if (cmd) submit(cmd)
+      return
     }
+
+    if (target.closest('.suggestions-container') || target.closest('a')) return
+
+    setSuggestionsVisible(false)
+    if (isTouchDevice() && !target.closest('#input-line')) return
+    inputRef.current?.focus()
   }
 
   // Maximize toggles the same 6 classes the old site toggled
@@ -206,15 +241,22 @@ export function Terminal() {
   return (
     <>
       <div className={containerClassName}>
-        <TitleBar onClose={handleClose} onMinimize={handleMinimize} onMaximize={toggleMaximize} />
+        <TitleBar
+          maximized={state.maximized}
+          onClose={handleClose}
+          onMinimize={handleMinimize}
+          onMaximize={toggleMaximize}
+        />
 
         <div
           id="terminal"
           className="terminal-content-area flex-1 relative"
+          role="region"
+          aria-label="Interactive terminal portfolio"
           onClick={handleTerminalClick}
           ref={contentRef}
         >
-          <div id="output-container" aria-live="polite">
+          <div id="output-container" role="log" aria-live="polite" aria-atomic="false">
             {state.blocks.map((block) => (
               <CommandBlock block={block} key={block.id} />
             ))}
@@ -228,6 +270,7 @@ export function Terminal() {
             terminalRef={contentRef}
             suggestionsVisible={suggestionsVisible}
             setSuggestionsVisible={setSuggestionsVisible}
+            awaitingProjectResponse={state.awaitingProjectResponse}
           />
         </div>
 

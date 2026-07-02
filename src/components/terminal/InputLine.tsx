@@ -29,6 +29,8 @@ interface InputLineProps {
   terminalRef: React.RefObject<HTMLDivElement | null>
   suggestionsVisible: boolean
   setSuggestionsVisible: (visible: boolean) => void
+  /** Swaps this line's prompt to the projects y/n question — see Prompt.tsx. */
+  awaitingProjectResponse: boolean
 }
 
 export function InputLine({
@@ -39,6 +41,7 @@ export function InputLine({
   terminalRef,
   suggestionsVisible,
   setSuggestionsVisible,
+  awaitingProjectResponse,
 }: InputLineProps) {
   const [value, setValue] = useState('')
   const [historyIndex, setHistoryIndex] = useState(history.length)
@@ -134,7 +137,7 @@ export function InputLine({
 
   return (
     <div className="command-block" id="input-line" ref={inputLineRef}>
-      <Prompt>
+      <Prompt awaitingProjectResponse={awaitingProjectResponse}>
         <span className="command-text">{value}</span>
         <span className="cursor" />
         <input
@@ -144,6 +147,7 @@ export function InputLine({
           className="opacity-0 absolute top-0 left-0 h-full w-full cursor-text"
           autoComplete="off"
           spellCheck={false}
+          aria-label="Terminal command input. Type a command like help, about, projects, or contact, then press Enter."
           value={value}
           onChange={handleChange}
           onKeyDown={handleKeyDown}

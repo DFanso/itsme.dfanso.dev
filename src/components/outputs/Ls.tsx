@@ -24,6 +24,16 @@ import { COMMANDS } from '../../lib/commands'
  * `commands.tsx` imports `Ls` to build `COMMANDS` itself, so a module-scope
  * `COMMANDS.filter(...)` here would run during that circular import, while
  * `COMMANDS` is still undefined.
+ *
+ * Each row is a `<button>` carrying `data-command-trigger={c.name}` (not a
+ * `<div>`) so the entries are reachable and activatable without a keyboard
+ * being required to type the command out — a tap or Enter/Space on the row
+ * runs it. `Terminal.tsx`'s single delegated click handler on `#terminal`
+ * looks for `[data-command-trigger]` and calls `submit(cmd)`; that's the
+ * same event-delegation shape the old site used
+ * (`initializeCommandTriggers`, index.astro:892-903), just expressed as one
+ * React `onClick` instead of a second imperative `addEventListener`.
+ * (accessibility pass, commit 3d056be)
  */
 export function Ls() {
   const entries = COMMANDS.filter((c) => c.lsEntry)
@@ -35,22 +45,32 @@ export function Ls() {
       <div className="text-[#bb9af7] font-bold mb-2 ls-header">Directory listing of ~/portfolio</div>
       <div className="space-y-1">
         {directories.map((c) => (
-          <div className="ls-entry flex items-center gap-2" key={c.name}>
-            <span className="text-[#565f89] hidden sm:inline">{c.lsEntry!.perms}</span>
+          <button
+            type="button"
+            data-command-trigger={c.name}
+            className="ls-entry flex items-center gap-2 w-full text-left"
+            key={c.name}
+          >
+            <span className="text-[#a9b1d6] hidden sm:inline">{c.lsEntry!.perms}</span>
             <span className="ls-name text-[#7aa2f7]">{c.lsEntry!.name}</span>
-            <span className="text-[#565f89] ml-auto text-xs sm:text-sm">{c.lsEntry!.note}</span>
-          </div>
+            <span className="text-[#a9b1d6] ml-auto text-xs sm:text-sm">{c.lsEntry!.note}</span>
+          </button>
         ))}
         {files.map((c) => (
-          <div className="ls-entry flex items-center gap-2" key={c.name}>
-            <span className="text-[#565f89] hidden sm:inline">{c.lsEntry!.perms}</span>
+          <button
+            type="button"
+            data-command-trigger={c.name}
+            className="ls-entry flex items-center gap-2 w-full text-left"
+            key={c.name}
+          >
+            <span className="text-[#a9b1d6] hidden sm:inline">{c.lsEntry!.perms}</span>
             <span className="ls-name text-[#e0af68]">{c.lsEntry!.name}</span>
-            <span className="text-[#565f89] ml-auto text-xs sm:text-sm">{c.lsEntry!.note}</span>
-          </div>
+            <span className="text-[#a9b1d6] ml-auto text-xs sm:text-sm">{c.lsEntry!.note}</span>
+          </button>
         ))}
       </div>
-      <div className="text-[#565f89] text-xs mt-4 ls-footer">
-        Use 'cd' to navigate or type the command directly (e.g., 'about', 'projects')
+      <div className="text-[#a9b1d6] text-xs mt-4 ls-footer">
+        Tap an entry or type the command (e.g., 'about', 'projects')
       </div>
     </>
   )

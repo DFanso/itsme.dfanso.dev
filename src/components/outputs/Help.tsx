@@ -18,6 +18,11 @@ import { COMMANDS } from '../../lib/commands'
  * commands (resume, sudo, rm, vi, vim, nano) are marked `hidden: true` in
  * the registry and excluded here, matching the source never mentioning them
  * in this list (while `executeLine` still handles them as input).
+ *
+ * Each command name is a `<button data-command-trigger={c.name}>` (not a
+ * `<div>`), so — like `Ls`'s directory rows — it's tappable/activatable
+ * without typing the command out; `Terminal.tsx`'s delegated click handler
+ * on `#terminal` runs it. (accessibility pass, commit 3d056be)
  */
 export function Help() {
   const visible = COMMANDS.filter((c) => !c.hidden)
@@ -28,19 +33,22 @@ export function Help() {
       <div className="mb-4">
         <p className="text-[#7aa2f7] mb-2">USAGE:</p>
         <p className="text-[#c0caf5] ml-4">command [arguments]</p>
+        <p className="text-[#a9b1d6] ml-4 text-xs mt-1">Tip: tap any command below to run it.</p>
       </div>
       <div className="mb-4">
         <p className="text-[#7aa2f7] mb-2">AVAILABLE COMMANDS:</p>
         <ul className="command-help-list">
           {visible.map((c) => (
             <li key={c.name}>
-              <div className="command-name">{c.name}</div>
+              <button type="button" data-command-trigger={c.name} className="command-name">
+                {c.name}
+              </button>
               <div className="command-desc">{c.description}</div>
             </li>
           ))}
         </ul>
       </div>
-      <div className="text-[#565f89] text-xs mt-6">
+      <div className="text-[#a9b1d6] text-xs mt-6">
         <p>Use arrow keys ↑↓ to navigate command history</p>
         <p>Press Ctrl+L or type 'clear' to clear screen</p>
       </div>

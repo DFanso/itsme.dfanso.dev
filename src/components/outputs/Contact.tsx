@@ -1,3 +1,4 @@
+import type { ComponentType } from 'react'
 import MailIcon from '~icons/lucide/mail'
 import MapPinIcon from '~icons/lucide/map-pin'
 import GithubIcon from '~icons/simple-icons/github'
@@ -16,15 +17,30 @@ import InstagramIcon from '~icons/simple-icons/instagram'
  * the inner `command-output` div — Terminal.tsx already supplies exactly
  * one `command-output` wrapper around every rendered `Output` (see
  * About.tsx for the same note).
+ *
+ * `url` is optional (accessibility pass, commit 3d056be): the old source
+ * gave the Location row a dead `href="#"` anchor — focusable and clickable
+ * but going nowhere, a keyboard/screen-reader trap. Location now has no
+ * `url` and renders as plain text instead of a link. `isExternal` (matching
+ * the old site's identically-named helper) gates `target="_blank"
+ * rel="noopener noreferrer"` on `http(s)` URLs only, so the `mailto:` link
+ * opens in place rather than a blank new tab.
  */
-const contactInfo = [
+interface ContactLink {
+  id: string
+  name: string
+  url?: string
+  Icon: ComponentType<{ className?: string }>
+}
+
+const contactInfo: ContactLink[] = [
   {
     id: 'EM',
     name: 'leogavin123@outlook.com',
     url: 'mailto:leogavin123@outlook.com',
     Icon: MailIcon,
   },
-  { id: 'LO', name: 'Colombo, Sri Lanka', url: '#', Icon: MapPinIcon },
+  { id: 'LO', name: 'Colombo, Sri Lanka', Icon: MapPinIcon },
   { id: 'GH', name: 'github.com/dfansoo', url: 'https://github.com/dfansoo', Icon: GithubIcon },
   {
     id: 'IN',
@@ -41,6 +57,8 @@ const contactInfo = [
   },
 ]
 
+const isExternal = (url: string) => /^https?:/i.test(url)
+
 export function Contact() {
   return (
     <section>
@@ -48,22 +66,26 @@ export function Contact() {
       <div className="space-y-2">
         {contactInfo.map((link) => (
           <div className="flex items-center gap-2" key={link.id}>
-            <span className="text-[#565f89]">└─▶</span>
+            <span className="text-[#a9b1d6]">└─▶</span>
             <span className="text-[#e0af68] min-w-[30px]">[{link.id}]</span>
             <div className="flex items-center gap-2">
               <link.Icon className="w-4 h-4 text-[#7aa2f7]" />
-              <a
-                href={link.url}
-                target={link.url.startsWith('#') ? '_self' : '_blank'}
-                className="text-[#7aa2f7] hover:text-[#9ece6a] transition-colors"
-              >
-                {link.name}
-              </a>
+              {link.url ? (
+                <a
+                  href={link.url}
+                  {...(isExternal(link.url) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  className="text-[#7aa2f7] hover:text-[#9ece6a] transition-colors"
+                >
+                  {link.name}
+                </a>
+              ) : (
+                <span className="text-[#c0caf5]">{link.name}</span>
+              )}
             </div>
           </div>
         ))}
       </div>
-      <div className="mt-4 text-[#565f89] text-xs">
+      <div className="mt-4 text-[#a9b1d6] text-xs">
         <span className="text-[#9ece6a]">Note:</span> Click on any link to connect
       </div>
     </section>
