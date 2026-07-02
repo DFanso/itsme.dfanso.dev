@@ -83,10 +83,25 @@ function BlockOutput({ execution }: { execution: Execution }) {
 // mount-only DOM reveal (char-by-char typing, `.typing-line` stagger, the
 // `ls` anime sequence) to actually run once and never be re-triggered or
 // clobbered by React reconciling this subtree again.
+//
+// `github` is excluded from the reveal even though `CommandBlock` itself
+// never re-renders: `GitHubStats` owns its own `loading → data|error`
+// `useState` transition (it fetches client-side via `getGitHubStats`, unlike
+// every other `Output`, which renders synchronously from static data), so
+// its subtree re-renders on its own schedule regardless of the memo above.
+// The reveal's char-by-char typing branch directly clears and mutates
+// `el.innerHTML`/`textContent` outside React — if that races
+// `GitHubStats`'s own re-render, React's next commit tries to remove DOM
+// nodes the hook already ripped out from under it, throwing
+// `NotFoundError: Failed to execute 'removeChild' on 'Node'` and tripping
+// the route's error boundary. Skipping the reveal for this one output keeps
+// the DOM entirely React-owned, which `GitHubStats`'s own loading state
+// already communicates visually.
 const CommandBlock = memo(
   function CommandBlock({ block }: { block: Block }) {
     const outputRef = useRef<HTMLDivElement>(null)
-    useOutputReveal(outputRef, { disabled: !!block.seeded })
+    const revealDisabled = !!block.seeded || block.execution.componentName === 'github'
+    useOutputReveal(outputRef, { disabled: revealDisabled })
 
     return (
       <div className="command-block">
