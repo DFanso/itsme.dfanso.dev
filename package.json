@@ -10,9 +10,6 @@
     "generate:cv": "tsx scripts/generate-pdf.tsx"
   },
   "dependencies": {
-    "@astrojs/sitemap": "3.7.2",
-    "@astrojs/tailwind": "6.0.2",
-    "@astrojs/vercel": "10.0.4",
     "@iconify-json/lucide": "^1.2.115",
     "@iconify-json/mdi": "^1.2.3",
     "@iconify-json/simple-icons": "^1.2.88",
@@ -23,8 +20,6 @@
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "animejs": "3.2.2",
-    "astro": "6.1.5",
-    "astro-icon": "^1.1.5",
     "jspdf": "^3.0.2",
     "nitro": "^3.0.260610-beta",
     "react": "^19",
