@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { fetchGitHubStats, fetchProjectStats } from '../github-fetch'
+import { fetchGitHubStats, fetchProjectStats, GITHUB_USERNAME } from '../github-fetch'
 
 /** Minimal stand-in for the subset of `Response` the fetch logic touches. */
 function jsonResponse(body: unknown, ok = true): Response {
@@ -83,7 +83,7 @@ describe('fetchGitHubStats', () => {
       if (url.includes('graphql')) {
         return jsonResponse({ message: 'Bad credentials' }, false)
       }
-      if (url.includes('/users/DFanso/repos')) {
+      if (url.includes(`/users/${GITHUB_USERNAME}/repos`)) {
         return jsonResponse([
           {
             name: 'proj1',
@@ -105,7 +105,7 @@ describe('fetchGitHubStats', () => {
           },
         ])
       }
-      if (url.includes('/users/DFanso')) {
+      if (url.includes(`/users/${GITHUB_USERNAME}`)) {
         return jsonResponse({ public_repos: 8, followers: 55 })
       }
       throw new Error(`unexpected fetch to ${url}`)
@@ -140,7 +140,7 @@ describe('fetchGitHubStats', () => {
       if (url.includes('graphql')) {
         throw new Error('should not call GraphQL without a token')
       }
-      if (url.includes('/users/DFanso/repos')) {
+      if (url.includes(`/users/${GITHUB_USERNAME}/repos`)) {
         return jsonResponse([])
       }
       return jsonResponse({ public_repos: 1, followers: 2 })

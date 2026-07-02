@@ -24,7 +24,7 @@ export function Whoami() {
         />
         <div>
           <h1 className="text-lg sm:text-xl font-bold text-[#7aa2f7] cursor">Leo Felcianas</h1>
-          <p className="text-[#a9b1d6] text-xs sm:text-sm"> DevOps Engineer</p>
+          <p className="text-[#a9b1d6] text-xs sm:text-sm"> DevOps Engineer & Software Engineer</p>
         </div>
       </div>
     </header>

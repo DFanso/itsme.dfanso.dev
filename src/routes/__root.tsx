@@ -23,9 +23,9 @@ import { NotFound } from '../components/NotFound'
 // description, og/twitter title+description), which dedupe cleanly by
 // `name`/`property` (first match wins, and matches are walked leaf-first).
 const SITE_URL = 'https://itsme.dfanso.dev/'
-const TITLE = 'Leo Felcianas - DevOps Engineer & Software Developer'
+const TITLE = 'Leo Felcianas - DevOps Engineer & Software Engineer'
 const DESCRIPTION =
-  'DevOps/Backend specialist crafting efficient and scalable solutions. Expert in cloud architecture, containerization, and modern development practices.'
+  'DevOps & Software Engineer crafting efficient and scalable solutions. Expert in cloud architecture, containerization, and modern development practices.'
 const OG_IMAGE_URL = 'https://itsme.dfanso.dev/og-image.svg'
 const PROFILE_IMAGE_URL = new URL(profileImage, SITE_URL).toString()
 
@@ -116,11 +116,11 @@ export const Route = createRootRoute({
             '@context': 'https://schema.org',
             '@type': 'Person',
             name: 'Leo Felcianas',
-            jobTitle: 'DevOps Engineer & Software Developer',
+            jobTitle: 'DevOps Engineer & Software Engineer',
             description: DESCRIPTION,
             url: SITE_URL,
             image: PROFILE_IMAGE_URL,
-            sameAs: ['https://github.com/dfanso', 'https://linkedin.com/in/dfanso'],
+            sameAs: ['https://github.com/dfansoo', 'https://linkedin.com/in/dfanso'],
             alumniOf: {
               '@type': 'CollegeOrUniversity',
               name: 'University of Plymouth',

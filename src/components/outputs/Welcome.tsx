@@ -19,7 +19,7 @@ const asciiArt = `
  ╚═════╝ ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝ ╚═════╝ 
 `
 
-const tagline = 'DevOps Engineer & Backend Developer'
+const tagline = 'DevOps Engineer & Software Engineer'
 const version = 'v2.5.0'
 
 export function Welcome() {

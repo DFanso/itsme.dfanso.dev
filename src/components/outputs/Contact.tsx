@@ -25,7 +25,7 @@ const contactInfo = [
     Icon: MailIcon,
   },
   { id: 'LO', name: 'Colombo, Sri Lanka', url: '#', Icon: MapPinIcon },
-  { id: 'GH', name: 'github.com/dfanso', url: 'https://github.com/dfanso', Icon: GithubIcon },
+  { id: 'GH', name: 'github.com/dfansoo', url: 'https://github.com/dfansoo', Icon: GithubIcon },
   {
     id: 'IN',
     name: 'linkedin.com/in/leogavin',
