@@ -1,2 +1,787 @@
 @import 'tailwindcss';
-/* Global styles ported in Task 3 */
+
+/*
+ * Ported global CSS is wrapped in Tailwind's `base` layer so that Tailwind
+ * utility classes (including arbitrary-value ones like `text-[#1a1b26]`)
+ * always win the cascade against these rules, matching how it behaved under
+ * Tailwind v3 (bare-selector CSS beaten by any class-selector utility).
+ * Tailwind v4's `@import 'tailwindcss'` declares `@layer theme, base,
+ * components, utilities;` — unlayered CSS would otherwise out-cascade every
+ * layer, including `utilities`, regardless of selector specificity.
+ */
+@layer base {
+
+/* ─── Ported from src-astro/layouts/Layout.astro:240-441 (<style is:global>) ─── */
+
+:root {
+  --primary: #7aa2f7;
+  --secondary: #9ece6a;
+  --text: #c0caf5;
+  --bg: #1a1b26;
+  --accent: #bb9af7;
+  --error: #f7768e;
+  --warning: #e0af68;
+  --muted: #565f89;
+}
+
+body {
+  font-family: 'JetBrains Mono', monospace;
+  background-color: var(--bg);
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+}
+
+body::before {
+  background: radial-gradient(circle at 20% 20%, rgba(122, 162, 247, 0.25), transparent 45%),
+    radial-gradient(circle at 80% 0%, rgba(187, 154, 247, 0.18), transparent 40%),
+    radial-gradient(circle at 50% 80%, rgba(158, 206, 106, 0.12), transparent 35%);
+  filter: blur(40px);
+  animation: auroraShift 18s ease-in-out infinite alternate;
+}
+
+body::after {
+  background-image: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.01) 0, rgba(255, 255, 255, 0.01) 2px, transparent 2px, transparent 4px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.015) 0, rgba(255, 255, 255, 0.015) 2px, transparent 2px, transparent 4px);
+  mix-blend-mode: screen;
+  opacity: 0.3;
+  animation: noiseDrift 6s steps(2) infinite;
+}
+
+@keyframes auroraShift {
+  0% {
+    transform: translate3d(-5%, -5%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(5%, 3%, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(-3%, 4%, 0) scale(1.02);
+  }
+}
+
+@keyframes noiseDrift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-3%, 3%, 0);
+  }
+}
+
+.command-prompt {
+  color: var(--primary);
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+.section-title {
+  color: var(--primary);
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Terminal-style text selection */
+::selection {
+  background: var(--primary);
+  color: var(--bg);
+}
+
+/* Prevent icon FOUC (Flash of Unstyled Content) */
+svg[data-icon] {
+  opacity: 0;
+  animation: icon-fade-in 0.2s ease forwards;
+  animation-delay: 0.1s;
+}
+
+@keyframes icon-fade-in {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Hide empty icon containers */
+[data-icon]:empty {
+  display: none;
+}
+
+/* ── CRT Monitor Effects ───────────────────────────────────────────── */
+#crt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9980;
+  pointer-events: none;
+  border-radius: 2px;
+}
+
+/* Static scanline grid */
+.crt-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.06) 0px,
+    rgba(0, 0, 0, 0.06) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  animation: crt-scanlines-drift 12s linear infinite;
+}
+
+@keyframes crt-scanlines-drift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 12px;
+  }
+}
+
+/* Edge vignette */
+.crt-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, transparent 52%, rgba(0, 0, 0, 0.62) 100%);
+}
+
+/* Top-left glare reflection */
+.crt-glare {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.028) 0%, transparent 40%, rgba(0, 0, 0, 0.07) 100%);
+}
+
+/* Rolling scanline sweep */
+.crt-rolling {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 80px;
+  top: -80px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.018) 40%,
+    rgba(255, 255, 255, 0.032) 50%,
+    rgba(255, 255, 255, 0.018) 60%,
+    transparent 100%
+  );
+}
+
+/* CRT power-on element */
+#crt-poweron {
+  position: fixed;
+  inset: 0;
+  z-index: 9985;
+  background: linear-gradient(180deg, #bbd0ff 0%, #ffffff 50%, #bbd0ff 100%);
+  transform: scaleY(0);
+  transform-origin: center center;
+  pointer-events: none;
+  border-radius: 2px;
+}
+
+/* ─── Ported from src-astro/pages/index.astro (terminal <style> block) ─── */
+
+.terminal-container {
+  @apply bg-[#1a1b26];
+  font-family: 'JetBrains Mono', monospace;
+  height: 90vh;
+  height: 90dvh; /* Modern dynamic viewport height */
+  /* Mobile height adjustment */
+  @media (max-width: 640px) {
+    height: 95dvh; /* Taller on mobile */
+  }
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4), 0 0 60px rgba(122, 162, 247, 0.1);
+}
+
+body.booting .terminal-container {
+  opacity: 0;
+  transform: translateY(16px) scale(0.98);
+}
+
+body.booted .terminal-container {
+  animation: boot-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+body.no-js .terminal-container {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+}
+
+@keyframes boot-up {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.95);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.terminal-title-bar {
+  @apply flex items-center bg-[#1a1b26] border-b border-[#7aa2f7]/20 p-2 sm:p-1;
+  background: #1a1b26;
+}
+
+.terminal-content-area {
+  @apply p-2 sm:p-4 overflow-auto space-y-2;
+  /* Dynamic height calculation */
+  height: 100%;
+  background: #1a1b26;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.command-block {
+  @apply mb-2;
+}
+
+.command-prompt {
+  @apply text-[#7aa2f7] mb-1 flex items-center gap-1.5 flex-wrap text-sm;
+  font-family: 'JetBrains Mono', monospace;
+  position: relative;
+}
+
+#input-line .command-prompt input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  outline: none;
+}
+
+.command-output {
+  @apply pl-6 py-2 text-sm opacity-90;
+  border-left: 2px solid rgba(86, 95, 137, 0.3);
+  margin-left: 0.5rem;
+}
+
+.cursor {
+  @apply ml-[1px] -mr-[1px] opacity-70;
+}
+
+.cursor::after {
+  content: '▋';
+  animation: cursor-blink 0.8s step-end infinite;
+}
+
+.typing-line {
+  opacity: 0;
+  transform: translateY(6px);
+  animation: typingLine 0.35s ease forwards;
+}
+
+@keyframes typingLine {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes cursor-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Character typing cursor */
+.typing-cursor::after {
+  content: '█';
+  color: #7aa2f7;
+  animation: typing-cursor-blink 0.5s step-end infinite;
+}
+
+@keyframes typing-cursor-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Scanline effect for terminal feel */
+.terminal-content-area::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  z-index: 10;
+}
+
+body.terminal-idle .cursor::after {
+  color: var(--secondary);
+  text-shadow: 0 0 8px rgba(158, 206, 106, 0.8);
+  animation: idle-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes idle-pulse {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Custom Scrollbar - More minimal */
+.terminal-content-area {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(122, 162, 247, 0.3) transparent;
+}
+
+.terminal-content-area::-webkit-scrollbar {
+  width: 2px;
+}
+
+.terminal-content-area::-webkit-scrollbar-thumb {
+  background-color: rgba(122, 162, 247, 0.3);
+}
+
+.command-list {
+  @apply text-sm p-4 rounded;
+  background: rgba(26, 27, 38, 0.6);
+  border: 1px solid rgba(86, 95, 137, 0.2);
+}
+
+.command-list p {
+  @apply text-[#7aa2f7] mb-2;
+}
+
+.command-list ul li {
+  @apply flex items-center gap-2;
+}
+
+.command-list ul li span {
+  @apply text-[#9ece6a] font-mono;
+}
+
+/* Update help command styling */
+#help .command-list ul li::before {
+  content: '└─▶';
+  @apply text-[#565f89] mr-2;
+}
+
+.terminal-footer {
+  @apply text-center opacity-50 hover:opacity-80 transition-opacity;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Window Controls */
+.terminal-button {
+  @apply w-3 h-3 rounded-full border border-black/10 relative flex items-center justify-center;
+}
+
+.terminal-button::before {
+  content: '';
+  @apply opacity-0 transition-opacity duration-200 text-[8px] font-bold text-black/50;
+}
+
+.terminal-buttons:hover .terminal-button::before {
+  @apply opacity-100;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 640px) {
+  .mobile-section {
+    @apply bg-[#1a1b26] rounded-lg p-4;
+    border: 1px solid rgba(122, 162, 247, 0.1);
+  }
+
+  .mobile-section h2 {
+    @apply mb-4;
+  }
+
+  /* Adjust command output for mobile */
+  .command-output {
+    @apply pl-4;
+    border-left: 1px solid rgba(86, 95, 137, 0.3);
+  }
+
+  /* Make links more touchable */
+  a {
+    @apply py-2;
+  }
+
+  /* Improve mobile scrolling */
+  body {
+    @apply overflow-hidden;
+  }
+
+  .block.sm\:hidden {
+    height: 100vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Section spacing */
+  .space-y-8 > * {
+    @apply mb-8;
+  }
+
+  /* Mobile footer */
+  .fixed.bottom-0 {
+    @apply text-center shadow-lg z-50;
+    background: rgba(26, 27, 38, 0.95);
+    backdrop-filter: blur(8px);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.75rem;
+  }
+
+  /* Ensure content doesn't hide behind footer */
+  .p-4.pb-20 {
+    padding-bottom: 5rem;
+  }
+}
+
+/* Remove fancy background effects */
+.terminal-container {
+  background-image: none !important;
+}
+
+/* Adjust text colors for more terminal-like appearance */
+.text-[#c0caf5] {
+  @apply opacity-90;
+}
+
+.welcome-text {
+  @apply opacity-80;
+}
+
+/* Make the ASCII art more terminal-like */
+.ascii-art {
+  @apply opacity-70;
+}
+
+.command-help-list {
+  @apply space-y-2 ml-4;
+}
+
+.command-help-list li {
+  @apply flex items-start gap-4;
+}
+
+.command-name {
+  @apply text-[#9ece6a] w-24 font-mono;
+}
+
+.command-desc {
+  @apply text-[#c0caf5] opacity-80;
+}
+
+/* Matrix animation */
+.matrix-animation pre {
+  animation: matrix 2s infinite;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+@keyframes matrix {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Ping animation */
+.ping-animation .ping-line {
+  animation: fade-in 0.3s ease-out forwards;
+  opacity: 0;
+}
+
+.ping-animation .ping-line:nth-child(1) {
+  animation-delay: 0s;
+}
+.ping-animation .ping-line:nth-child(2) {
+  animation-delay: 0.5s;
+}
+.ping-animation .ping-line:nth-child(3) {
+  animation-delay: 1s;
+}
+.ping-animation .ping-line:nth-child(4) {
+  animation-delay: 1.5s;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── ls directory listing ──────────────────────────────────────────────── */
+.ls-entry {
+  border-radius: 3px;
+  padding: 1px 6px;
+  margin: 0 -6px;
+  transition: background 0.15s ease, transform 0.15s ease;
+  cursor: default;
+}
+
+.ls-entry:hover {
+  background: rgba(122, 162, 247, 0.08);
+  transform: translateX(4px);
+}
+
+.ls-entry:hover .ls-name {
+  text-shadow: 0 0 10px currentColor;
+  transition: text-shadow 0.15s ease;
+}
+
+/* Copy/Paste Styles */
+.copy-button {
+  @apply fixed bg-[#1a1b26] text-[#7aa2f7] px-2 py-1 rounded cursor-pointer z-50 border border-[#7aa2f7]/20 hover:bg-[#7aa2f7]/10 transition-colors;
+  display: none;
+}
+
+.copy-feedback {
+  @apply fixed top-4 right-4 bg-[#9ece6a] text-[#1a1b26] px-4 py-2 rounded shadow-lg z-50;
+  animation: fadeInOut 1.5s ease-in-out forwards;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+/* Selection style */
+::selection {
+  @apply bg-[#7aa2f7]/30 text-[#c0caf5];
+}
+
+#terminal::before,
+#terminal::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 1.5rem;
+  transform: translate(-50%, 0);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.45);
+  color: var(--primary);
+  box-shadow: 0 0 15px rgba(122, 162, 247, 0.25);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+#terminal::before {
+  content: 'Booting portfolio OS...';
+}
+
+body.booting #terminal::before {
+  opacity: 1;
+  transform: translate(-50%, -10px);
+}
+
+body.booted #terminal::before {
+  opacity: 0;
+  transform: translate(-50%, -20px);
+}
+
+#terminal::after {
+  content: 'Idle — tap to resume';
+  top: auto;
+  bottom: 1.5rem;
+  background: rgba(17, 24, 39, 0.8);
+  border: 1px solid rgba(154, 206, 106, 0.3);
+  color: var(--secondary);
+  box-shadow: 0 0 25px rgba(154, 206, 106, 0.25);
+}
+
+body.terminal-idle #terminal::after {
+  opacity: 0.35;
+  transform: translate(-50%, 0);
+}
+
+body.booting #terminal {
+  pointer-events: none;
+}
+
+body.no-js #terminal::before,
+body.no-js #terminal::after {
+  display: none;
+}
+
+.syntax-error {
+  color: #f7768e;
+  font-weight: 600;
+}
+
+.syntax-success {
+  color: #9ece6a;
+  font-weight: 600;
+}
+
+.syntax-warning {
+  color: #e0af68;
+  font-weight: 600;
+}
+
+.syntax-flag {
+  color: #bb9af7;
+}
+
+.syntax-path {
+  color: #e0af68;
+}
+
+.syntax-command {
+  color: #7aa2f7;
+  font-weight: 600;
+}
+
+.syntax-link {
+  color: #7dcfff;
+  text-decoration: underline;
+  text-decoration-color: rgba(125, 207, 255, 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.booted .terminal-container {
+    animation: none !important;
+  }
+
+  .cursor::after,
+  body.terminal-idle .cursor::after {
+    animation: none !important;
+    opacity: 1;
+  }
+
+  #terminal::before,
+  #terminal::after {
+    transition: none;
+  }
+}
+
+/* Command Auto-completion Styles */
+.suggestions-container {
+  @apply absolute bg-[#1a1b26] border border-[#7aa2f7]/20 rounded-md shadow-lg z-50 max-h-48 overflow-y-auto min-w-[150px];
+}
+
+.suggestions-container.hidden {
+  display: none;
+}
+
+.suggestion-item {
+  @apply px-4 py-2 text-[#c0caf5] hover:bg-[#7aa2f7]/10 cursor-pointer transition-colors text-sm font-mono;
+}
+
+.suggestion-item .matched-text {
+  @apply text-[#c0caf5];
+}
+
+.suggestion-item .remaining-text {
+  @apply text-[#c0caf5] opacity-50;
+}
+
+.suggestion-item:hover .remaining-text {
+  @apply opacity-70;
+}
+
+.suggestion-item:not(:last-child) {
+  @apply border-b border-[#7aa2f7]/10;
+}
+
+/* Ensure suggestions container scrollbar matches terminal style */
+.suggestions-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.suggestions-container::-webkit-scrollbar-track {
+  @apply bg-[#1a1b26];
+}
+
+.suggestions-container::-webkit-scrollbar-thumb {
+  @apply bg-[#7aa2f7]/20 rounded-full hover:bg-[#7aa2f7]/30 transition-colors;
+}
+
+} /* end @layer base */
