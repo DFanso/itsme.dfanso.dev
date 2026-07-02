@@ -130,7 +130,7 @@ export function Terminal() {
             {state.blocks.map((block) => (
               <div className="command-block" key={block.id}>
                 <Prompt>
-                  <span className="command-text">{block.command}</span>
+                  {!block.seeded && <span className="command-text">{block.command}</span>}
                 </Prompt>
                 <div className="command-output">
                   <BlockOutput execution={block.execution} />

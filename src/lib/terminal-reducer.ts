@@ -20,6 +20,8 @@ export interface Block {
   /** Trimmed, original-case input as submitted (not lowercased). */
   command: string
   execution: Execution
+  /** True for the initial/reboot-seeded blocks, which render a bare prompt (no typed command echoed). */
+  seeded?: boolean
 }
 
 export interface TerminalState {
@@ -41,7 +43,7 @@ export type TerminalAction =
   | { type: 'toggle-maximize' }
 
 function seedBlock(command: string, id: number): Block {
-  return { id, command, execution: { kind: 'component', componentName: command } }
+  return { id, command, execution: { kind: 'component', componentName: command }, seeded: true }
 }
 
 export const initialState: TerminalState = {
