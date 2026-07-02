@@ -19,6 +19,12 @@ import { Certifications } from '../components/outputs/Certifications'
 import { TimeOutput } from '../components/outputs/TimeOutput'
 import { Weather } from '../components/outputs/Weather'
 import { Ping } from '../components/outputs/Ping'
+import { Skills } from '../components/outputs/Skills'
+import { Experience } from '../components/outputs/Experience'
+import { Projects } from '../components/outputs/Projects'
+import { Ls } from '../components/outputs/Ls'
+import { Help } from '../components/outputs/Help'
+import { Neofetch } from '../components/outputs/Neofetch'
 
 export interface CommandDef {
   name: string
@@ -27,6 +33,17 @@ export interface CommandDef {
   kind: 'output' | 'action'
   Output?: ComponentType // for kind 'output' (wired in Tasks 8-10; placeholder until then)
   action?: 'clear' | 'matrix' | 'hack' | 'open-resume'
+  /**
+   * True for the easter-egg commands (resume, sudo, rm, vi, vim, nano) that
+   * are valid input but intentionally excluded from the `help` listing
+   * (src-astro/pages/index.astro:257-348 never mentions them, though
+   * `executeLine`, in the same file at lines 749-775, still handles them).
+   * `Help` and `Ls` both derive their rendered rows from this registry
+   * (single source of truth): `Help` filters on `!hidden`, `Ls` filters on
+   * `lsEntry` presence — `resume` has an `lsEntry` (it shows up as
+   * `resume.pdf`) despite being `hidden` from `help`.
+   */
+  hidden?: boolean
 }
 
 /** Temporary stand-in for the section components not yet ported (Tasks 9-10). */
@@ -39,7 +56,7 @@ export const COMMANDS: CommandDef[] = [
     name: 'ls',
     description: 'List available sections and commands',
     kind: 'output',
-    Output: Placeholder,
+    Output: Ls,
   },
   {
     name: 'welcome',
@@ -67,21 +84,21 @@ export const COMMANDS: CommandDef[] = [
     description: 'Browse my featured projects',
     lsEntry: { name: 'projects/', perms: 'drwxr-xr-x', note: 'featured work' },
     kind: 'output',
-    Output: Placeholder,
+    Output: Projects,
   },
   {
     name: 'skills',
     description: 'List technical skills and expertise',
     lsEntry: { name: 'skills/', perms: 'drwxr-xr-x', note: 'technical expertise' },
     kind: 'output',
-    Output: Placeholder,
+    Output: Skills,
   },
   {
     name: 'experience',
     description: 'View work history and roles',
     lsEntry: { name: 'experience/', perms: 'drwxr-xr-x', note: 'work history' },
     kind: 'output',
-    Output: Placeholder,
+    Output: Experience,
   },
   {
     name: 'education',
@@ -114,13 +131,13 @@ export const COMMANDS: CommandDef[] = [
     name: 'help',
     description: 'Show this help message',
     kind: 'output',
-    Output: Placeholder,
+    Output: Help,
   },
   {
     name: 'neofetch',
     description: 'Display system information',
     kind: 'output',
-    Output: Placeholder,
+    Output: Neofetch,
   },
   {
     name: 'time',
@@ -168,31 +185,37 @@ export const COMMANDS: CommandDef[] = [
     lsEntry: { name: 'resume.pdf', perms: '-rw-r--r--', note: 'curriculum vitae' },
     kind: 'action',
     action: 'open-resume',
+    hidden: true,
   },
   {
     name: 'sudo',
     description: 'Attempt to gain superuser privileges',
     kind: 'action',
+    hidden: true,
   },
   {
     name: 'rm',
     description: 'Remove files (nice try)',
     kind: 'action',
+    hidden: true,
   },
   {
     name: 'vi',
     description: 'Open the vi text editor',
     kind: 'action',
+    hidden: true,
   },
   {
     name: 'vim',
     description: 'Open the vim text editor',
     kind: 'action',
+    hidden: true,
   },
   {
     name: 'nano',
     description: 'Open the nano text editor',
     kind: 'action',
+    hidden: true,
   },
 ]
 
