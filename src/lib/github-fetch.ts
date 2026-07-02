@@ -8,7 +8,7 @@
  * `createServerFn` for actual use from the browser.
  */
 
-const GITHUB_USERNAME = 'DFanso'
+export const GITHUB_USERNAME = 'DFanso'
 
 // ---------------------------------------------------------------------------
 // GitHubStats.astro port

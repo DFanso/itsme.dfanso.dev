@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import type { GitHubStatsData } from '../../lib/github-fetch'
+import { GITHUB_USERNAME, type GitHubStatsData } from '../../lib/github-fetch'
 import { getGitHubStats } from '../../lib/github-server-fn'
 import LucideBookIcon from '~icons/lucide/book'
 import LucideBookMarkedIcon from '~icons/lucide/book-marked'
@@ -10,8 +10,6 @@ import LucideGitPullRequestIcon from '~icons/lucide/git-pull-request'
 import LucideStarIcon from '~icons/lucide/star'
 import LucideUsersIcon from '~icons/lucide/users'
 import GithubIcon from '~icons/simple-icons/github'
-
-const GITHUB_USERNAME = 'DFanso'
 
 /** Ported verbatim from GitHubStats.astro's `getContributionLevel` (lines 156-162). */
 function getContributionLevel(count: number): number {

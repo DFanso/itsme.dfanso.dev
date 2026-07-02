@@ -118,7 +118,7 @@ export const Route = createRootRoute({
             name: 'Leo Felcianas',
             jobTitle: 'DevOps Engineer & Software Developer',
             description: DESCRIPTION,
-            url: 'https://itsme.dfanso.dev/',
+            url: SITE_URL,
             image: PROFILE_IMAGE_URL,
             sameAs: ['https://github.com/dfanso', 'https://linkedin.com/in/dfanso'],
             alumniOf: {
@@ -144,10 +144,10 @@ export const Route = createRootRoute({
             '@context': 'https://schema.org',
             '@type': 'WebSite',
             name: 'Leo Felcianas Portfolio',
-            url: 'https://itsme.dfanso.dev/',
+            url: SITE_URL,
             potentialAction: {
               '@type': 'SearchAction',
-              target: 'https://itsme.dfanso.dev/?s={search_term_string}',
+              target: `${SITE_URL}?s={search_term_string}`,
               'query-input': 'required name=search_term_string',
             },
           }),

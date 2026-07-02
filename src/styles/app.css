@@ -119,12 +119,6 @@ a:hover {
   background: var(--accent);
 }
 
-/* Terminal-style text selection */
-::selection {
-  background: var(--primary);
-  color: var(--bg);
-}
-
 /* Prevent icon FOUC (Flash of Unstyled Content) */
 svg[data-icon] {
   opacity: 0;
