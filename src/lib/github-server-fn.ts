@@ -31,6 +31,26 @@ export const getGitHubStats = createServerFn({ method: 'GET' }).handler(() =>
   fetchGitHubStats(process.env.GITHUB_TOKEN),
 )
 
+// `owner/repo` shorthand only: word chars, dots, and hyphens on each side of
+// a single slash (matches the `github` field format used by Projects.tsx's
+// project data, e.g. `dfanso/itsme.dfanso.dev`).
+const REPO_PATTERN = /^[\w.-]+\/[\w.-]+$/
+
+function validateRepos(repos: string[]): string[] {
+  if (!Array.isArray(repos)) {
+    throw new Error('getProjectStats: input must be an array of repo strings')
+  }
+  if (repos.length > 20) {
+    throw new Error('getProjectStats: input must not exceed 20 repos')
+  }
+  for (const repo of repos) {
+    if (typeof repo !== 'string' || !REPO_PATTERN.test(repo)) {
+      throw new Error(`getProjectStats: invalid repo identifier "${String(repo)}"`)
+    }
+  }
+  return repos
+}
+
 export const getProjectStats = createServerFn({ method: 'GET' })
-  .validator((repos: string[]) => repos)
+  .validator(validateRepos)
   .handler(({ data }) => fetchProjectStats(data, process.env.GITHUB_TOKEN))
