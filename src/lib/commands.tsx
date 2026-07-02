@@ -214,11 +214,14 @@ const EMPTY_INPUT_MESSAGES = [
   '🚀 Ready for your input, commander!',
 ]
 
-export function executeLine(raw: string, ctx: { awaitingProjectResponse: boolean }): Execution {
+export function executeLine(
+  raw: string,
+  ctx: { awaitingProjectResponse: boolean; rand?: number },
+): Execution {
   const command = raw.trim().toLowerCase()
 
   if (!command) {
-    const message = EMPTY_INPUT_MESSAGES[Math.floor(Math.random() * EMPTY_INPUT_MESSAGES.length)]
+    const message = EMPTY_INPUT_MESSAGES[Math.floor((ctx.rand ?? 0) * EMPTY_INPUT_MESSAGES.length)]
     return { kind: 'text', text: { color: 'text-[#bb9af7]', lines: [message] } }
   }
 

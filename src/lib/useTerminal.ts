@@ -18,14 +18,16 @@
  * the resume side effect; `state.overlay` identity for the reveal delay)
  * and are no-ops during SSR (`typeof window === 'undefined'`).
  */
+import type React from 'react'
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
 import { terminalReducer, initialState } from './terminal-reducer'
-import type { TerminalState } from './terminal-reducer'
+import type { TerminalState, TerminalAction } from './terminal-reducer'
 
 export interface UseTerminalResult {
   state: TerminalState
   /** `state.overlay` delayed by 300ms to mirror the old site's launch pause. */
   overlayVisible: boolean
+  dispatch: React.Dispatch<TerminalAction>
   submit: (raw: string) => void
   clear: () => void
   closeOverlay: () => void
@@ -63,12 +65,22 @@ export function useTerminal(): UseTerminalResult {
     return () => window.clearTimeout(timer)
   }, [state.overlay])
 
-  const submit = useCallback((raw: string) => dispatch({ type: 'submit', raw }), [])
+  const submit = useCallback((raw: string) => dispatch({ type: 'submit', raw, rand: Math.random() }), [])
   const clear = useCallback(() => dispatch({ type: 'clear' }), [])
   const closeOverlay = useCallback(() => dispatch({ type: 'overlay-closed' }), [])
   const shutdown = useCallback(() => dispatch({ type: 'shutdown' }), [])
   const reboot = useCallback(() => dispatch({ type: 'reboot' }), [])
   const toggleMaximize = useCallback(() => dispatch({ type: 'toggle-maximize' }), [])
 
-  return { state, overlayVisible, submit, clear, closeOverlay, shutdown, reboot, toggleMaximize }
+  return {
+    state,
+    overlayVisible,
+    dispatch,
+    submit,
+    clear,
+    closeOverlay,
+    shutdown,
+    reboot,
+    toggleMaximize,
+  }
 }

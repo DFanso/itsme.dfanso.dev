@@ -17,6 +17,7 @@ import { executeLine, type Execution } from './commands'
 
 export interface Block {
   id: number
+  /** Trimmed, original-case input as submitted (not lowercased). */
   command: string
   execution: Execution
 }
@@ -32,7 +33,7 @@ export interface TerminalState {
 }
 
 export type TerminalAction =
-  | { type: 'submit'; raw: string }
+  | { type: 'submit'; raw: string; rand?: number }
   | { type: 'clear' } // also Ctrl+L
   | { type: 'overlay-closed' }
   | { type: 'shutdown' }
@@ -58,9 +59,9 @@ function appendBlock(state: TerminalState, command: string, execution: Execution
   return { ...state, blocks: [...state.blocks, block], nextId: state.nextId + 1 }
 }
 
-function submit(state: TerminalState, raw: string): TerminalState {
+function submit(state: TerminalState, raw: string, rand?: number): TerminalState {
   const trimmed = raw.trim()
-  const execution = executeLine(raw, { awaitingProjectResponse: state.awaitingProjectResponse })
+  const execution = executeLine(raw, { awaitingProjectResponse: state.awaitingProjectResponse, rand })
 
   let next: TerminalState = {
     ...state,
@@ -86,7 +87,7 @@ function submit(state: TerminalState, raw: string): TerminalState {
 export function terminalReducer(state: TerminalState, action: TerminalAction): TerminalState {
   switch (action.type) {
     case 'submit':
-      return submit(state, action.raw)
+      return submit(state, action.raw, action.rand)
     case 'clear':
       return { ...state, blocks: [] }
     case 'overlay-closed':
