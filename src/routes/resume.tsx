@@ -43,6 +43,7 @@ export const Route = createFileRoute('/resume')({
       { name: 'title', content: TITLE },
       { name: 'description', content: DESCRIPTION },
       { name: 'robots', content: 'noindex' },
+      { name: 'googlebot', content: 'noindex, nofollow' },
       { property: 'og:title', content: TITLE },
       { property: 'og:description', content: DESCRIPTION },
       { property: 'og:url', content: RESUME_URL },
