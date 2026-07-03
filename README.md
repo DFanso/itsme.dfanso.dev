@@ -1,6 +1,6 @@
 # DFanso's Terminal Portfolio
 
-A unique terminal-style portfolio built with Astro and TypeScript, providing an interactive command-line interface to explore my work and experience.
+A unique terminal-style portfolio built with TanStack Start, React and TypeScript, providing an interactive command-line interface to explore my work and experience.
 
 ## Live Site
 
@@ -51,11 +51,16 @@ Visit my portfolio at [itsme.dfanso.dev](https://itsme.dfanso.dev)
 
 ## Tech Stack
 
-![Astro](https://img.shields.io/badge/Astro-FF5D01?style=for-the-badge&logo=astro&logoColor=white)
+![TanStack Start](https://img.shields.io/badge/TanStack_Start-FF4154?style=for-the-badge&logo=react&logoColor=white)
+![React](https://img.shields.io/badge/React_19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Vitest](https://img.shields.io/badge/Vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white)
 ![GitHub GraphQL](https://img.shields.io/badge/GitHub_GraphQL-181717?style=for-the-badge&logo=github&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+
+Built on [TanStack Start](https://tanstack.com/start) (React 19 + [TanStack Router](https://tanstack.com/router), server-rendered and prerendered via [Nitro](https://nitro.build/)), styled with Tailwind CSS v4, animated with anime.js, tested with [Vitest](https://vitest.dev/), and deployed to Vercel.
 
 ## Development
 
@@ -90,25 +95,27 @@ yarn dev
 5. Build for production:
 ```bash
 yarn build
+yarn start
 ```
 
 ### Environment Variables
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `GITHUB_TOKEN` | Optional | GitHub personal access token for full stats |
+| `GITHUB_TOKEN` | Optional | GitHub personal access token, used by the `github` command's server function (`src/lib/github-server-fn.ts`) for full stats (contribution graph, commits, PRs, issues, pinned repos) |
 
-Without the token, basic GitHub stats (stars, forks, repos) will still work via the public API.
+Without the token — or if the GitHub API request fails — the `github` command falls back to a "Unable to fetch GitHub data" message. Set `GITHUB_TOKEN` as a project environment variable in the Vercel dashboard for the deployed site (Settings → Environment Variables); it isn't read from `.env` in production, only during local `yarn dev`.
 
 ## Project Commands
 
 | Command | Action |
 |---------|--------|
 | `yarn install` | Install dependencies |
-| `yarn dev` | Start local dev server at `localhost:4321` |
-| `yarn build` | Build production site to `./dist/` |
-| `yarn preview` | Preview build locally |
-| `yarn astro ...` | Run Astro CLI commands |
+| `yarn dev` | Start local dev server at `localhost:3000` |
+| `yarn build` | Build the production app (prerendered `/` + `/resume`, SSR server, static assets) to `./.output/` |
+| `yarn start` | Run the production build (`node .output/server/index.mjs`) |
+| `yarn test` | Run the Vitest test suite (`yarn test run` for a single non-watch run) |
+| `yarn generate:cv` | Regenerate `public/resume.pdf` from the portfolio data |
 
 ## Keyboard Shortcuts
 

@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://itsme.dfanso.dev/sitemap-index.xml
+Sitemap: https://itsme.dfanso.dev/sitemap.xml
 
 # Ensure crawl efficiency
 Crawl-delay: 5
