@@ -15,9 +15,7 @@ export function About() {
       <div className="ml-4 border-l-2 border-[#a9b1d6] pl-4 text-sm space-y-4">
         <p className="leading-relaxed text-[#c0caf5]">
           <span className="text-[#7aa2f7] font-bold">Senior Software Engineer</span> at{' '}
-          <span className="text-[#7aa2f7]">Fun Extreme Technology</span> &{' '}
-          <span className="text-[#7aa2f7] font-bold">DevOps Engineer</span> at{' '}
-          <span className="text-[#7aa2f7]">Empite</span>, holding a{' '}
+          <span className="text-[#7aa2f7]">CD Extreme OPC</span>, holding a{' '}
           <span className="text-[#e0af68]">First-Class Honours</span> degree from the{' '}
           <span className="text-[#9ece6a]">University of Plymouth</span>. Experienced across
           DevOps pipelines, backend development, cloud infrastructure, and AI-driven automation.

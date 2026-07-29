@@ -12,7 +12,7 @@ export const profile = {
     githubHandle: "github.com/dfansoo",
     portfolio: "https://itsme.dfanso.dev/",
     portfolioHandle: "itsme.dfanso.dev",
-    summary: "Senior Software Engineer at Fun Extreme Technology & DevOps Engineer at Empite, holding a First-Class Honours degree from the University of Plymouth. Experienced across DevOps pipelines, backend development, cloud infrastructure, and AI-driven automation. Co-Founder & CTO of CodeXeed and KlexD, building scalable cloud-native applications and intelligent systems for global clients.",
+    summary: "Senior Software Engineer at CD Extreme OPC, holding a First-Class Honours degree from the University of Plymouth. Experienced across DevOps pipelines, backend development, cloud infrastructure, and AI-driven automation. Co-Founder & CTO of CodeXeed and KlexD, building scalable cloud-native applications and intelligent systems for global clients.",
 };
 
 export interface Role {
@@ -33,7 +33,7 @@ export interface Company {
 
 export const companies: Company[] = [
     {
-        company: "Fun Extreme Technology LLC",
+        company: "CD Extreme OPC",
         totalPeriod: "March 2026 - Present",
         icon: "lucide:gamepad-2",
         roles: [
@@ -48,6 +48,10 @@ export const companies: Company[] = [
                     "Applying architectural patterns including Mediator, CQRS, and Domain-Driven Design (DDD)",
                     "Working with Entity Framework Core and PostgreSQL for robust, scalable data access layers",
                     "Delivering innovative software solutions and game-related applications for a global audience",
+                    "Built a KYC (Know Your Customer) verification platform for 747Live, covering document and facial-similarity verification workflows",
+                    "Trained and fine-tuned custom Python ML models for automated identity verification and fraud detection",
+                    "Designed load-balanced, auto-scaling infrastructure across Cloudflare and Azure to handle high-throughput verification traffic",
+                    "Set up Azure DevOps (ADO) pipelines for CI/CD of the KYC platform and automated ML model deployment",
                 ],
                 tech: [
                     { name: ".NET Core", icon: "simple-icons:dotnet" },
@@ -58,20 +62,25 @@ export const companies: Company[] = [
                     { name: "PostgreSQL", icon: "simple-icons:postgresql" },
                     { name: "Clean Arch", icon: "lucide:layers" },
                     { name: "Mediator", icon: "lucide:share-2" },
+                    { name: "Python", icon: "simple-icons:python" },
+                    { name: "PyTorch", icon: "simple-icons:pytorch" },
+                    { name: "Cloudflare", icon: "simple-icons:cloudflare" },
+                    { name: "Docker", icon: "simple-icons:docker" },
+                    { name: "Redis", icon: "simple-icons:redis" },
                 ],
             },
         ],
     },
     {
         company: "Empite",
-        totalPeriod: "July 2024 - Present · 1 yr 10 mos",
+        totalPeriod: "July 2024 - March 2026 · 1 yr 8 mos",
         icon: "lucide:building-2",
         roles: [
             {
                 type: "DEV",
                 typeColor: "text-[#e0af68]",
                 title: "DevOps Engineer",
-                period: "August 2025 - Present",
+                period: "August 2025 - March 2026",
                 responsibilities: [
                     "Implemented auto-scaling solutions, achieving a 20% cost reduction while maintaining high availability",
                     "Executed disaster recovery plans and led migrations to immutable infrastructure using Terraform",

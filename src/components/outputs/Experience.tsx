@@ -14,6 +14,7 @@ import AdobeaftereffectsIcon from '~icons/simple-icons/adobeaftereffects'
 import AdobepremiereproIcon from '~icons/simple-icons/adobepremierepro'
 import AmazonawsIcon from '~icons/simple-icons/amazonaws'
 import AzuredevopsIcon from '~icons/simple-icons/azuredevops'
+import CloudflareIcon from '~icons/simple-icons/cloudflare'
 import CsharpIcon from '~icons/simple-icons/csharp'
 import DockerIcon from '~icons/simple-icons/docker'
 import DotnetIcon from '~icons/simple-icons/dotnet'
@@ -34,7 +35,9 @@ import PackerIcon from '~icons/simple-icons/packer'
 import PostgresqlIcon from '~icons/simple-icons/postgresql'
 import PrismaIcon from '~icons/simple-icons/prisma'
 import PythonIcon from '~icons/simple-icons/python'
+import PytorchIcon from '~icons/simple-icons/pytorch'
 import ReactIcon from '~icons/simple-icons/react'
+import RedisIcon from '~icons/simple-icons/redis'
 import TailwindcssIcon from '~icons/simple-icons/tailwindcss'
 import TerraformIcon from '~icons/simple-icons/terraform'
 import TypescriptIcon from '~icons/simple-icons/typescript'
@@ -69,6 +72,7 @@ const ICONS: Record<string, ComponentType<{ className?: string }>> = {
   'simple-icons:adobepremierepro': AdobepremiereproIcon,
   'simple-icons:amazonaws': AmazonawsIcon,
   'simple-icons:azuredevops': AzuredevopsIcon,
+  'simple-icons:cloudflare': CloudflareIcon,
   'simple-icons:csharp': CsharpIcon,
   'simple-icons:docker': DockerIcon,
   'simple-icons:dotnet': DotnetIcon,
@@ -89,7 +93,9 @@ const ICONS: Record<string, ComponentType<{ className?: string }>> = {
   'simple-icons:postgresql': PostgresqlIcon,
   'simple-icons:prisma': PrismaIcon,
   'simple-icons:python': PythonIcon,
+  'simple-icons:pytorch': PytorchIcon,
   'simple-icons:react': ReactIcon,
+  'simple-icons:redis': RedisIcon,
   'simple-icons:tailwindcss': TailwindcssIcon,
   'simple-icons:terraform': TerraformIcon,
   'simple-icons:typescript': TypescriptIcon,
